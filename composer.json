@@ -1,0 +1,29 @@
+{
+    "name": "opportify/insights-sdk-php",
+    "description": "Opportify Insights PHP SDK",
+    "version": "0.1.0",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Opportify\\Sdk\\": "src/",
+            "OpenAPI\\Client\\": "lib/v1/lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "OpenAPI\\Client\\Test\\" : "lib/v1/test/" }
+    },
+    "require": {
+        "php": ">=7.4",
+        "openapi/client": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0 || ^9.0",
+        "friendsofphp/php-cs-fixer": "^3.5"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "lib/v1"
+        }
+    ]
+}

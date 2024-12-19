@@ -1,0 +1,20 @@
+# Ignore PHP specific files
+vendor/
+
+# Ignore IDE and editor specific files
+.idea/
+*.iml
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore log files and databases
+*.log
+
+# Ignore PHPUnit test results
+phpunit.xml
+phpunit.xml.dist
+
+# Ignore coverage reports
+coverage/
