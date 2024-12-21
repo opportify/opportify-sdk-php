@@ -1,5 +1,5 @@
 {
-    "name": "opportify/insights-sdk-php",
+    "name": "opportify/opportify-sdk-php",
     "description": "Opportify Insights PHP SDK",
     "version": "0.1.0",
     "type": "library",

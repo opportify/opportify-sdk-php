@@ -1,4 +1,4 @@
-# Opportify/Insights-SDK-PHP
+# Opportify-SDK-PHP
 
 ## Overview
 
@@ -22,7 +22,7 @@ Requires PHP v[7.4 or later](https://www.php.net/releases){:target="_blank"}. It
 First, install Opportify via the Composer package manager:
 
 ```
-composer require opportify/insights-sdk-php
+composer require opportify/opportify-sdk-php
 ```
 
 ### Calling Email Insights
