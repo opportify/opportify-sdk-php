@@ -11,6 +11,4 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    with:
-      config-repo: opportify/.github
     secrets: inherit
