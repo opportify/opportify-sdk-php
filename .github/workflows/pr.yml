@@ -1,0 +1,13 @@
+name: Labeler
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  labeler:
+    uses: opportify/.github/.github/workflows/labeler.yml@main
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets: inherit
