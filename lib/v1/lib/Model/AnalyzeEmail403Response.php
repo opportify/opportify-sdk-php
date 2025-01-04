@@ -1,6 +1,6 @@
 <?php
 /**
- * AdminContact
+ * AnalyzeEmail403Response
  *
  * PHP version 7.4
  *
@@ -32,16 +32,15 @@ use \ArrayAccess;
 use \OpenAPI\Client\ObjectSerializer;
 
 /**
- * AdminContact Class Doc Comment
+ * AnalyzeEmail403Response Class Doc Comment
  *
  * @category Class
- * @description Admin contact details.
  * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
+class AnalyzeEmail403Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'AdminContact';
+    protected static $openAPIModelName = 'analyzeEmail_403_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,13 +57,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'contact_id' => 'string',
-        'contact_type' => 'string',
-        'name' => 'string',
-        'address' => 'string[]',
-        'phone' => 'string[]',
-        'fax' => 'string[]',
-        'email' => 'string[]'
+        'error' => '\OpenAPI\Client\Model\AnalyzeEmail403ResponseError'
     ];
 
     /**
@@ -75,13 +68,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'contact_id' => null,
-        'contact_type' => null,
-        'name' => null,
-        'address' => null,
-        'phone' => null,
-        'fax' => null,
-        'email' => null
+        'error' => null
     ];
 
     /**
@@ -90,13 +77,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'contact_id' => false,
-        'contact_type' => false,
-        'name' => false,
-        'address' => false,
-        'phone' => false,
-        'fax' => false,
-        'email' => false
+        'error' => false
     ];
 
     /**
@@ -185,13 +166,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'contact_id' => 'contactId',
-        'contact_type' => 'contactType',
-        'name' => 'name',
-        'address' => 'address',
-        'phone' => 'phone',
-        'fax' => 'fax',
-        'email' => 'email'
+        'error' => 'error'
     ];
 
     /**
@@ -200,13 +175,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'contact_id' => 'setContactId',
-        'contact_type' => 'setContactType',
-        'name' => 'setName',
-        'address' => 'setAddress',
-        'phone' => 'setPhone',
-        'fax' => 'setFax',
-        'email' => 'setEmail'
+        'error' => 'setError'
     ];
 
     /**
@@ -215,13 +184,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'contact_id' => 'getContactId',
-        'contact_type' => 'getContactType',
-        'name' => 'getName',
-        'address' => 'getAddress',
-        'phone' => 'getPhone',
-        'fax' => 'getFax',
-        'email' => 'getEmail'
+        'error' => 'getError'
     ];
 
     /**
@@ -281,13 +244,7 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->setIfExists('contact_id', $data ?? [], null);
-        $this->setIfExists('contact_type', $data ?? [], null);
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('address', $data ?? [], null);
-        $this->setIfExists('phone', $data ?? [], null);
-        $this->setIfExists('fax', $data ?? [], null);
-        $this->setIfExists('email', $data ?? [], null);
+        $this->setIfExists('error', $data ?? [], null);
     }
 
     /**
@@ -333,190 +290,28 @@ class AdminContact implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets contact_id
+     * Gets error
      *
-     * @return string|null
+     * @return \OpenAPI\Client\Model\AnalyzeEmail403ResponseError|null
      */
-    public function getContactId()
+    public function getError()
     {
-        return $this->container['contact_id'];
+        return $this->container['error'];
     }
 
     /**
-     * Sets contact_id
+     * Sets error
      *
-     * @param string|null $contact_id Unique identifier for the admin contact.
+     * @param \OpenAPI\Client\Model\AnalyzeEmail403ResponseError|null $error error
      *
      * @return self
      */
-    public function setContactId($contact_id)
+    public function setError($error)
     {
-        if (is_null($contact_id)) {
-            throw new \InvalidArgumentException('non-nullable contact_id cannot be null');
+        if (is_null($error)) {
+            throw new \InvalidArgumentException('non-nullable error cannot be null');
         }
-        $this->container['contact_id'] = $contact_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets contact_type
-     *
-     * @return string|null
-     */
-    public function getContactType()
-    {
-        return $this->container['contact_type'];
-    }
-
-    /**
-     * Sets contact_type
-     *
-     * @param string|null $contact_type Type of contact (e.g., \"admin\").
-     *
-     * @return self
-     */
-    public function setContactType($contact_type)
-    {
-        if (is_null($contact_type)) {
-            throw new \InvalidArgumentException('non-nullable contact_type cannot be null');
-        }
-        $this->container['contact_type'] = $contact_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     *
-     * @return string|null
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string|null $name Name of the admin contact.
-     *
-     * @return self
-     */
-    public function setName($name)
-    {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
-        }
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets address
-     *
-     * @return string[]|null
-     */
-    public function getAddress()
-    {
-        return $this->container['address'];
-    }
-
-    /**
-     * Sets address
-     *
-     * @param string[]|null $address Admin contact address details.
-     *
-     * @return self
-     */
-    public function setAddress($address)
-    {
-        if (is_null($address)) {
-            throw new \InvalidArgumentException('non-nullable address cannot be null');
-        }
-        $this->container['address'] = $address;
-
-        return $this;
-    }
-
-    /**
-     * Gets phone
-     *
-     * @return string[]|null
-     */
-    public function getPhone()
-    {
-        return $this->container['phone'];
-    }
-
-    /**
-     * Sets phone
-     *
-     * @param string[]|null $phone Contact phone numbers for admin issues.
-     *
-     * @return self
-     */
-    public function setPhone($phone)
-    {
-        if (is_null($phone)) {
-            throw new \InvalidArgumentException('non-nullable phone cannot be null');
-        }
-        $this->container['phone'] = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Gets fax
-     *
-     * @return string[]|null
-     */
-    public function getFax()
-    {
-        return $this->container['fax'];
-    }
-
-    /**
-     * Sets fax
-     *
-     * @param string[]|null $fax Contact fax numbers for admin issues.
-     *
-     * @return self
-     */
-    public function setFax($fax)
-    {
-        if (is_null($fax)) {
-            throw new \InvalidArgumentException('non-nullable fax cannot be null');
-        }
-        $this->container['fax'] = $fax;
-
-        return $this;
-    }
-
-    /**
-     * Gets email
-     *
-     * @return string[]|null
-     */
-    public function getEmail()
-    {
-        return $this->container['email'];
-    }
-
-    /**
-     * Sets email
-     *
-     * @param string[]|null $email Contact email addresses for admin issues.
-     *
-     * @return self
-     */
-    public function setEmail($email)
-    {
-        if (is_null($email)) {
-            throw new \InvalidArgumentException('non-nullable email cannot be null');
-        }
-        $this->container['email'] = $email;
+        $this->container['error'] = $error;
 
         return $this;
     }
