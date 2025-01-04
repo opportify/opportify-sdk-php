@@ -15,7 +15,7 @@ https://api.opportify.ai/insights/v1/<service>/<endpoint>
 
 ## Requirements
 
-Requires PHP v[7.4 or later](https://www.php.net/releases). It is also compatible with v8.0.
+Requires PHP [v7.4 or later](https://www.php.net/releases). It is also compatible with v8.0.
 
 ## Getting Started
 
@@ -56,7 +56,7 @@ $params = [
 $result = $ipInsights->analyze($params);
 ```
 
-### Enable Debug Mode
+### Enabling Debug Mode
 
 ```php
 $clientInsights->setDebugMode(true);
@@ -79,9 +79,9 @@ try {
 ```
 Below are the `ApiException` functions available:
 
-| Function | Type | Description |
-|----------|------|-------------|
-| `$e->getMessage();` | string | `"[403] Client error: POST https://api.opportify.ai/insights/v1/email/analyze resulted in a 403 Forbidden"` |
+| Function | Type | Value Sample |
+|------------|------|--------------|
+| `$e->getMessage();` | string | `"[403] Client error: POST https://api.opportify.ai/insights/v1/... resulted in a 403 Forbidden"` |
 | `$e->getResponseBody();` | string | `"{"errorMessage":"Your plan does not support AI features, please upgrade your plan or set enableAI as false.","errorCode":"INVALID_PLAN"}"` |
 | `$e->getCode();` | integer | `403` |
 
