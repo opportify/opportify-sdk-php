@@ -3,7 +3,6 @@
 namespace Opportify\Sdk;
 
 use OpenAPI\Client\Configuration as ApiConfiguration;
-use OpenAPI\Client\ApiException;
 use OpenAPI\Client\Api\EmailInsightsApi;
 use OpenAPI\Client\Model\AnalyzeEmailRequest;
 use GuzzleHttp\Client;
@@ -47,12 +46,9 @@ class EmailInsights
 
         $analyzeEmailRequest = new AnalyzeEmailRequest($params); 
 
-        try {
-            $result = $this->apiInstance->analyzeEmail($analyzeEmailRequest);
-            return $result->jsonSerialize();
-        } catch (ApiException $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $result = $this->apiInstance->analyzeEmail($analyzeEmailRequest);
+        return $result->jsonSerialize();
+       
     }
 
     /**

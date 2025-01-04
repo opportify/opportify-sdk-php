@@ -3,7 +3,6 @@
 namespace Opportify\Sdk;
 
 use OpenAPI\Client\Configuration as ApiConfiguration;
-use OpenAPI\Client\ApiException;
 use OpenAPI\Client\Api\IpInsightsApi;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
 use GuzzleHttp\Client;
@@ -50,12 +49,9 @@ class IpInsights
 
         $analyzeIpRequest = new AnalyzeIpRequest($params);
 
-        try {
-            $result = $this->apiInstance->analyzeIp($analyzeIpRequest);
-            return $result->jsonSerialize();
-        } catch (ApiException $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $result = $this->apiInstance->analyzeIp($analyzeIpRequest);
+        return $result->jsonSerialize();
+     
     }
 
     /**
