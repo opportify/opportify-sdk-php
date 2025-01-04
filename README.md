@@ -21,13 +21,13 @@ Requires PHP v[7.4 or later](https://www.php.net/releases). It is also compatibl
 
 First, install Opportify via the Composer package manager:
 
-```
+```shell
 composer require opportify/opportify-sdk-php
 ```
 
 ### Calling Email Insights
 
-```
+```php
 use Opportify\Sdk\EmailInsights;
 
 $emailInsights = new EmailInsights("YOUR-API-KEY-HERE");
@@ -43,7 +43,7 @@ $result = $emailInsights->analyze($params);
 
 ### Calling IP Insights
 
-```
+```php
 use Opportify\Sdk\IpInsights;
 
 $ipInsights = new IpInsights("<YOUR-KEY-HERE>");
@@ -58,9 +58,32 @@ $result = $ipInsights->analyze($params);
 
 ### Enable Debug Mode
 
-```
+```php
 $clientInsights->setDebugMode(true);
 ```
+
+### Handling Error
+
+We strongly recommend that any usage of this SDK happens within a try-catch to properly handle any exceptions or errors.
+
+```php
+use OpenAPI\Client\ApiException;
+
+try {
+    
+    // Email or IP Insights usage...
+
+} catch (ApiException $e) {
+    throw new \Exception($e->getResponseBody());
+}
+```
+Below are the `ApiException` functions available:
+
+| Function | Type | Description |
+|----------|------|-------------|
+| `$e->getMessage();` | string | `"[403] Client error: POST https://api.opportify.ai/insights/v1/email/analyze resulted in a 403 Forbidden"` |
+| `$e->getResponseBody();` | string | `"{"errorMessage":"Your plan does not support AI features, please upgrade your plan or set enableAI as false.","errorCode":"INVALID_PLAN"}"` |
+| `$e->getCode();` | integer | `403` |
 
 ## About this package
 
