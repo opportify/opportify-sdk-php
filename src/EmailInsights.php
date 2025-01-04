@@ -14,7 +14,9 @@ class EmailInsights
     private EmailInsightsApi $apiInstance;
     private bool $debugMode = false;
     protected string $host = 'https://api.opportify.ai';
+    protected string $prefix = 'insights';
     protected string $version = 'v1';
+    protected string $finalUrl;
 
     /**
      * EmailInsights constructor.
@@ -37,8 +39,10 @@ class EmailInsights
     public function analyze(array $params): object
     {
         $params = $this->normalizeRequest($params);
+
+        $this->finalUrl = $this->host . '/' . $this->prefix . '/' . $this->version;
         
-        $this->config->setHost($this->host);
+        $this->config->setHost($this->finalUrl);
         
         $this->apiInstance = new EmailInsightsApi(
             new Client(["debug" => $this->debugMode]),

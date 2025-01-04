@@ -18,7 +18,9 @@ class IpInsights
     private IpInsightsApi $apiInstance;
     private bool $debugMode = false;
     protected string $host = 'https://api.opportify.com';
+    protected string $prefix = 'insights';
     protected string $version = 'v1';
+    protected string $finalUrl;
 
     /**
      * IpInsights constructor.
@@ -41,7 +43,9 @@ class IpInsights
     {
         $params = $this->normalizeRequest($params);
 
-        $this->config->setHost($this->host);
+        $this->finalUrl = $this->host . '/' . $this->prefix . '/' . $this->version;
+
+        $this->config->setHost($this->finalUrl);
 
         $this->apiInstance = new IpInsightsApi(
             new Client(["debug" => $this->debugMode]),
