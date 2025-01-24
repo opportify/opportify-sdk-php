@@ -62,11 +62,12 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         'email_type' => 'string',
         'is_format_valid' => 'bool',
         'email_correction' => 'string',
-        'is_deliverable' => 'bool',
+        'is_deliverable' => 'string',
         'is_catch_all' => 'bool',
+        'is_mailbox_full' => 'bool',
         'is_reachable' => 'bool',
         'email_dns' => '\OpenAPI\Client\Model\EmailDNS',
-        'risk_report' => '\OpenAPI\Client\Model\RiskReport'
+        'risk_report' => '\OpenAPI\Client\Model\RiskReportEmail'
     ];
 
     /**
@@ -84,6 +85,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         'email_correction' => null,
         'is_deliverable' => null,
         'is_catch_all' => null,
+        'is_mailbox_full' => null,
         'is_reachable' => null,
         'email_dns' => null,
         'risk_report' => null
@@ -102,6 +104,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         'email_correction' => false,
         'is_deliverable' => false,
         'is_catch_all' => false,
+        'is_mailbox_full' => false,
         'is_reachable' => false,
         'email_dns' => false,
         'risk_report' => false
@@ -200,6 +203,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         'email_correction' => 'emailCorrection',
         'is_deliverable' => 'isDeliverable',
         'is_catch_all' => 'isCatchAll',
+        'is_mailbox_full' => 'isMailboxFull',
         'is_reachable' => 'isReachable',
         'email_dns' => 'emailDNS',
         'risk_report' => 'riskReport'
@@ -218,6 +222,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         'email_correction' => 'setEmailCorrection',
         'is_deliverable' => 'setIsDeliverable',
         'is_catch_all' => 'setIsCatchAll',
+        'is_mailbox_full' => 'setIsMailboxFull',
         'is_reachable' => 'setIsReachable',
         'email_dns' => 'setEmailDns',
         'risk_report' => 'setRiskReport'
@@ -236,6 +241,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         'email_correction' => 'getEmailCorrection',
         'is_deliverable' => 'getIsDeliverable',
         'is_catch_all' => 'getIsCatchAll',
+        'is_mailbox_full' => 'getIsMailboxFull',
         'is_reachable' => 'getIsReachable',
         'email_dns' => 'getEmailDns',
         'risk_report' => 'getRiskReport'
@@ -305,6 +311,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('email_correction', $data ?? [], null);
         $this->setIfExists('is_deliverable', $data ?? [], null);
         $this->setIfExists('is_catch_all', $data ?? [], null);
+        $this->setIfExists('is_mailbox_full', $data ?? [], null);
         $this->setIfExists('is_reachable', $data ?? [], null);
         $this->setIfExists('email_dns', $data ?? [], null);
         $this->setIfExists('risk_report', $data ?? [], null);
@@ -357,6 +364,9 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
         }
         if ($this->container['is_catch_all'] === null) {
             $invalidProperties[] = "'is_catch_all' can't be null";
+        }
+        if ($this->container['is_mailbox_full'] === null) {
+            $invalidProperties[] = "'is_mailbox_full' can't be null";
         }
         if ($this->container['is_reachable'] === null) {
             $invalidProperties[] = "'is_reachable' can't be null";
@@ -449,7 +459,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets email_type
      *
-     * @param string $email_type Type of email address (e.g., free, disposable, corporate, unknown).
+     * @param string $email_type Type of email address (e.g., free, disposable, private, unknown).
      *
      * @return self
      */
@@ -520,7 +530,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets is_deliverable
      *
-     * @return bool
+     * @return string
      */
     public function getIsDeliverable()
     {
@@ -530,7 +540,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets is_deliverable
      *
-     * @param bool $is_deliverable Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability.
+     * @param string $is_deliverable Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification.
      *
      * @return self
      */
@@ -567,6 +577,33 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable is_catch_all cannot be null');
         }
         $this->container['is_catch_all'] = $is_catch_all;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_mailbox_full
+     *
+     * @return bool
+     */
+    public function getIsMailboxFull()
+    {
+        return $this->container['is_mailbox_full'];
+    }
+
+    /**
+     * Sets is_mailbox_full
+     *
+     * @param bool $is_mailbox_full Determines if the mailbox associated with the email is full, in association with isDeliverable field, it can give a reason why the email is not deliverable.
+     *
+     * @return self
+     */
+    public function setIsMailboxFull($is_mailbox_full)
+    {
+        if (is_null($is_mailbox_full)) {
+            throw new \InvalidArgumentException('non-nullable is_mailbox_full cannot be null');
+        }
+        $this->container['is_mailbox_full'] = $is_mailbox_full;
 
         return $this;
     }
@@ -628,7 +665,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets risk_report
      *
-     * @return \OpenAPI\Client\Model\RiskReport
+     * @return \OpenAPI\Client\Model\RiskReportEmail
      */
     public function getRiskReport()
     {
@@ -638,7 +675,7 @@ class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets risk_report
      *
-     * @param \OpenAPI\Client\Model\RiskReport $risk_report risk_report
+     * @param \OpenAPI\Client\Model\RiskReportEmail $risk_report risk_report
      *
      * @return self
      */
