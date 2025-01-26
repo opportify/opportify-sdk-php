@@ -34,7 +34,8 @@ docs/Model/MALFORMEDREQUEST.md
 docs/Model/MALFORMEDREQUEST1.md
 docs/Model/NOTFOUND.md
 docs/Model/Organization.md
-docs/Model/RiskReport.md
+docs/Model/RiskReportEmail.md
+docs/Model/RiskReportIp.md
 docs/Model/TechContact.md
 docs/Model/TrustedProvider.md
 docs/Model/Whois.md
@@ -74,7 +75,8 @@ lib/Model/MALFORMEDREQUEST1.php
 lib/Model/ModelInterface.php
 lib/Model/NOTFOUND.php
 lib/Model/Organization.php
-lib/Model/RiskReport.php
+lib/Model/RiskReportEmail.php
+lib/Model/RiskReportIp.php
 lib/Model/TechContact.php
 lib/Model/TrustedProvider.php
 lib/Model/Whois.php
@@ -111,7 +113,8 @@ test/Model/MALFORMEDREQUEST1Test.php
 test/Model/MALFORMEDREQUESTTest.php
 test/Model/NOTFOUNDTest.php
 test/Model/OrganizationTest.php
-test/Model/RiskReportTest.php
+test/Model/RiskReportEmailTest.php
+test/Model/RiskReportIpTest.php
 test/Model/TechContactTest.php
 test/Model/TrustedProviderTest.php
 test/Model/WhoisTest.php

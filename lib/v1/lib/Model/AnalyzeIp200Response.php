@@ -67,7 +67,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => '\OpenAPI\Client\Model\Whois',
         'trusted_provider' => '\OpenAPI\Client\Model\TrustedProvider',
         'blocklisted' => '\OpenAPI\Client\Model\BlockListed',
-        'risk_report' => '\OpenAPI\Client\Model\RiskReport'
+        'risk_report' => '\OpenAPI\Client\Model\RiskReportIp'
     ];
 
     /**
@@ -665,7 +665,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets risk_report
      *
-     * @return \OpenAPI\Client\Model\RiskReport
+     * @return \OpenAPI\Client\Model\RiskReportIp
      */
     public function getRiskReport()
     {
@@ -675,7 +675,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets risk_report
      *
-     * @param \OpenAPI\Client\Model\RiskReport $risk_report risk_report
+     * @param \OpenAPI\Client\Model\RiskReportIp $risk_report risk_report
      *
      * @return self
      */
