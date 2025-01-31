@@ -16,7 +16,7 @@ class IpInsights
     private ApiConfiguration $config;
     private IpInsightsApi $apiInstance;
     private bool $debugMode = false;
-    protected string $host = 'https://api.opportify.com';
+    protected string $host = 'https://api.opportify.ai';
     protected string $prefix = 'insights';
     protected string $version = 'v1';
     protected string $finalUrl;
