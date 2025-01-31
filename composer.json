@@ -2,6 +2,19 @@
     "name": "opportify/opportify-sdk-php",
     "description": "Opportify Insights PHP SDK",
     "type": "library",
+    "keywords": [
+        "php",
+        "opportify",
+        "sdk",
+        "api",
+        "client",
+        "email",
+        "ip",
+        "insights",
+        "validation",
+        "verification"
+    ],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Opportify\\Sdk\\": "src/",
