@@ -1,14 +1,12 @@
 <?php
-
 /**
  * AnalyzeIpRequest
  *
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 
@@ -30,70 +28,66 @@
 
 namespace OpenAPI\Client\Model;
 
-use ArrayAccess;
-use OpenAPI\Client\ObjectSerializer;
+use \ArrayAccess;
+use \OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeIpRequest Class Doc Comment
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
- *
  * @implements \ArrayAccess<string, mixed>
  */
-class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
+class AnalyzeIpRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
     /**
-     * The original name of the model.
-     *
-     * @var string
-     */
+      * The original name of the model.
+      *
+      * @var string
+      */
     protected static $openAPIModelName = 'analyzeIp_request';
 
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @var string[]
-     */
+      * Array of property to type mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
     protected static $openAPITypes = [
         'ip' => 'string',
-        'enable_ai' => 'bool',
+        'enable_ai' => 'bool'
     ];
 
     /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @var string[]
-     *
-     * @phpstan-var array<string, string|null>
-     *
-     * @psalm-var array<string, string|null>
-     */
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      * @phpstan-var array<string, string|null>
+      * @psalm-var array<string, string|null>
+      */
     protected static $openAPIFormats = [
         'ip' => null,
-        'enable_ai' => null,
+        'enable_ai' => null
     ];
 
     /**
-     * Array of nullable properties. Used for (de)serialization
-     *
-     * @var bool[]
-     */
+      * Array of nullable properties. Used for (de)serialization
+      *
+      * @var boolean[]
+      */
     protected static array $openAPINullables = [
         'ip' => false,
-        'enable_ai' => false,
+        'enable_ai' => false
     ];
 
     /**
-     * If a nullable field gets set to null, insert it here
-     *
-     * @var bool[]
-     */
+      * If a nullable field gets set to null, insert it here
+      *
+      * @var boolean[]
+      */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -118,6 +112,8 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Array of nullable properties
+     *
+     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -127,7 +123,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return bool[]
+     * @return boolean[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -137,7 +133,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param  bool[]  $openAPINullablesSetToNull
+     * @param boolean[] $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -146,6 +142,9 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Checks if a property is nullable
+     *
+     * @param string $property
+     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -154,6 +153,9 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Checks if a nullable property is set to null.
+     *
+     * @param string $property
+     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -168,7 +170,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
      */
     protected static $attributeMap = [
         'ip' => 'ip',
-        'enable_ai' => 'enableAI',
+        'enable_ai' => 'enableAI'
     ];
 
     /**
@@ -178,7 +180,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
      */
     protected static $setters = [
         'ip' => 'setIp',
-        'enable_ai' => 'setEnableAi',
+        'enable_ai' => 'setEnableAi'
     ];
 
     /**
@@ -188,7 +190,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
      */
     protected static $getters = [
         'ip' => 'getIp',
-        'enable_ai' => 'getEnableAi',
+        'enable_ai' => 'getEnableAi'
     ];
 
     /**
@@ -232,6 +234,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -242,22 +245,24 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Constructor
      *
-     * @param  mixed[]  $data  Associated array of property values
-     *                         initializing the model
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
-    public function __construct(?array $data = null)
+    public function __construct(array $data = null)
     {
         $this->setIfExists('ip', $data ?? [], null);
         $this->setIfExists('enable_ai', $data ?? [], null);
     }
 
     /**
-     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-     * $this->openAPINullablesSetToNull array
-     *
-     * @param  mixed  $defaultValue
-     */
+    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+    * $this->openAPINullablesSetToNull array
+    *
+    * @param string $variableName
+    * @param array  $fields
+    * @param mixed  $defaultValue
+    */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -279,7 +284,6 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
         if ($this->container['ip'] === null) {
             $invalidProperties[] = "'ip' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -294,6 +298,7 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets ip
      *
@@ -307,7 +312,8 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets ip
      *
-     * @param  string  $ip  The IPv4 or IPv6 address to analyze.
+     * @param string $ip The IPv4 or IPv6 address to analyze.
+     *
      * @return self
      */
     public function setIp($ip)
@@ -333,7 +339,8 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets enable_ai
      *
-     * @param  bool|null  $enable_ai  Enable AI-driven analysis for the IP address. Default is `false`.
+     * @param bool|null $enable_ai Enable AI-driven analysis for the IP address. Default is `false`.
+     *
      * @return self
      */
     public function setEnableAi($enable_ai)
@@ -345,11 +352,12 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
 
         return $this;
     }
-
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return boolean
      */
     public function offsetExists($offset): bool
     {
@@ -359,7 +367,8 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -371,8 +380,10 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets value based on offset.
      *
-     * @param  int|null  $offset  Offset
-     * @param  mixed  $value  Value to be set
+     * @param int|null $offset Offset
+     * @param mixed    $value  Value to be set
+     *
+     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -386,7 +397,9 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Unsets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -395,16 +408,15 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     *               of any type other than a resource.
+     * of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-        return ObjectSerializer::sanitizeForSerialization($this);
+       return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -430,3 +442,5 @@ class AnalyzeIpRequest implements \JsonSerializable, ArrayAccess, ModelInterface
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

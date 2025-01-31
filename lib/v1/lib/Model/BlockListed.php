@@ -1,14 +1,12 @@
 <?php
-
 /**
  * BlockListed
  *
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 
@@ -30,78 +28,73 @@
 
 namespace OpenAPI\Client\Model;
 
-use ArrayAccess;
-use OpenAPI\Client\ObjectSerializer;
+use \ArrayAccess;
+use \OpenAPI\Client\ObjectSerializer;
 
 /**
  * BlockListed Class Doc Comment
  *
  * @category Class
- *
  * @description ### Block Listed Details  The &#x60;BlockListed&#x60; object provides detailed information about whether an IP address is listed in known blocklists and related data.   ---  #### Key Highlights: - **Continuous Monitoring**: We constantly monitor and update blocklist sources to ensure the information is accurate and reflects the latest active reports. - **Expanding Coverage**: Our system incorporates a wide range of trusted sources, with continuous efforts to onboard additional blocklist data providers.  ---  ### Response Elements
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
- *
  * @implements \ArrayAccess<string, mixed>
  */
-class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
+class BlockListed implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
     /**
-     * The original name of the model.
-     *
-     * @var string
-     */
+      * The original name of the model.
+      *
+      * @var string
+      */
     protected static $openAPIModelName = 'BlockListed';
 
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @var string[]
-     */
+      * Array of property to type mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
     protected static $openAPITypes = [
         'is_block_listed' => 'bool',
         'sources' => 'int',
         'active_reports' => 'int',
-        'last_detected' => '\DateTime',
+        'last_detected' => '\DateTime'
     ];
 
     /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @var string[]
-     *
-     * @phpstan-var array<string, string|null>
-     *
-     * @psalm-var array<string, string|null>
-     */
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      * @phpstan-var array<string, string|null>
+      * @psalm-var array<string, string|null>
+      */
     protected static $openAPIFormats = [
         'is_block_listed' => null,
         'sources' => null,
         'active_reports' => null,
-        'last_detected' => 'date-time',
+        'last_detected' => 'date-time'
     ];
 
     /**
-     * Array of nullable properties. Used for (de)serialization
-     *
-     * @var bool[]
-     */
+      * Array of nullable properties. Used for (de)serialization
+      *
+      * @var boolean[]
+      */
     protected static array $openAPINullables = [
         'is_block_listed' => false,
         'sources' => false,
         'active_reports' => false,
-        'last_detected' => false,
+        'last_detected' => false
     ];
 
     /**
-     * If a nullable field gets set to null, insert it here
-     *
-     * @var bool[]
-     */
+      * If a nullable field gets set to null, insert it here
+      *
+      * @var boolean[]
+      */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -126,6 +119,8 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Array of nullable properties
+     *
+     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -135,7 +130,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return bool[]
+     * @return boolean[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -145,7 +140,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param  bool[]  $openAPINullablesSetToNull
+     * @param boolean[] $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -154,6 +149,9 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Checks if a property is nullable
+     *
+     * @param string $property
+     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -162,6 +160,9 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Checks if a nullable property is set to null.
+     *
+     * @param string $property
+     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -178,7 +179,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         'is_block_listed' => 'isBlockListed',
         'sources' => 'sources',
         'active_reports' => 'activeReports',
-        'last_detected' => 'lastDetected',
+        'last_detected' => 'lastDetected'
     ];
 
     /**
@@ -190,7 +191,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         'is_block_listed' => 'setIsBlockListed',
         'sources' => 'setSources',
         'active_reports' => 'setActiveReports',
-        'last_detected' => 'setLastDetected',
+        'last_detected' => 'setLastDetected'
     ];
 
     /**
@@ -202,7 +203,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         'is_block_listed' => 'getIsBlockListed',
         'sources' => 'getSources',
         'active_reports' => 'getActiveReports',
-        'last_detected' => 'getLastDetected',
+        'last_detected' => 'getLastDetected'
     ];
 
     /**
@@ -246,6 +247,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -256,10 +258,10 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Constructor
      *
-     * @param  mixed[]  $data  Associated array of property values
-     *                         initializing the model
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
-    public function __construct(?array $data = null)
+    public function __construct(array $data = null)
     {
         $this->setIfExists('is_block_listed', $data ?? [], null);
         $this->setIfExists('sources', $data ?? [], null);
@@ -268,12 +270,14 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     }
 
     /**
-     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-     * $this->openAPINullablesSetToNull array
-     *
-     * @param  mixed  $defaultValue
-     */
+    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+    * $this->openAPINullablesSetToNull array
+    *
+    * @param string $variableName
+    * @param array  $fields
+    * @param mixed  $defaultValue
+    */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -301,7 +305,6 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         if ($this->container['active_reports'] === null) {
             $invalidProperties[] = "'active_reports' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -316,6 +319,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets is_block_listed
      *
@@ -329,7 +333,8 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets is_block_listed
      *
-     * @param  bool  $is_block_listed  Indicates if the IP is blocklisted in some of the known blocklist sources.
+     * @param bool $is_block_listed Indicates if the IP is blocklisted in some of the known blocklist sources.
+     *
      * @return self
      */
     public function setIsBlockListed($is_block_listed)
@@ -355,7 +360,8 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets sources
      *
-     * @param  int  $sources  Number of blocklist sources.
+     * @param int $sources Number of blocklist sources.
+     *
      * @return self
      */
     public function setSources($sources)
@@ -381,7 +387,8 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets active_reports
      *
-     * @param  int  $active_reports  Number of blocklist active reports for the given IP address. We constantly monitor and update this value as new reports are detected or resolved.
+     * @param int $active_reports Number of blocklist active reports for the given IP address. We constantly monitor and update this value as new reports are detected or resolved.
+     *
      * @return self
      */
     public function setActiveReports($active_reports)
@@ -407,7 +414,8 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets last_detected
      *
-     * @param  \DateTime|null  $last_detected  Date and time of the last blocklist detection. ISO 8601 standard.
+     * @param \DateTime|null $last_detected Date and time of the last blocklist detection. ISO 8601 standard.
+     *
      * @return self
      */
     public function setLastDetected($last_detected)
@@ -419,11 +427,12 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
 
         return $this;
     }
-
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return boolean
      */
     public function offsetExists($offset): bool
     {
@@ -433,7 +442,8 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -445,8 +455,10 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets value based on offset.
      *
-     * @param  int|null  $offset  Offset
-     * @param  mixed  $value  Value to be set
+     * @param int|null $offset Offset
+     * @param mixed    $value  Value to be set
+     *
+     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -460,7 +472,9 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Unsets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -469,16 +483,15 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     *               of any type other than a resource.
+     * of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-        return ObjectSerializer::sanitizeForSerialization($this);
+       return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -504,3 +517,5 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

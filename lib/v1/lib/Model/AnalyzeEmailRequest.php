@@ -1,14 +1,12 @@
 <?php
-
 /**
  * AnalyzeEmailRequest
  *
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 
@@ -30,73 +28,69 @@
 
 namespace OpenAPI\Client\Model;
 
-use ArrayAccess;
-use OpenAPI\Client\ObjectSerializer;
+use \ArrayAccess;
+use \OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeEmailRequest Class Doc Comment
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
- *
  * @implements \ArrayAccess<string, mixed>
  */
-class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterface
+class AnalyzeEmailRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
     /**
-     * The original name of the model.
-     *
-     * @var string
-     */
+      * The original name of the model.
+      *
+      * @var string
+      */
     protected static $openAPIModelName = 'analyzeEmail_request';
 
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @var string[]
-     */
+      * Array of property to type mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
     protected static $openAPITypes = [
         'email' => 'string',
         'enable_ai' => 'bool',
-        'enable_auto_correction' => 'bool',
+        'enable_auto_correction' => 'bool'
     ];
 
     /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @var string[]
-     *
-     * @phpstan-var array<string, string|null>
-     *
-     * @psalm-var array<string, string|null>
-     */
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      * @phpstan-var array<string, string|null>
+      * @psalm-var array<string, string|null>
+      */
     protected static $openAPIFormats = [
         'email' => null,
         'enable_ai' => null,
-        'enable_auto_correction' => null,
+        'enable_auto_correction' => null
     ];
 
     /**
-     * Array of nullable properties. Used for (de)serialization
-     *
-     * @var bool[]
-     */
+      * Array of nullable properties. Used for (de)serialization
+      *
+      * @var boolean[]
+      */
     protected static array $openAPINullables = [
         'email' => false,
         'enable_ai' => false,
-        'enable_auto_correction' => false,
+        'enable_auto_correction' => false
     ];
 
     /**
-     * If a nullable field gets set to null, insert it here
-     *
-     * @var bool[]
-     */
+      * If a nullable field gets set to null, insert it here
+      *
+      * @var boolean[]
+      */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -121,6 +115,8 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
 
     /**
      * Array of nullable properties
+     *
+     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -130,7 +126,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return bool[]
+     * @return boolean[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -140,7 +136,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param  bool[]  $openAPINullablesSetToNull
+     * @param boolean[] $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -149,6 +145,9 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
 
     /**
      * Checks if a property is nullable
+     *
+     * @param string $property
+     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -157,6 +156,9 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
 
     /**
      * Checks if a nullable property is set to null.
+     *
+     * @param string $property
+     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -172,7 +174,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     protected static $attributeMap = [
         'email' => 'email',
         'enable_ai' => 'enableAI',
-        'enable_auto_correction' => 'enableAutoCorrection',
+        'enable_auto_correction' => 'enableAutoCorrection'
     ];
 
     /**
@@ -183,7 +185,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     protected static $setters = [
         'email' => 'setEmail',
         'enable_ai' => 'setEnableAi',
-        'enable_auto_correction' => 'setEnableAutoCorrection',
+        'enable_auto_correction' => 'setEnableAutoCorrection'
     ];
 
     /**
@@ -194,7 +196,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     protected static $getters = [
         'email' => 'getEmail',
         'enable_ai' => 'getEnableAi',
-        'enable_auto_correction' => 'getEnableAutoCorrection',
+        'enable_auto_correction' => 'getEnableAutoCorrection'
     ];
 
     /**
@@ -238,6 +240,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -248,10 +251,10 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Constructor
      *
-     * @param  mixed[]  $data  Associated array of property values
-     *                         initializing the model
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
-    public function __construct(?array $data = null)
+    public function __construct(array $data = null)
     {
         $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('enable_ai', $data ?? [], null);
@@ -259,12 +262,14 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     }
 
     /**
-     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-     * $this->openAPINullablesSetToNull array
-     *
-     * @param  mixed  $defaultValue
-     */
+    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+    * $this->openAPINullablesSetToNull array
+    *
+    * @param string $variableName
+    * @param array  $fields
+    * @param mixed  $defaultValue
+    */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -304,6 +309,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets email
      *
@@ -317,7 +323,8 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets email
      *
-     * @param  string  $email  The email address to validate.
+     * @param string $email The email address to validate.
+     *
      * @return self
      */
     public function setEmail($email)
@@ -347,7 +354,8 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets enable_ai
      *
-     * @param  bool|null  $enable_ai  Enable AI-based analysis for insights.
+     * @param bool|null $enable_ai Enable AI-based analysis for insights.
+     *
      * @return self
      */
     public function setEnableAi($enable_ai)
@@ -373,7 +381,8 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets enable_auto_correction
      *
-     * @param  bool|null  $enable_auto_correction  Suggest possible corrections for misspelled emails.
+     * @param bool|null $enable_auto_correction Suggest possible corrections for misspelled emails.
+     *
      * @return self
      */
     public function setEnableAutoCorrection($enable_auto_correction)
@@ -385,11 +394,12 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
 
         return $this;
     }
-
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return boolean
      */
     public function offsetExists($offset): bool
     {
@@ -399,7 +409,8 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Gets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -411,8 +422,10 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets value based on offset.
      *
-     * @param  int|null  $offset  Offset
-     * @param  mixed  $value  Value to be set
+     * @param int|null $offset Offset
+     * @param mixed    $value  Value to be set
+     *
+     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -426,7 +439,9 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Unsets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -435,16 +450,15 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     *               of any type other than a resource.
+     * of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-        return ObjectSerializer::sanitizeForSerialization($this);
+       return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -470,3 +484,5 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+
