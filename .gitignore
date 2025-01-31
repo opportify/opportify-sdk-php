@@ -13,7 +13,6 @@ Thumbs.db
 *.log
 
 # Ignore PHPUnit test results
-phpunit.xml
 phpunit.xml.dist
 .phpunit.result.cache
 
