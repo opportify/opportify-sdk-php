@@ -9,13 +9,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
-use Mockery;
+use Mockery as m;
 
 class IPInsightsApiTest extends TestCase
 {
     protected function tearDown(): void
     {
-        Mockery::close(); // Ensures all expectations are verified
+        m::close(); // Ensures all expectations are verified
     }
 
     private function createMockConfig()

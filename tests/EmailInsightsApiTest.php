@@ -7,18 +7,18 @@ use OpenAPI\Client\HeaderSelector;
 use OpenAPI\Client\Model\AnalyzeEmailRequest;
 use OpenAPI\Client\ApiException;
 use GuzzleHttp\ClientInterface;
-use Mockery;
+use Mockery as m;
 
 class EmailInsightsApiTest extends TestCase
 {
     protected function tearDown(): void
     {
-        Mockery::close();
+        m::close();
     }
 
     public function testAnalyzeEmailSuccess()
     {
-        $mockClient = Mockery::mock(ClientInterface::class);
+        $mockClient = Mockery::mock(\GuzzleHttp\ClientInterface::class);
 
         // Define a properly formatted API JSON response
         $mockResponseData = json_encode([
@@ -51,14 +51,14 @@ class EmailInsightsApiTest extends TestCase
             ->andReturn($mockResponse);
 
         // Mock Configuration and HeaderSelector
-        $config = Mockery::mock(Configuration::class);
+        $config = Mockery::mock(\OpenAPI\Client\Configuration::class);
         $config->shouldReceive('getApiKeyWithPrefix')->andReturn('fake_api_key');
         $config->shouldReceive('getHost')->andReturn('https://api.opportify.ai');
         $config->shouldReceive('getUserAgent')->andReturn('MockUserAgent');
         $config->shouldReceive('getDebug')->andReturn(false);
         $config->shouldReceive('getDebugFile')->andReturn('/dev/null');
 
-        $headerSelector = Mockery::mock(HeaderSelector::class);
+        $headerSelector = Mockery::mock(\OpenAPI\Client\HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
             'Content-Type' => 'application/json'
         ]);

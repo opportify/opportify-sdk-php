@@ -3,16 +3,13 @@
 use PHPUnit\Framework\TestCase;
 use Opportify\Sdk\EmailInsights;
 use OpenAPI\Client\Api\EmailInsightsApi;
-use OpenAPI\Client\Model\AnalyzeEmailRequest;
-use OpenAPI\Client\Configuration as ApiConfiguration;
-use GuzzleHttp\Client;
-use Mockery;
+use Mockery as m;
 
 class EmailInsightsTest extends TestCase
 {
     protected function tearDown(): void
     {
-        Mockery::close(); // Ensures all expectations are verified
+        m::close(); // Ensures all expectations are verified
     }
 
     public function testSetHost()
