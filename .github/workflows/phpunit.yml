@@ -1,45 +1,41 @@
 name: PHPUnit Tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 permissions:
-  contents: read  
+    contents: read  
 
 jobs:
-  tests:
-    name: PHPUnit on PHP ${{ matrix.php-version }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        php-version: [8.0, 8.1, 8.2, 8.3]
+    tests:
+        name: PHPUnit on PHP ${{ matrix.php-version }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: true
+            matrix:
+                php-version: [8.0, 8.1, 8.2, 8.3]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
 
-      - name: Set up PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@9e72090525849c5e82e596468b86eb55e9cc5401
-        with:
-          php-version: ${{ matrix.php-version }}
-          coverage: none # Disable coverage for faster builds
-          tools: composer
+          - name: Set up PHP ${{ matrix.php-version }}
+            uses: shivammathur/setup-php@v2
+            with:
+              php-version: ${{ matrix.php-version }}
+              coverage: none 
+              tools: composer
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
+          - name: Validate composer.json and composer.lock
+            run: composer validate --strict
 
-      - name: Install dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+          - name: Install dependencies
+            run: composer install --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Run PHPUnit Tests (All Files)
-        uses: php-actions/phpunit@8b81f7e713aba7ca15632bad78c56635ff327104
-        with:
-          bootstrap: vendor/autoload.php
-          configuration: phpunit.xml
-          args: --testdox --colors=always tests/
+          - name: Run PHP Unit tests
+            run: vendor/bin/phpunit --testdox --colors=always tests/   
