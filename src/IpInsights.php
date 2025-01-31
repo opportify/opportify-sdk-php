@@ -2,28 +2,32 @@
 
 namespace Opportify\Sdk;
 
-use OpenAPI\Client\Configuration as ApiConfiguration;
-use OpenAPI\Client\Api\IpInsightsApi;
-use OpenAPI\Client\Model\AnalyzeIpRequest;
 use GuzzleHttp\Client;
+use OpenAPI\Client\Api\IpInsightsApi;
+use OpenAPI\Client\Configuration as ApiConfiguration;
+use OpenAPI\Client\Model\AnalyzeIpRequest;
 
 /**
  * Class IpInsights
- * @package Opportify\Sdk
  */
 class IpInsights
 {
     private ApiConfiguration $config;
+
     private IpInsightsApi $apiInstance;
+
     private bool $debugMode = false;
+
     protected string $host = 'https://api.opportify.com';
+
     protected string $prefix = 'insights';
+
     protected string $version = 'v1';
+
     protected string $finalUrl;
 
     /**
      * IpInsights constructor.
-     * @param string $apiKey
      */
     public function __construct(string $apiKey)
     {
@@ -34,26 +38,25 @@ class IpInsights
     /**
      * Analyzes the IP based on the provided parameters.
      *
-     * @param array $params
-     * @return object
      * @throws \Exception
      */
     public function analyze(array $params): object
     {
         $params = $this->normalizeRequest($params);
 
-        $this->finalUrl = $this->host . '/' . $this->prefix . '/' . $this->version;
+        $this->finalUrl = $this->host.'/'.$this->prefix.'/'.$this->version;
 
         $this->config->setHost($this->finalUrl);
 
         $this->apiInstance = new IpInsightsApi(
-            new Client(["debug" => $this->debugMode]),
+            new Client(['debug' => $this->debugMode]),
             $this->config
         );
 
         $analyzeIpRequest = new AnalyzeIpRequest($params);
 
         $result = $this->apiInstance->analyzeIp($analyzeIpRequest);
+
         return $result->jsonSerialize();
 
     }
@@ -61,44 +64,41 @@ class IpInsights
     /**
      * Sets the host.
      *
-     * @param string $host
      * @return $this
      */
     public function setHost(string $host): self
     {
         $this->host = $host;
+
         return $this;
     }
 
     /**
      * Sets the version.
      *
-     * @param string $version
      * @return $this
      */
     public function setVersion(string $version): self
     {
         $this->version = $version;
+
         return $this;
     }
 
     /**
      * Sets the debug mode.
      *
-     * @param bool $debugMode
      * @return $this
      */
     public function setDebugMode(bool $debugMode): self
     {
         $this->debugMode = $debugMode;
+
         return $this;
     }
 
     /**
      * Normalizes the request parameters.
-     *
-     * @param array $params
-     * @return array
      */
     private function normalizeRequest(array $params): array
     {

@@ -5,8 +5,9 @@
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -44,8 +45,9 @@ use OpenAPI\Client\ObjectSerializer;
  * EmailInsightsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 class EmailInsightsApi
@@ -70,7 +72,7 @@ class EmailInsightsApi
      */
     protected $hostIndex;
 
-    /** @var string[] $contentTypes **/
+    /** @var string[] * */
     public const contentTypes = [
         'analyzeEmail' => [
             'application/json',
@@ -78,27 +80,24 @@ class EmailInsightsApi
     ];
 
     /**
-     * @param ClientInterface $client
-     * @param Configuration   $config
-     * @param HeaderSelector  $selector
-     * @param int             $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
+     * @param  int  $hostIndex  (Optional) host index to select the list of hosts if defined in the OpenAPI spec
      */
     public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null,
+        ?ClientInterface $client = null,
+        ?Configuration $config = null,
+        ?HeaderSelector $selector = null,
         $hostIndex = 0
     ) {
-        $this->client = $client ?: new Client();
+        $this->client = $client ?: new Client;
         $this->config = $config ?: Configuration::getDefaultConfiguration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
+        $this->headerSelector = $selector ?: new HeaderSelector;
         $this->hostIndex = $hostIndex;
     }
 
     /**
      * Set the host index
      *
-     * @param int $hostIndex Host index (required)
+     * @param  int  $hostIndex  Host index (required)
      */
     public function setHostIndex($hostIndex): void
     {
@@ -128,16 +127,17 @@ class EmailInsightsApi
      *
      * Analyze Email
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest $analyze_email_request analyze_email_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest  $analyze_email_request  analyze_email_request (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @return \OpenAPI\Client\Model\AnalyzeEmail200Response|\OpenAPI\Client\Model\AnalyzeEmail400Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\AnalyzeEmail200Response|\OpenAPI\Client\Model\AnalyzeEmail400Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
      */
     public function analyzeEmail($analyze_email_request, string $contentType = self::contentTypes['analyzeEmail'][0])
     {
-        list($response) = $this->analyzeEmailWithHttpInfo($analyze_email_request, $contentType);
+        [$response] = $this->analyzeEmailWithHttpInfo($analyze_email_request, $contentType);
+
         return $response;
     }
 
@@ -146,12 +146,12 @@ class EmailInsightsApi
      *
      * Analyze Email
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest $analyze_email_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest  $analyze_email_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @return array of \OpenAPI\Client\Model\AnalyzeEmail200Response|\OpenAPI\Client\Model\AnalyzeEmail400Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\AnalyzeEmail200Response|\OpenAPI\Client\Model\AnalyzeEmail400Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function analyzeEmailWithHttpInfo($analyze_email_request, string $contentType = self::contentTypes['analyzeEmail'][0])
     {
@@ -179,11 +179,10 @@ class EmailInsightsApi
 
             $statusCode = $response->getStatusCode();
 
-
             switch ($statusCode) {
                 case 200:
                     if ('\OpenAPI\Client\Model\AnalyzeEmail200Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeEmail200Response' !== 'string') {
@@ -206,11 +205,11 @@ class EmailInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeEmail200Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 400:
                     if ('\OpenAPI\Client\Model\AnalyzeEmail400Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeEmail400Response' !== 'string') {
@@ -233,11 +232,11 @@ class EmailInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeEmail400Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 403:
                     if ('\OpenAPI\Client\Model\AnalyzeEmail403Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeEmail403Response' !== 'string') {
@@ -260,11 +259,11 @@ class EmailInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeEmail403Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 500:
                     if ('\OpenAPI\Client\Model\AnalyzeEmail500Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeEmail500Response' !== 'string') {
@@ -287,7 +286,7 @@ class EmailInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeEmail500Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
             }
 
@@ -306,7 +305,7 @@ class EmailInsightsApi
 
             $returnType = '\OpenAPI\Client\Model\AnalyzeEmail200Response';
             if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
+                $content = $response->getBody(); // stream goes to serializer
             } else {
                 $content = (string) $response->getBody();
                 if ($returnType !== 'string') {
@@ -329,7 +328,7 @@ class EmailInsightsApi
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
-                $response->getHeaders()
+                $response->getHeaders(),
             ];
 
         } catch (ApiException $e) {
@@ -376,11 +375,11 @@ class EmailInsightsApi
      *
      * Analyze Email
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest $analyze_email_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest  $analyze_email_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @return \GuzzleHttp\Promise\PromiseInterface
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function analyzeEmailAsync($analyze_email_request, string $contentType = self::contentTypes['analyzeEmail'][0])
     {
@@ -397,11 +396,11 @@ class EmailInsightsApi
      *
      * Analyze Email
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest $analyze_email_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest  $analyze_email_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @return \GuzzleHttp\Promise\PromiseInterface
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function analyzeEmailAsyncWithHttpInfo($analyze_email_request, string $contentType = self::contentTypes['analyzeEmail'][0])
     {
@@ -413,7 +412,7 @@ class EmailInsightsApi
             ->then(
                 function ($response) use ($returnType) {
                     if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ($returnType !== 'string') {
@@ -424,7 +423,7 @@ class EmailInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 },
                 function ($exception) {
@@ -447,11 +446,11 @@ class EmailInsightsApi
     /**
      * Create request for operation 'analyzeEmail'
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest $analyze_email_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeEmailRequest  $analyze_email_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeEmail'] to see the possible values for this operation
+     * @return \GuzzleHttp\Psr7\Request
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
      */
     public function analyzeEmailRequest($analyze_email_request, string $contentType = self::contentTypes['analyzeEmail'][0])
     {
@@ -463,7 +462,6 @@ class EmailInsightsApi
             );
         }
 
-
         $resourcePath = '/email/analyze';
         $formParams = [];
         $queryParams = [];
@@ -471,12 +469,8 @@ class EmailInsightsApi
         $httpBody = '';
         $multipart = false;
 
-
-
-
-
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json'],
             $contentType,
             $multipart
         );
@@ -484,7 +478,7 @@ class EmailInsightsApi
         // for model (json/xml)
         if (isset($analyze_email_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
+                // if Content-Type contains "application/json", json_encode the body
                 $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($analyze_email_request));
             } else {
                 $httpBody = $analyze_email_request;
@@ -497,7 +491,7 @@ class EmailInsightsApi
                     foreach ($formParamValueItems as $formParamValueItem) {
                         $multipartContents[] = [
                             'name' => $formParamName,
-                            'contents' => $formParamValueItem
+                            'contents' => $formParamValueItem,
                         ];
                     }
                 }
@@ -505,7 +499,7 @@ class EmailInsightsApi
                 $httpBody = new MultipartStream($multipartContents);
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
+                // if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
@@ -532,9 +526,10 @@ class EmailInsightsApi
 
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
+
         return new Request(
             'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $operationHost.$resourcePath.($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -543,8 +538,9 @@ class EmailInsightsApi
     /**
      * Create http client option
      *
-     * @throws \RuntimeException on file opening failure
      * @return array of http client options
+     *
+     * @throws \RuntimeException on file opening failure
      */
     protected function createHttpClientOption()
     {
@@ -552,7 +548,7 @@ class EmailInsightsApi
         if ($this->config->getDebug()) {
             $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
             if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+                throw new \RuntimeException('Failed to open the debug file: '.$this->config->getDebugFile());
             }
         }
 

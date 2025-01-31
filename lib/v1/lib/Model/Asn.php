@@ -6,8 +6,9 @@
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -36,66 +37,71 @@ use OpenAPI\Client\ObjectSerializer;
  * Asn Class Doc Comment
  *
  * @category Class
+ *
  * @description Autonomous System Number details.
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
+class Asn implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
+     * The original name of the model.
+     *
+     * @var string
+     */
     protected static $openAPIModelName = 'Asn';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
         'asn_id' => 'string',
         'as_name' => 'string',
         'descr' => 'string[]',
-        'email' => 'string[]'
+        'email' => 'string[]',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
         'asn_id' => null,
         'as_name' => null,
         'descr' => null,
-        'email' => null
+        'email' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
         'asn_id' => false,
         'as_name' => false,
         'descr' => false,
-        'email' => false
+        'email' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -120,8 +126,6 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -131,7 +135,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -141,7 +145,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -150,9 +154,6 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -161,9 +162,6 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -180,7 +178,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
         'asn_id' => 'asnId',
         'as_name' => 'asName',
         'descr' => 'descr',
-        'email' => 'email'
+        'email' => 'email',
     ];
 
     /**
@@ -192,7 +190,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
         'asn_id' => 'setAsnId',
         'as_name' => 'setAsName',
         'descr' => 'setDescr',
-        'email' => 'setEmail'
+        'email' => 'setEmail',
     ];
 
     /**
@@ -204,7 +202,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
         'asn_id' => 'getAsnId',
         'as_name' => 'getAsName',
         'descr' => 'getDescr',
-        'email' => 'getEmail'
+        'email' => 'getEmail',
     ];
 
     /**
@@ -248,7 +246,6 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -259,10 +256,10 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Constructor
      *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]  $data  Associated array of property values
+     *                         initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         $this->setIfExists('asn_id', $data ?? [], null);
         $this->setIfExists('as_name', $data ?? [], null);
@@ -271,14 +268,12 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -311,7 +306,6 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets asn_id
      *
@@ -325,8 +319,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets asn_id
      *
-     * @param string|null $asn_id ASN identifier.
-     *
+     * @param  string|null  $asn_id  ASN identifier.
      * @return self
      */
     public function setAsnId($asn_id)
@@ -352,8 +345,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets as_name
      *
-     * @param string|null $as_name ASN name.
-     *
+     * @param  string|null  $as_name  ASN name.
      * @return self
      */
     public function setAsName($as_name)
@@ -379,8 +371,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets descr
      *
-     * @param string[]|null $descr ASN description. It might return different values based on the data source. Some provide ownership, address, others provide a more abstract description. Our system tries to sanitize removing visual blocks special characters (+++, ---, ...).
-     *
+     * @param  string[]|null  $descr  ASN description. It might return different values based on the data source. Some provide ownership, address, others provide a more abstract description. Our system tries to sanitize removing visual blocks special characters (+++, ---, ...).
      * @return self
      */
     public function setDescr($descr)
@@ -406,8 +397,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets email
      *
-     * @param string[]|null $email Previously sanitized and validated contact email addresses always in lower case.
-     *
+     * @param  string[]|null  $email  Previously sanitized and validated contact email addresses always in lower case.
      * @return self
      */
     public function setEmail($email)
@@ -419,12 +409,11 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $this;
     }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -434,8 +423,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -447,10 +435,8 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -464,9 +450,7 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -475,10 +459,11 @@ class Asn implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()

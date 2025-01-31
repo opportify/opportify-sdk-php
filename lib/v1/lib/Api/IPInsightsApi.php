@@ -5,8 +5,9 @@
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -44,8 +45,9 @@ use OpenAPI\Client\ObjectSerializer;
  * IPInsightsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 class IPInsightsApi
@@ -70,7 +72,7 @@ class IPInsightsApi
      */
     protected $hostIndex;
 
-    /** @var string[] $contentTypes **/
+    /** @var string[] * */
     public const contentTypes = [
         'analyzeIp' => [
             'application/json',
@@ -78,27 +80,24 @@ class IPInsightsApi
     ];
 
     /**
-     * @param ClientInterface $client
-     * @param Configuration   $config
-     * @param HeaderSelector  $selector
-     * @param int             $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
+     * @param  int  $hostIndex  (Optional) host index to select the list of hosts if defined in the OpenAPI spec
      */
     public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null,
+        ?ClientInterface $client = null,
+        ?Configuration $config = null,
+        ?HeaderSelector $selector = null,
         $hostIndex = 0
     ) {
-        $this->client = $client ?: new Client();
+        $this->client = $client ?: new Client;
         $this->config = $config ?: Configuration::getDefaultConfiguration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
+        $this->headerSelector = $selector ?: new HeaderSelector;
         $this->hostIndex = $hostIndex;
     }
 
     /**
      * Set the host index
      *
-     * @param int $hostIndex Host index (required)
+     * @param  int  $hostIndex  Host index (required)
      */
     public function setHostIndex($hostIndex): void
     {
@@ -128,16 +127,17 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest $analyze_ip_request analyze_ip_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  analyze_ip_request (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @return \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\AnalyzeIp404Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeIp500Response
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\AnalyzeIp404Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeIp500Response
      */
     public function analyzeIp($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
     {
-        list($response) = $this->analyzeIpWithHttpInfo($analyze_ip_request, $contentType);
+        [$response] = $this->analyzeIpWithHttpInfo($analyze_ip_request, $contentType);
+
         return $response;
     }
 
@@ -146,12 +146,12 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest $analyze_ip_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @return array of \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\AnalyzeIp404Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeIp500Response, HTTP status code, HTTP response headers (array of strings)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\AnalyzeIp404Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeIp500Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function analyzeIpWithHttpInfo($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
     {
@@ -179,11 +179,10 @@ class IPInsightsApi
 
             $statusCode = $response->getStatusCode();
 
-
             switch ($statusCode) {
                 case 200:
                     if ('\OpenAPI\Client\Model\AnalyzeIp200Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeIp200Response' !== 'string') {
@@ -206,11 +205,11 @@ class IPInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeIp200Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 400:
                     if ('\OpenAPI\Client\Model\AnalyzeIp400Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeIp400Response' !== 'string') {
@@ -233,11 +232,11 @@ class IPInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeIp400Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 404:
                     if ('\OpenAPI\Client\Model\AnalyzeIp404Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeIp404Response' !== 'string') {
@@ -260,11 +259,11 @@ class IPInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeIp404Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 403:
                     if ('\OpenAPI\Client\Model\AnalyzeEmail403Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeEmail403Response' !== 'string') {
@@ -287,11 +286,11 @@ class IPInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeEmail403Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 case 500:
                     if ('\OpenAPI\Client\Model\AnalyzeIp500Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ('\OpenAPI\Client\Model\AnalyzeIp500Response' !== 'string') {
@@ -314,7 +313,7 @@ class IPInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeIp500Response', []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
             }
 
@@ -333,7 +332,7 @@ class IPInsightsApi
 
             $returnType = '\OpenAPI\Client\Model\AnalyzeIp200Response';
             if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
+                $content = $response->getBody(); // stream goes to serializer
             } else {
                 $content = (string) $response->getBody();
                 if ($returnType !== 'string') {
@@ -356,7 +355,7 @@ class IPInsightsApi
             return [
                 ObjectSerializer::deserialize($content, $returnType, []),
                 $response->getStatusCode(),
-                $response->getHeaders()
+                $response->getHeaders(),
             ];
 
         } catch (ApiException $e) {
@@ -411,11 +410,11 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest $analyze_ip_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @return \GuzzleHttp\Promise\PromiseInterface
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function analyzeIpAsync($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
     {
@@ -432,11 +431,11 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest $analyze_ip_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @return \GuzzleHttp\Promise\PromiseInterface
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function analyzeIpAsyncWithHttpInfo($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
     {
@@ -448,7 +447,7 @@ class IPInsightsApi
             ->then(
                 function ($response) use ($returnType) {
                     if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
+                        $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                         if ($returnType !== 'string') {
@@ -459,7 +458,7 @@ class IPInsightsApi
                     return [
                         ObjectSerializer::deserialize($content, $returnType, []),
                         $response->getStatusCode(),
-                        $response->getHeaders()
+                        $response->getHeaders(),
                     ];
                 },
                 function ($exception) {
@@ -482,11 +481,11 @@ class IPInsightsApi
     /**
      * Create request for operation 'analyzeIp'
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest $analyze_ip_request (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
+     * @return \GuzzleHttp\Psr7\Request
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
      */
     public function analyzeIpRequest($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
     {
@@ -498,7 +497,6 @@ class IPInsightsApi
             );
         }
 
-
         $resourcePath = '/ip/analyze';
         $formParams = [];
         $queryParams = [];
@@ -506,12 +504,8 @@ class IPInsightsApi
         $httpBody = '';
         $multipart = false;
 
-
-
-
-
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json'],
             $contentType,
             $multipart
         );
@@ -519,7 +513,7 @@ class IPInsightsApi
         // for model (json/xml)
         if (isset($analyze_ip_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
+                // if Content-Type contains "application/json", json_encode the body
                 $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($analyze_ip_request));
             } else {
                 $httpBody = $analyze_ip_request;
@@ -532,7 +526,7 @@ class IPInsightsApi
                     foreach ($formParamValueItems as $formParamValueItem) {
                         $multipartContents[] = [
                             'name' => $formParamName,
-                            'contents' => $formParamValueItem
+                            'contents' => $formParamValueItem,
                         ];
                     }
                 }
@@ -540,7 +534,7 @@ class IPInsightsApi
                 $httpBody = new MultipartStream($multipartContents);
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
+                // if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
@@ -567,9 +561,10 @@ class IPInsightsApi
 
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
+
         return new Request(
             'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $operationHost.$resourcePath.($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -578,8 +573,9 @@ class IPInsightsApi
     /**
      * Create http client option
      *
-     * @throws \RuntimeException on file opening failure
      * @return array of http client options
+     *
+     * @throws \RuntimeException on file opening failure
      */
     protected function createHttpClientOption()
     {
@@ -587,7 +583,7 @@ class IPInsightsApi
         if ($this->config->getDebug()) {
             $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
             if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+                throw new \RuntimeException('Failed to open the debug file: '.$this->config->getDebugFile());
             }
         }
 

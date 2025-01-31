@@ -6,8 +6,9 @@
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -36,27 +37,29 @@ use OpenAPI\Client\ObjectSerializer;
  * AnalyzeIp200Response Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializable
+class AnalyzeIp200Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
+     * The original name of the model.
+     *
+     * @var string
+     */
     protected static $openAPIModelName = 'analyzeIp_200_response';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
         'ip_address' => 'string',
         'ip_address_number' => 'int',
@@ -68,16 +71,18 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => '\OpenAPI\Client\Model\Whois',
         'trusted_provider' => '\OpenAPI\Client\Model\TrustedProvider',
         'blocklisted' => '\OpenAPI\Client\Model\BlockListed',
-        'risk_report' => '\OpenAPI\Client\Model\RiskReportIp'
+        'risk_report' => '\OpenAPI\Client\Model\RiskReportIp',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
         'ip_address' => null,
         'ip_address_number' => null,
@@ -89,14 +94,14 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => null,
         'trusted_provider' => null,
         'blocklisted' => null,
-        'risk_report' => null
+        'risk_report' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
         'ip_address' => false,
         'ip_address_number' => false,
@@ -108,14 +113,14 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => false,
         'trusted_provider' => false,
         'blocklisted' => false,
-        'risk_report' => false
+        'risk_report' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -140,8 +145,6 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -151,7 +154,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -161,7 +164,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -170,9 +173,6 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -181,9 +181,6 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -207,7 +204,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => 'whois',
         'trusted_provider' => 'trustedProvider',
         'blocklisted' => 'blocklisted',
-        'risk_report' => 'riskReport'
+        'risk_report' => 'riskReport',
     ];
 
     /**
@@ -226,7 +223,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => 'setWhois',
         'trusted_provider' => 'setTrustedProvider',
         'blocklisted' => 'setBlocklisted',
-        'risk_report' => 'setRiskReport'
+        'risk_report' => 'setRiskReport',
     ];
 
     /**
@@ -245,7 +242,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         'whois' => 'getWhois',
         'trusted_provider' => 'getTrustedProvider',
         'blocklisted' => 'getBlocklisted',
-        'risk_report' => 'getRiskReport'
+        'risk_report' => 'getRiskReport',
     ];
 
     /**
@@ -289,7 +286,6 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -300,10 +296,10 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Constructor
      *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]  $data  Associated array of property values
+     *                         initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         $this->setIfExists('ip_address', $data ?? [], null);
         $this->setIfExists('ip_address_number', $data ?? [], null);
@@ -319,14 +315,12 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -378,6 +372,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         if ($this->container['risk_report'] === null) {
             $invalidProperties[] = "'risk_report' can't be null";
         }
+
         return $invalidProperties;
     }
 
@@ -392,7 +387,6 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets ip_address
      *
@@ -406,8 +400,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets ip_address
      *
-     * @param string $ip_address The analyzed IP address.
-     *
+     * @param  string  $ip_address  The analyzed IP address.
      * @return self
      */
     public function setIpAddress($ip_address)
@@ -433,8 +426,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets ip_address_number
      *
-     * @param int $ip_address_number Numeric representation of the IP address.
-     *
+     * @param  int  $ip_address_number  Numeric representation of the IP address.
      * @return self
      */
     public function setIpAddressNumber($ip_address_number)
@@ -460,8 +452,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets ip_type
      *
-     * @param string $ip_type Type of the IP address (IPv4 or IPv6).
-     *
+     * @param  string  $ip_type  Type of the IP address (IPv4 or IPv6).
      * @return self
      */
     public function setIpType($ip_type)
@@ -487,8 +478,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets ip_cidr
      *
-     * @param string $ip_cidr CIDR notation of the IP address.
-     *
+     * @param  string  $ip_cidr  CIDR notation of the IP address.
      * @return self
      */
     public function setIpCidr($ip_cidr)
@@ -514,8 +504,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets connection_type
      *
-     * @param string $connection_type The **connectionType** element provides information about the type of connection associated with a given IP address. Our system employs a **dynamic and evolving approach**, leveraging multiple data points to identify the connection type as accurately as possible.  - **wired**: A traditional wired connection (e.g., DSL, fiber, cable). - **mobile**: A mobile network connection (e.g., 4G, 5G). - **enterprise**: A connection from a known large business or corporate network. - **satellite**: A satellite internet connection. - **vpn**: A connection routed through a Virtual Private Network. - **cloud-provider**: A connection from a cloud hosting provider (e.g., AWS, Azure). - **open-proxy**: A connection using an open or public proxy. - **tor**: A connection routed through the Tor network.
-     *
+     * @param  string  $connection_type  The **connectionType** element provides information about the type of connection associated with a given IP address. Our system employs a **dynamic and evolving approach**, leveraging multiple data points to identify the connection type as accurately as possible.  - **wired**: A traditional wired connection (e.g., DSL, fiber, cable). - **mobile**: A mobile network connection (e.g., 4G, 5G). - **enterprise**: A connection from a known large business or corporate network. - **satellite**: A satellite internet connection. - **vpn**: A connection routed through a Virtual Private Network. - **cloud-provider**: A connection from a cloud hosting provider (e.g., AWS, Azure). - **open-proxy**: A connection using an open or public proxy. - **tor**: A connection routed through the Tor network.
      * @return self
      */
     public function setConnectionType($connection_type)
@@ -541,8 +530,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets host_reverse
      *
-     * @param string $host_reverse Real time reverse DNS lookup result for the IP address.
-     *
+     * @param  string  $host_reverse  Real time reverse DNS lookup result for the IP address.
      * @return self
      */
     public function setHostReverse($host_reverse)
@@ -568,8 +556,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets geo
      *
-     * @param \OpenAPI\Client\Model\Geo $geo geo
-     *
+     * @param  \OpenAPI\Client\Model\Geo  $geo  geo
      * @return self
      */
     public function setGeo($geo)
@@ -595,8 +582,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets whois
      *
-     * @param \OpenAPI\Client\Model\Whois $whois whois
-     *
+     * @param  \OpenAPI\Client\Model\Whois  $whois  whois
      * @return self
      */
     public function setWhois($whois)
@@ -622,8 +608,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets trusted_provider
      *
-     * @param \OpenAPI\Client\Model\TrustedProvider $trusted_provider trusted_provider
-     *
+     * @param  \OpenAPI\Client\Model\TrustedProvider  $trusted_provider  trusted_provider
      * @return self
      */
     public function setTrustedProvider($trusted_provider)
@@ -649,8 +634,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets blocklisted
      *
-     * @param \OpenAPI\Client\Model\BlockListed $blocklisted blocklisted
-     *
+     * @param  \OpenAPI\Client\Model\BlockListed  $blocklisted  blocklisted
      * @return self
      */
     public function setBlocklisted($blocklisted)
@@ -676,8 +660,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets risk_report
      *
-     * @param \OpenAPI\Client\Model\RiskReportIp $risk_report risk_report
-     *
+     * @param  \OpenAPI\Client\Model\RiskReportIp  $risk_report  risk_report
      * @return self
      */
     public function setRiskReport($risk_report)
@@ -689,12 +672,11 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
 
         return $this;
     }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -704,8 +686,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -717,10 +698,8 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -734,9 +713,7 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -745,10 +722,11 @@ class AnalyzeIp200Response implements ModelInterface, ArrayAccess, \JsonSerializ
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()

@@ -6,8 +6,9 @@
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -36,72 +37,77 @@ use OpenAPI\Client\ObjectSerializer;
  * Whois Class Doc Comment
  *
  * @category Class
+ *
  * @description ### WHOIS Details This object provides sanitized and normalized WHOIS information for an IP address, including details about the Regional Internet Registry (RIR), Autonomous System Number (ASN), organization, and contact information.  ---  &gt; **IMPORTANT:**  &gt; While the WHOIS data we provide are publicly available and can be accessed through any Regional Internet Registry (RIR) by anyone, we prioritize data privacy. As such, details for address, phone number, and email are **not included in the free plan**. To access this information, you need to subscribe to a paid plan and comply with additional data privacy agreements.  ---  #### Key Features: - **RIR Details**: Identify the Regional Internet Registry managing the IP address. - **ASN Information**: Obtain the Autonomous System Number details, including the ASN identifier, name, and description. - **Organization Data**: Retrieve organization details, such as the ID, name, type, description, address, country, and contact information. - **Contact Information**: Access contact details for abuse, admin, and tech issues, including the contact ID, type, name, address, phone, fax, and email.  ---  ### Response Elements
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
+class Whois implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
+     * The original name of the model.
+     *
+     * @var string
+     */
     protected static $openAPIModelName = 'Whois';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
         'rir' => 'string',
         'asn' => '\OpenAPI\Client\Model\Asn',
         'organization' => '\OpenAPI\Client\Model\Organization',
         'abuse_contact' => '\OpenAPI\Client\Model\AbuseContact',
         'admin_contact' => '\OpenAPI\Client\Model\AdminContact',
-        'tech_contact' => '\OpenAPI\Client\Model\TechContact'
+        'tech_contact' => '\OpenAPI\Client\Model\TechContact',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
         'rir' => null,
         'asn' => null,
         'organization' => null,
         'abuse_contact' => null,
         'admin_contact' => null,
-        'tech_contact' => null
+        'tech_contact' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
         'rir' => false,
         'asn' => false,
         'organization' => false,
         'abuse_contact' => false,
         'admin_contact' => false,
-        'tech_contact' => false
+        'tech_contact' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -126,8 +132,6 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -137,7 +141,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -147,7 +151,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -156,9 +160,6 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -167,9 +168,6 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -188,7 +186,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => 'organization',
         'abuse_contact' => 'abuseContact',
         'admin_contact' => 'adminContact',
-        'tech_contact' => 'techContact'
+        'tech_contact' => 'techContact',
     ];
 
     /**
@@ -202,7 +200,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => 'setOrganization',
         'abuse_contact' => 'setAbuseContact',
         'admin_contact' => 'setAdminContact',
-        'tech_contact' => 'setTechContact'
+        'tech_contact' => 'setTechContact',
     ];
 
     /**
@@ -216,7 +214,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => 'getOrganization',
         'abuse_contact' => 'getAbuseContact',
         'admin_contact' => 'getAdminContact',
-        'tech_contact' => 'getTechContact'
+        'tech_contact' => 'getTechContact',
     ];
 
     /**
@@ -260,7 +258,6 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -271,10 +268,10 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Constructor
      *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]  $data  Associated array of property values
+     *                         initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         $this->setIfExists('rir', $data ?? [], null);
         $this->setIfExists('asn', $data ?? [], null);
@@ -285,14 +282,12 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -325,7 +320,6 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets rir
      *
@@ -339,8 +333,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets rir
      *
-     * @param string|null $rir Regional Internet Registry managing the IP.
-     *
+     * @param  string|null  $rir  Regional Internet Registry managing the IP.
      * @return self
      */
     public function setRir($rir)
@@ -366,8 +359,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets asn
      *
-     * @param \OpenAPI\Client\Model\Asn|null $asn asn
-     *
+     * @param  \OpenAPI\Client\Model\Asn|null  $asn  asn
      * @return self
      */
     public function setAsn($asn)
@@ -393,8 +385,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets organization
      *
-     * @param \OpenAPI\Client\Model\Organization|null $organization organization
-     *
+     * @param  \OpenAPI\Client\Model\Organization|null  $organization  organization
      * @return self
      */
     public function setOrganization($organization)
@@ -420,8 +411,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets abuse_contact
      *
-     * @param \OpenAPI\Client\Model\AbuseContact|null $abuse_contact abuse_contact
-     *
+     * @param  \OpenAPI\Client\Model\AbuseContact|null  $abuse_contact  abuse_contact
      * @return self
      */
     public function setAbuseContact($abuse_contact)
@@ -447,8 +437,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets admin_contact
      *
-     * @param \OpenAPI\Client\Model\AdminContact|null $admin_contact admin_contact
-     *
+     * @param  \OpenAPI\Client\Model\AdminContact|null  $admin_contact  admin_contact
      * @return self
      */
     public function setAdminContact($admin_contact)
@@ -474,8 +463,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets tech_contact
      *
-     * @param \OpenAPI\Client\Model\TechContact|null $tech_contact tech_contact
-     *
+     * @param  \OpenAPI\Client\Model\TechContact|null  $tech_contact  tech_contact
      * @return self
      */
     public function setTechContact($tech_contact)
@@ -487,12 +475,11 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $this;
     }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -502,8 +489,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -515,10 +501,8 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -532,9 +516,7 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -543,10 +525,11 @@ class Whois implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
