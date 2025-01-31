@@ -42,4 +42,4 @@ jobs:
         with:
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
-          args: --testdox --coverage-text
+          args: --testdox --coverage-text --fail-on-warning --colors=always
