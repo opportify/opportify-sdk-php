@@ -1,4 +1,4 @@
-[![Tests](https://img.shields.io/github/actions/workflow/status/opportify/opportify-sdk-php/tests.yml?label=tests&style=for-the-badge&labelColor=115e5c)](https://github.com/opportify/opportify-sdk-php/actions/workflows/tests.yml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/opportify/opportify-sdk-php/phpunit.yml?label=tests&style=for-the-badge&labelColor=115e5c)](https://github.com/opportify/opportify-sdk-php/actions/workflows/phpunit.yml)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/opportify/opportify-sdk-php?style=for-the-badge&labelColor=115e5c)](https://packagist.org/packages/opportify/opportify-sdk-php)
 [![Packagist Version](https://img.shields.io/packagist/v/opportify/opportify-sdk-php?style=for-the-badge&labelColor=115e5c)](https://packagist.org/packages/opportify/opportify-sdk-php)
 [![License](https://img.shields.io/github/license/opportify/opportify-sdk-php?color=9cf&style=for-the-badge&labelColor=115e5c)](https://github.com/opportify/opportify-sdk-php/blob/main/LICENSE)
