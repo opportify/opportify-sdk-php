@@ -38,7 +38,7 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run PHPUnit Tests
-        uses: php-actions/phpunit@v3
+        uses: php-actions/phpunit@8b81f7e713aba7ca15632bad78c56635ff327104
         with:
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
