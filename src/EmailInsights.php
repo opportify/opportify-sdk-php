@@ -40,19 +40,19 @@ class EmailInsights
         $params = $this->normalizeRequest($params);
 
         $this->finalUrl = $this->host . '/' . $this->prefix . '/' . $this->version;
-        
+
         $this->config->setHost($this->finalUrl);
-        
+
         $this->apiInstance = new EmailInsightsApi(
             new Client(["debug" => $this->debugMode]),
             $this->config
         );
 
-        $analyzeEmailRequest = new AnalyzeEmailRequest($params); 
+        $analyzeEmailRequest = new AnalyzeEmailRequest($params);
 
         $result = $this->apiInstance->analyzeEmail($analyzeEmailRequest);
         return $result->jsonSerialize();
-       
+
     }
 
     /**
@@ -100,7 +100,7 @@ class EmailInsights
     {
         $normalized = [];
         $normalized['email'] = (string) $params['email'];
-           
+
         if (isset($params['enableAi'])) {
             $params['enable_ai'] = $params['enableAi'];
             unset($params['enableAi']);

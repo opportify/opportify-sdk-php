@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EmailInsightsApi
  * PHP version 7.4
@@ -179,7 +180,7 @@ class EmailInsightsApi
             $statusCode = $response->getStatusCode();
 
 
-            switch($statusCode) {
+            switch ($statusCode) {
                 case 200:
                     if ('\OpenAPI\Client\Model\AnalyzeEmail200Response' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer

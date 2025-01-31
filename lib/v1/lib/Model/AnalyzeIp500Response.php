@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AnalyzeIp500Response
  *
@@ -28,8 +29,8 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeIp500Response Class Doc Comment
@@ -379,7 +380,7 @@ class AnalyzeIp500Response implements ModelInterface, ArrayAccess, \JsonSerializ
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -405,5 +406,3 @@ class AnalyzeIp500Response implements ModelInterface, ArrayAccess, \JsonSerializ
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

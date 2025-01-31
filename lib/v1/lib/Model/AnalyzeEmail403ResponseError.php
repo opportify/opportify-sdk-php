@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AnalyzeEmail403ResponseError
  *
@@ -28,8 +29,8 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeEmail403ResponseError Class Doc Comment
@@ -413,7 +414,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -439,5 +440,3 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

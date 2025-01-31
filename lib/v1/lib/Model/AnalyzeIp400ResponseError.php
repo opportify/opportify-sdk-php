@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AnalyzeIp400ResponseError
  *
@@ -28,8 +29,8 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeIp400ResponseError Class Doc Comment
@@ -413,7 +414,7 @@ class AnalyzeIp400ResponseError implements ModelInterface, ArrayAccess, \JsonSer
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -439,5 +440,3 @@ class AnalyzeIp400ResponseError implements ModelInterface, ArrayAccess, \JsonSer
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

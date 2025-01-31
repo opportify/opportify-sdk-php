@@ -55,7 +55,7 @@ class IpInsights
 
         $result = $this->apiInstance->analyzeIp($analyzeIpRequest);
         return $result->jsonSerialize();
-     
+
     }
 
     /**

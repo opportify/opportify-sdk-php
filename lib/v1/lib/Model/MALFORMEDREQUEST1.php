@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MALFORMEDREQUEST1
  *
@@ -28,8 +29,8 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * MALFORMEDREQUEST1 Class Doc Comment
@@ -413,7 +414,7 @@ class MALFORMEDREQUEST1 implements ModelInterface, ArrayAccess, \JsonSerializabl
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -439,5 +440,3 @@ class MALFORMEDREQUEST1 implements ModelInterface, ArrayAccess, \JsonSerializabl
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-
