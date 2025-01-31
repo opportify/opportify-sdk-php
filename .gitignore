@@ -15,6 +15,7 @@ Thumbs.db
 # Ignore PHPUnit test results
 phpunit.xml
 phpunit.xml.dist
+.phpunit.result.cache
 
 # Ignore coverage reports
 coverage/
