@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read  
+
 jobs:
   tests:
     name: PHPUnit on PHP ${{ matrix.php-version }}
