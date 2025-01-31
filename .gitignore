@@ -1,6 +1,9 @@
 # Ignore PHP specific files
 vendor/
 
+# Ignore Composer lock file
+composer.lock
+
 # Ignore IDE and editor specific files
 .idea/
 *.iml
@@ -13,8 +16,10 @@ Thumbs.db
 *.log
 
 # Ignore PHPUnit test results
-phpunit.xml
 phpunit.xml.dist
+junit.xml
+phpunit.xml.*
+.phpunit.result.cache
 
 # Ignore coverage reports
 coverage/
