@@ -20,7 +20,7 @@ https://api.opportify.ai/insights/v1/<service>/<endpoint>
 
 ## Requirements
 
-Requires PHP [v7.4 or later](https://www.php.net/releases). It is also compatible with v8.0.
+Requires PHP [v8.1 or later](https://www.php.net/releases). It is also compatible with v8.0.
 
 ## Getting Started
 
