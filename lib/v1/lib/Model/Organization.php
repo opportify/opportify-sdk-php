@@ -1,12 +1,14 @@
 <?php
+
 /**
  * Organization
  *
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -28,35 +30,38 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * Organization Class Doc Comment
  *
  * @category Class
+ *
  * @description Organization details for an IP address.
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
+class Organization implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
+     * The original name of the model.
+     *
+     * @var string
+     */
     protected static $openAPIModelName = 'Organization';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
         'org_id' => 'string',
         'org_name' => 'string',
@@ -66,16 +71,18 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'string',
         'phone' => 'string[]',
         'fax' => 'string[]',
-        'email' => 'string[]'
+        'email' => 'string[]',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
         'org_id' => null,
         'org_name' => null,
@@ -85,14 +92,14 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => null,
         'phone' => null,
         'fax' => null,
-        'email' => null
+        'email' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
         'org_id' => false,
         'org_name' => false,
@@ -102,14 +109,14 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => false,
         'phone' => false,
         'fax' => false,
-        'email' => false
+        'email' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -134,8 +141,6 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -145,7 +150,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -155,7 +160,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -164,9 +169,6 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -175,9 +177,6 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -199,7 +198,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'country',
         'phone' => 'phone',
         'fax' => 'fax',
-        'email' => 'email'
+        'email' => 'email',
     ];
 
     /**
@@ -216,7 +215,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'setCountry',
         'phone' => 'setPhone',
         'fax' => 'setFax',
-        'email' => 'setEmail'
+        'email' => 'setEmail',
     ];
 
     /**
@@ -233,7 +232,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'getCountry',
         'phone' => 'getPhone',
         'fax' => 'getFax',
-        'email' => 'getEmail'
+        'email' => 'getEmail',
     ];
 
     /**
@@ -277,7 +276,6 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -288,10 +286,10 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Constructor
      *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]  $data  Associated array of property values
+     *                         initializing the model
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         $this->setIfExists('org_id', $data ?? [], null);
         $this->setIfExists('org_name', $data ?? [], null);
@@ -305,14 +303,12 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -345,7 +341,6 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets org_id
      *
@@ -359,8 +354,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets org_id
      *
-     * @param string|null $org_id Organization ID.
-     *
+     * @param  string|null  $org_id  Organization ID.
      * @return self
      */
     public function setOrgId($org_id)
@@ -386,8 +380,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets org_name
      *
-     * @param string|null $org_name Organization name.
-     *
+     * @param  string|null  $org_name  Organization name.
      * @return self
      */
     public function setOrgName($org_name)
@@ -413,8 +406,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets org_type
      *
-     * @param string|null $org_type Organization type.
-     *
+     * @param  string|null  $org_type  Organization type.
      * @return self
      */
     public function setOrgType($org_type)
@@ -440,8 +432,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets descr
      *
-     * @param string[]|null $descr Organization description. It might return different values based on the data source. Some provide ownership, address, others provide a more abstract description. Our system tries to sanitize removing visual blocks special characters (+++, ---, ...).
-     *
+     * @param  string[]|null  $descr  Organization description. It might return different values based on the data source. Some provide ownership, address, others provide a more abstract description. Our system tries to sanitize removing visual blocks special characters (+++, ---, ...).
      * @return self
      */
     public function setDescr($descr)
@@ -467,8 +458,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets address
      *
-     * @param string[]|null $address Organization address details. No standard address format is guaranteed.
-     *
+     * @param  string[]|null  $address  Organization address details. No standard address format is guaranteed.
      * @return self
      */
     public function setAddress($address)
@@ -494,8 +484,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets country
      *
-     * @param string|null $country Country code of the organization with 2 digits. (ISO 3166-1 alpha-2)
-     *
+     * @param  string|null  $country  Country code of the organization with 2 digits. (ISO 3166-1 alpha-2)
      * @return self
      */
     public function setCountry($country)
@@ -521,8 +510,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets phone
      *
-     * @param string[]|null $phone Contact phone numbers.
-     *
+     * @param  string[]|null  $phone  Contact phone numbers.
      * @return self
      */
     public function setPhone($phone)
@@ -548,8 +536,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets fax
      *
-     * @param string[]|null $fax Contact fax numbers.
-     *
+     * @param  string[]|null  $fax  Contact fax numbers.
      * @return self
      */
     public function setFax($fax)
@@ -575,8 +562,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets email
      *
-     * @param string[]|null $email Previously sanitized and validated contact email addresses always in lower case.
-     *
+     * @param  string[]|null  $email  Previously sanitized and validated contact email addresses always in lower case.
      * @return self
      */
     public function setEmail($email)
@@ -588,12 +574,11 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $this;
     }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -603,8 +588,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -616,10 +600,8 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -633,9 +615,7 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -644,15 +624,16 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -678,5 +659,3 @@ class Organization implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

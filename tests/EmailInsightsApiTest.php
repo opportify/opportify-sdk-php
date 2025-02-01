@@ -1,13 +1,13 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use GuzzleHttp\ClientInterface;
+use Mockery as m;
 use OpenAPI\Client\Api\EmailInsightsApi;
+use OpenAPI\Client\ApiException;
 use OpenAPI\Client\Configuration;
 use OpenAPI\Client\HeaderSelector;
 use OpenAPI\Client\Model\AnalyzeEmailRequest;
-use OpenAPI\Client\ApiException;
-use GuzzleHttp\ClientInterface;
-use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 class EmailInsightsApiTest extends TestCase
 {
@@ -16,7 +16,7 @@ class EmailInsightsApiTest extends TestCase
         m::close();
     }
 
-    public function testAnalyzeEmailSuccess()
+    public function test_analyze_email_success()
     {
         $mockClient = Mockery::mock(\GuzzleHttp\ClientInterface::class);
 
@@ -37,9 +37,9 @@ class EmailInsightsApiTest extends TestCase
                     '40 alt4.gmail-smtp-in.l.google.com',
                     '5 gmail-smtp-in.l.google.com',
                     '30 alt3.gmail-smtp-in.l.google.com',
-                    '20 alt2.gmail-smtp-in.l.google.com'
-                ]
-            ]
+                    '20 alt2.gmail-smtp-in.l.google.com',
+                ],
+            ],
         ]);
 
         // Create a PSR-7 response with JSON body
@@ -60,7 +60,7 @@ class EmailInsightsApiTest extends TestCase
 
         $headerSelector = Mockery::mock(\OpenAPI\Client\HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ]);
 
         // Create EmailInsightsApi instance with mock client
@@ -77,7 +77,7 @@ class EmailInsightsApiTest extends TestCase
         $this->assertTrue($response->jsonSerialize()->isFormatValid);
     }
 
-    public function testAnalyzeEmailInvalidRequest()
+    public function test_analyze_email_invalid_request()
     {
         $mockClient = Mockery::mock(ClientInterface::class);
 
@@ -100,7 +100,7 @@ class EmailInsightsApiTest extends TestCase
 
         $headerSelector = Mockery::mock(HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ]);
 
         $apiInstance = new EmailInsightsApi($mockClient, $config, $headerSelector);
@@ -110,7 +110,7 @@ class EmailInsightsApiTest extends TestCase
         $apiInstance->analyzeEmail($request);
     }
 
-    public function testAnalyzeEmailForbidden()
+    public function test_analyze_email_forbidden()
     {
         $mockClient = Mockery::mock(ClientInterface::class);
 
@@ -133,7 +133,7 @@ class EmailInsightsApiTest extends TestCase
 
         $headerSelector = Mockery::mock(HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ]);
 
         $apiInstance = new EmailInsightsApi($mockClient, $config, $headerSelector);
@@ -143,7 +143,7 @@ class EmailInsightsApiTest extends TestCase
         $apiInstance->analyzeEmail($request);
     }
 
-    public function testAnalyzeEmailServerError()
+    public function test_analyze_email_server_error()
     {
         $mockClient = Mockery::mock(ClientInterface::class);
 
@@ -166,7 +166,7 @@ class EmailInsightsApiTest extends TestCase
 
         $headerSelector = Mockery::mock(HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ]);
 
         $apiInstance = new EmailInsightsApi($mockClient, $config, $headerSelector);

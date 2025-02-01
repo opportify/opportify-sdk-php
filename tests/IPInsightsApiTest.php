@@ -1,15 +1,15 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use OpenAPI\Client\Api\IPInsightsApi;
-use OpenAPI\Client\Model\AnalyzeIpRequest;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\ApiException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Mockery as m;
+use OpenAPI\Client\Api\IPInsightsApi;
+use OpenAPI\Client\ApiException;
+use OpenAPI\Client\Configuration;
+use OpenAPI\Client\Model\AnalyzeIpRequest;
+use PHPUnit\Framework\TestCase;
 
 class IPInsightsApiTest extends TestCase
 {
@@ -30,44 +30,44 @@ class IPInsightsApiTest extends TestCase
         return $mockConfig;
     }
 
-    public function testAnalyzeIpSuccess()
+    public function test_analyze_ip_success()
     {
         $mockResponseData = json_encode([
-            "ipAddress" => "123.45.67.89",
-            "ipAddressNumber" => 123456789,
-            "ipType" => "IPv4",
-            "ipCidr" => "123.0.0.0/10",
-            "connectionType" => "wired",
-            "hostReverse" => "example.host.provider.net",
-            "geo" => [
-                "continent" => "NA",
-                "countryCode" => "US",
-                "countryName" => "United States",
-                "countryShortName" => "USA",
-                "currencyCode" => "USD",
-                "domainExtension" => ".us",
-                "languages" => "en-US,es-US,haw,fr",
-                "latitude" => 37.7749,
-                "longitude" => -122.4194,
-                "phoneIntCode" => "1",
-                "timezone" => "America/Los_Angeles"
+            'ipAddress' => '123.45.67.89',
+            'ipAddressNumber' => 123456789,
+            'ipType' => 'IPv4',
+            'ipCidr' => '123.0.0.0/10',
+            'connectionType' => 'wired',
+            'hostReverse' => 'example.host.provider.net',
+            'geo' => [
+                'continent' => 'NA',
+                'countryCode' => 'US',
+                'countryName' => 'United States',
+                'countryShortName' => 'USA',
+                'currencyCode' => 'USD',
+                'domainExtension' => '.us',
+                'languages' => 'en-US,es-US,haw,fr',
+                'latitude' => 37.7749,
+                'longitude' => -122.4194,
+                'phoneIntCode' => '1',
+                'timezone' => 'America/Los_Angeles',
             ],
-            "whois" => [
-                "rir" => "ARIN",
-                "asn" => ["asName" => "EXAMPLE-AS"],
-                "organization" => [
-                    "orgId" => "ORG-EX1-US",
-                    "orgName" => "Example Corp.",
-                    "orgType" => "ISP",
-                    "country" => "US"
+            'whois' => [
+                'rir' => 'ARIN',
+                'asn' => ['asName' => 'EXAMPLE-AS'],
+                'organization' => [
+                    'orgId' => 'ORG-EX1-US',
+                    'orgName' => 'Example Corp.',
+                    'orgType' => 'ISP',
+                    'country' => 'US',
                 ],
-                "abuseContact" => ["contactId" => "EX123-US", "name" => "Abuse Contact Example"],
-                "adminContact" => ["contactId" => "AD123-US", "name" => "Admin Contact Example"],
-                "techContact" => ["contactId" => "TE123-US", "name" => "Tech Contact Example"]
+                'abuseContact' => ['contactId' => 'EX123-US', 'name' => 'Abuse Contact Example'],
+                'adminContact' => ['contactId' => 'AD123-US', 'name' => 'Admin Contact Example'],
+                'techContact' => ['contactId' => 'TE123-US', 'name' => 'Tech Contact Example'],
             ],
-            "trustedProvider" => ["isKnownProvider" => true],
-            "blocklisted" => ["isBlockListed" => false, "sources" => 0, "activeReports" => 0],
-            "riskReport" => ["score" => 321, "level" => "low"]
+            'trustedProvider' => ['isKnownProvider' => true],
+            'blocklisted' => ['isBlockListed' => false, 'sources' => 0, 'activeReports' => 0],
+            'riskReport' => ['score' => 321, 'level' => 'low'],
         ]);
 
         // Create a valid Guzzle Response object
@@ -90,30 +90,30 @@ class IPInsightsApiTest extends TestCase
 
         // Assertions
         $this->assertIsObject($decodedResponse);
-        $this->assertEquals("123.45.67.89", $decodedResponse->ipAddress);
+        $this->assertEquals('123.45.67.89', $decodedResponse->ipAddress);
         $this->assertEquals(123456789, $decodedResponse->ipAddressNumber);
-        $this->assertEquals("IPv4", $decodedResponse->ipType);
-        $this->assertEquals("wired", $decodedResponse->connectionType);
-        $this->assertEquals("example.host.provider.net", $decodedResponse->hostReverse);
+        $this->assertEquals('IPv4', $decodedResponse->ipType);
+        $this->assertEquals('wired', $decodedResponse->connectionType);
+        $this->assertEquals('example.host.provider.net', $decodedResponse->hostReverse);
 
         // Geo Assertions
         $this->assertIsObject($decodedResponse->geo);
-        $this->assertEquals("US", $decodedResponse->geo->countryCode);
-        $this->assertEquals("United States", $decodedResponse->geo->countryName);
+        $this->assertEquals('US', $decodedResponse->geo->countryCode);
+        $this->assertEquals('United States', $decodedResponse->geo->countryName);
         $this->assertEquals(37.7749, $decodedResponse->geo->latitude);
         $this->assertEquals(-122.4194, $decodedResponse->geo->longitude);
-        $this->assertEquals("America/Los_Angeles", $decodedResponse->geo->timezone);
+        $this->assertEquals('America/Los_Angeles', $decodedResponse->geo->timezone);
 
         // WHOIS Assertions
         $this->assertIsObject($decodedResponse->whois);
-        $this->assertEquals("ARIN", $decodedResponse->whois->rir);
-        $this->assertEquals("EXAMPLE-AS", $decodedResponse->whois->asn->asName);
-        $this->assertEquals("Example Corp.", $decodedResponse->whois->organization->orgName);
+        $this->assertEquals('ARIN', $decodedResponse->whois->rir);
+        $this->assertEquals('EXAMPLE-AS', $decodedResponse->whois->asn->asName);
+        $this->assertEquals('Example Corp.', $decodedResponse->whois->organization->orgName);
 
         // Risk Report Assertions
         $this->assertIsObject($decodedResponse->riskReport);
         $this->assertEquals(321, $decodedResponse->riskReport->score);
-        $this->assertEquals("low", $decodedResponse->riskReport->level);
+        $this->assertEquals('low', $decodedResponse->riskReport->level);
 
         // Trusted Provider Assertions
         $this->assertIsObject($decodedResponse->trustedProvider);
@@ -125,7 +125,7 @@ class IPInsightsApiTest extends TestCase
         $this->assertEquals(0, $decodedResponse->blocklisted->sources);
     }
 
-    public function testAnalyzeIpThrows400BadRequest()
+    public function test_analyze_ip_throws400_bad_request()
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('[400]');
@@ -148,7 +148,7 @@ class IPInsightsApiTest extends TestCase
         $apiInstance->analyzeIp($request);
     }
 
-    public function testAnalyzeIpThrows403Forbidden()
+    public function test_analyze_ip_throws403_forbidden()
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('[403]');
@@ -171,7 +171,7 @@ class IPInsightsApiTest extends TestCase
         $apiInstance->analyzeIp($request);
     }
 
-    public function testAnalyzeIpThrows500ServerError()
+    public function test_analyze_ip_throws500_server_error()
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('[500]');
