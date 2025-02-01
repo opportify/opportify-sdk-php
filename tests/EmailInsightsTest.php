@@ -1,9 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Opportify\Sdk\EmailInsights;
-use OpenAPI\Client\Api\EmailInsightsApi;
 use Mockery as m;
+use OpenAPI\Client\Api\EmailInsightsApi;
+use Opportify\Sdk\EmailInsights;
+use PHPUnit\Framework\TestCase;
 
 class EmailInsightsTest extends TestCase
 {
@@ -12,7 +12,7 @@ class EmailInsightsTest extends TestCase
         m::close(); // Ensures all expectations are verified
     }
 
-    public function testSetHost()
+    public function test_set_host()
     {
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setHost('https://new-api.opportify.ai');
@@ -24,7 +24,7 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals('https://new-api.opportify.ai', $property->getValue($emailInsights));
     }
 
-    public function testSetVersion()
+    public function test_set_version()
     {
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setVersion('v2');
@@ -36,7 +36,7 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals('v2', $property->getValue($emailInsights));
     }
 
-    public function testSetDebugMode()
+    public function test_set_debug_mode()
     {
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setDebugMode(true);
@@ -48,20 +48,20 @@ class EmailInsightsTest extends TestCase
         $this->assertTrue($property->getValue($emailInsights));
     }
 
-    public function testNormalizeRequest()
+    public function test_normalize_request()
     {
         $emailInsights = new EmailInsights('fake_api_key');
 
         $input = [
             'email' => 'test@example.com',
             'enableAi' => true,
-            'enableAutoCorrection' => 'false'
+            'enableAutoCorrection' => 'false',
         ];
 
         $expectedOutput = [
             'email' => 'test@example.com',
             'enable_ai' => true,
-            'enable_auto_correction' => false
+            'enable_auto_correction' => false,
         ];
 
         $reflection = new \ReflectionClass($emailInsights);
@@ -72,7 +72,7 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals($expectedOutput, $normalized);
     }
 
-    public function testAnalyzeSuccess()
+    public function test_analyze_success()
     {
         $mockResponseData = [
             'emailAddress' => 'test@example.com',
@@ -90,9 +90,9 @@ class EmailInsightsTest extends TestCase
                     '40 alt4.gmail-smtp-in.l.google.com',
                     '5 gmail-smtp-in.l.google.com',
                     '30 alt3.gmail-smtp-in.l.google.com',
-                    '20 alt2.gmail-smtp-in.l.google.com'
-                ]
-            ]
+                    '20 alt2.gmail-smtp-in.l.google.com',
+                ],
+            ],
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
@@ -121,7 +121,7 @@ class EmailInsightsTest extends TestCase
         $this->assertTrue($response->isFormatValid);
     }
 
-    public function testThrowsExceptionWhenAnalyzeFails()
+    public function test_throws_exception_when_analyze_fails()
     {
         $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('analyzeEmail')

@@ -2,27 +2,33 @@
 
 namespace Opportify\Sdk;
 
-use OpenAPI\Client\Configuration as ApiConfiguration;
-use OpenAPI\Client\Api\EmailInsightsApi;
-use OpenAPI\Client\Model\AnalyzeEmailRequest;
 use GuzzleHttp\Client;
+use OpenAPI\Client\Api\EmailInsightsApi;
+use OpenAPI\Client\Configuration as ApiConfiguration;
+use OpenAPI\Client\Model\AnalyzeEmailRequest;
 
 class EmailInsights
 {
     private ApiConfiguration $config;
+
     private ?EmailInsightsApi $apiInstance = null;
+
     private bool $debugMode = false;
+
     protected string $host = 'https://api.opportify.ai';
+
     protected string $prefix = 'insights';
+
     protected string $version = 'v1';
+
     protected string $finalUrl;
+
     private bool $configChanged = false; // Tracks if configuration was modified
 
     /**
      * EmailInsights constructor.
      *
-     * @param string $apiKey
-     * @param EmailInsightsApi|null $apiInstance (Optional for testing)
+     * @param  EmailInsightsApi|null  $apiInstance  (Optional for testing)
      */
     public function __construct(string $apiKey, ?EmailInsightsApi $apiInstance = null)
     {
@@ -30,7 +36,7 @@ class EmailInsights
         $this->config->setApiKey('x-opportify-token', $apiKey);
 
         $this->updateFinalUrl();
-        
+
         // Allow passing a mock API instance for testing
         if ($apiInstance) {
             $this->apiInstance = $apiInstance;
@@ -41,20 +47,17 @@ class EmailInsights
 
     /**
      * Ensures `apiInstance` is updated only if config has changed.
-     * 
-     * @param bool $firstRun
-     * @return void
      */
     private function refreshApiInstance(bool $firstRun = false): void
     {
         if (!$this->configChanged && !$firstRun) {
-            return; 
+            return;
         }
 
         $this->updateFinalUrl();
         $this->config->setHost($this->finalUrl);
         $this->apiInstance = new EmailInsightsApi(
-            new Client(["debug" => $this->debugMode]),
+            new Client(['debug' => $this->debugMode]),
             $this->config
         );
 
@@ -72,8 +75,6 @@ class EmailInsights
     /**
      * Analyze the email with given parameters.
      *
-     * @param array $params
-     * @return object
      * @throws \Exception
      */
     public function analyze(array $params): object
@@ -85,13 +86,13 @@ class EmailInsights
         $analyzeEmailRequest = new AnalyzeEmailRequest($params);
 
         $result = $this->apiInstance->analyzeEmail($analyzeEmailRequest);
+
         return $result->jsonSerialize();
     }
 
     /**
      * Set the host.
      *
-     * @param string $host
      * @return $this
      */
     public function setHost(string $host): self
@@ -100,13 +101,13 @@ class EmailInsights
             $this->host = $host;
             $this->configChanged = true;
         }
+
         return $this;
     }
 
     /**
      * Set the version.
      *
-     * @param string $version
      * @return $this
      */
     public function setVersion(string $version): self
@@ -115,13 +116,13 @@ class EmailInsights
             $this->version = $version;
             $this->configChanged = true;
         }
+
         return $this;
     }
 
     /**
      * Set the debug mode.
      *
-     * @param bool $debugMode
      * @return $this
      */
     public function setDebugMode(bool $debugMode): self
@@ -130,14 +131,12 @@ class EmailInsights
             $this->debugMode = $debugMode;
             $this->configChanged = true;
         }
+
         return $this;
     }
 
     /**
      * Normalize the request parameters.
-     *
-     * @param array $params
-     * @return array
      */
     private function normalizeRequest(array $params): array
     {
