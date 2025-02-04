@@ -3,7 +3,7 @@
 namespace Opportify\Sdk;
 
 use GuzzleHttp\Client;
-use OpenAPI\Client\Api\IpInsightsApi;
+use OpenAPI\Client\Api\IPInsightsApi as IpInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
 
