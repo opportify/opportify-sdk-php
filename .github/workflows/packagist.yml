@@ -1,0 +1,27 @@
+name: Update Packagist on Release
+
+# This workflow triggers when a new release is published.
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-packagist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify Packagist
+        env:
+          PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
+          PACKAGIST_API_TOKEN: ${{ secrets.PACKAGIST_API_TOKEN }}
+          PACKAGE_NAME: ${{ secrets.PACKAGE_NAME }}
+        run: |
+          echo "Triggering Packagist update for package ${PACKAGE_NAME}..."
+          RESPONSE=$(curl -s -w "%{http_code}" -o /dev/null -X POST "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "{\"repository\": \"${PACKAGE_NAME}\"}")
+          if [ "$RESPONSE" != "200" ]; then
+            echo "Packagist update failed with status code: $RESPONSE"
+            exit 1
+          fi
+          echo "Packagist update successfully triggered."
