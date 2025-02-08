@@ -20,7 +20,7 @@ jobs:
           RESPONSE=$(curl -s -w "%{http_code}" -o /dev/null -X POST "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_API_TOKEN}" \
             -H "Content-Type: application/json" \
             -d "{\"repository\": \"${PACKAGE_NAME}\"}")
-          if [ "$RESPONSE" != "200" ]; then
+            if [ "$RESPONSE" != "200" ] && [ "$RESPONSE" != "202" ]; then
             echo "Packagist update failed with status code: $RESPONSE"
             exit 1
           fi
