@@ -1,25 +1,23 @@
 <?php
-
 /**
  * AnalyzeEmail200Response
  *
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 
 /**
  * Opportify Insights API
  *
- * ## Overview  The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.  ### Base URL Use the following base URL for all API requests:  ```plaintext https://api.opportify.ai/insights/v1/<service>/<endpoint> ```  ### Features - [**Email Insights:**](/docs/api/api-reference/email-insights)   - Validate email syntax.   - Identify email types (free, disposable, corporate or unknown).   - Real time verifications:     - Reachable: Confirms if the email domain has valid MX DNS records using DNS lookup.     - Deliverable: Simulates an SMTP handshake to check if the email address exists and is deliverable.     - Catch-All: Detects if the domain accepts all emails (catch-all configuration).   - Intelligent Error Correction: Automatically corrects well-known misspelled email addresses.   - Risk Report: Provides an AI-driven normalized score (200-1000) to evaluate email risk, using predefined thresholds.      [Access Documentation >>](/docs/api/api-reference/email-insights)  - [**IP Insights:**](/docs/api/api-reference/ip-insights)   - Connection types: Detects connection types such as `wired`, `mobile`, `enterprise`, `satellite`, `VPN`, `cloud-provider`, `open-proxy`, or `Tor`.   - Geo location: Delivers detailed insights such as country, city, timezone, language preferences, and additional location-based information to enhance regional understanding.   - WHOIS: Provides main details including RIR, ASN, organization, and abuse/admin/technical contacts.   - Trusted Provider Recognition: Identifies if the IP is part of a known trusted provider (e.g., ZTNA - Zero Trust Network Access).   - Blocklist Reports: Retrieves up-to-date blocklist statuses, active reports, and the latest detections.   - Risk Report: Delivers an AI-driven normalized score (200-1000) to evaluate IP risk, supported by predefined thresholds.    [Access Documentation >>](/docs/api/api-reference/ip-insights)  ### Authentication & Security - **API Key:** Access to the API requires an API key, which must be included in the request headers. Businesses can generate unlimited API keys directly from their account, offering flexibility and ease of use.  - **ACL Rules:** Enhance security with Access Control Lists (ACL), allowing you to restrict API access from specific IP addresses or ranges. This feature provides an additional layer of protection by ensuring only authorized IPs can interact with the API. - **No Query Parameters:** As a precautionary measure, our API avoids the use of query parameters for all operations, including authentication and handling Personally Identifiable Information (PII). This approach minimizes security risks by preventing sensitive data from being exposed in access logs, browser history, cached URLs, debugging tools, or inadvertently shared URLs. All sensitive information is securely transmitted through headers or the request body.
+ * ## Overview  The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.  ### Base URL Use the following base URL for all API requests:  ```plaintext https://api.opportify.ai/insights/v1/<service>/<endpoint> ```  ### Features - [**Email Insights:**](/docs/api/api-reference/email-insights)   - Validate email syntax.   - Identify email types (free, disposable, private or unknown).   - Real time verifications:     - Reachable: Confirms if the email domain has valid MX DNS records using DNS lookup.     - Deliverable: Simulates an SMTP handshake to check if the email address exists and is deliverable.     - Catch-All: Detects if the domain accepts all emails (catch-all configuration).   - Intelligent Error Correction: Automatically corrects well-known misspelled email addresses.   - Risk Report: Provides an AI-driven normalized score (200-1000) to evaluate email risk, using predefined thresholds.      [Access Documentation >>](/docs/api/api-reference/email-insights)  - [**IP Insights:**](/docs/api/api-reference/ip-insights)   - Connection types: Detects connection types such as `wired`, `mobile`, `enterprise`, `satellite`, `VPN`, `cloud-provider`, `open-proxy`, or `Tor`.   - Geo location: Delivers detailed insights such as country, city, timezone, language preferences, and additional location-based information to enhance regional understanding.   - WHOIS: Provides main details including RIR, ASN, organization, and abuse/admin/technical contacts.   - Trusted Provider Recognition: Identifies if the IP is part of a known trusted provider (e.g., ZTNA - Zero Trust Network Access).   - Blocklist Reports: Retrieves up-to-date blocklist statuses, active reports, and the latest detections.   - Risk Report: Delivers an AI-driven normalized score (200-1000) to evaluate IP risk, supported by predefined thresholds.    [Access Documentation >>](/docs/api/api-reference/ip-insights)  ### Authentication & Security - **API Key:** Access to the API requires an API key, which must be included in the request headers. Businesses can generate unlimited API keys directly from their account, offering flexibility and ease of use.  - **ACL Rules:** Enhance security with Access Control Lists (ACL), allowing you to restrict API access from specific IP addresses or ranges. This feature provides an additional layer of protection by ensuring only authorized IPs can interact with the API. - **No Query Parameters:** As a precautionary measure, our API avoids the use of query parameters for all operations, including authentication and handling Personally Identifiable Information (PII). This approach minimizes security risks by preventing sensitive data from being exposed in access logs, browser history, cached URLs, debugging tools, or inadvertently shared URLs. All sensitive information is securely transmitted through headers or the request body.
  *
  * The version of the OpenAPI document: 1.0.0
  * Generated by: https://openapi-generator.tech
- * Generator version: 7.10.0
+ * Generator version: 7.11.0
  */
 
 /**
@@ -30,36 +28,34 @@
 
 namespace OpenAPI\Client\Model;
 
-use ArrayAccess;
-use OpenAPI\Client\ObjectSerializer;
+use \ArrayAccess;
+use \OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeEmail200Response Class Doc Comment
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
- *
  * @implements \ArrayAccess<string, mixed>
  */
-class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class AnalyzeEmail200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
     /**
-     * The original name of the model.
-     *
-     * @var string
-     */
+      * The original name of the model.
+      *
+      * @var string
+      */
     protected static $openAPIModelName = 'analyzeEmail_200_response';
 
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @var string[]
-     */
+      * Array of property to type mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
     protected static $openAPITypes = [
         'email_address' => 'string',
         'email_provider' => 'string',
@@ -71,18 +67,16 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'is_mailbox_full' => 'bool',
         'is_reachable' => 'bool',
         'email_dns' => '\OpenAPI\Client\Model\EmailDNS',
-        'risk_report' => '\OpenAPI\Client\Model\RiskReportEmail',
+        'risk_report' => '\OpenAPI\Client\Model\RiskReportEmail'
     ];
 
     /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @var string[]
-     *
-     * @phpstan-var array<string, string|null>
-     *
-     * @psalm-var array<string, string|null>
-     */
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      * @phpstan-var array<string, string|null>
+      * @psalm-var array<string, string|null>
+      */
     protected static $openAPIFormats = [
         'email_address' => null,
         'email_provider' => null,
@@ -94,14 +88,14 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'is_mailbox_full' => null,
         'is_reachable' => null,
         'email_dns' => null,
-        'risk_report' => null,
+        'risk_report' => null
     ];
 
     /**
-     * Array of nullable properties. Used for (de)serialization
-     *
-     * @var bool[]
-     */
+      * Array of nullable properties. Used for (de)serialization
+      *
+      * @var boolean[]
+      */
     protected static array $openAPINullables = [
         'email_address' => false,
         'email_provider' => false,
@@ -113,14 +107,14 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'is_mailbox_full' => false,
         'is_reachable' => false,
         'email_dns' => false,
-        'risk_report' => false,
+        'risk_report' => false
     ];
 
     /**
-     * If a nullable field gets set to null, insert it here
-     *
-     * @var bool[]
-     */
+      * If a nullable field gets set to null, insert it here
+      *
+      * @var boolean[]
+      */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -145,6 +139,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
 
     /**
      * Array of nullable properties
+     *
+     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -154,7 +150,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return bool[]
+     * @return boolean[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -164,7 +160,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param  bool[]  $openAPINullablesSetToNull
+     * @param boolean[] $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -173,6 +169,9 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
 
     /**
      * Checks if a property is nullable
+     *
+     * @param string $property
+     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -181,6 +180,9 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
 
     /**
      * Checks if a nullable property is set to null.
+     *
+     * @param string $property
+     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -204,7 +206,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'is_mailbox_full' => 'isMailboxFull',
         'is_reachable' => 'isReachable',
         'email_dns' => 'emailDNS',
-        'risk_report' => 'riskReport',
+        'risk_report' => 'riskReport'
     ];
 
     /**
@@ -223,7 +225,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'is_mailbox_full' => 'setIsMailboxFull',
         'is_reachable' => 'setIsReachable',
         'email_dns' => 'setEmailDns',
-        'risk_report' => 'setRiskReport',
+        'risk_report' => 'setRiskReport'
     ];
 
     /**
@@ -242,7 +244,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'is_mailbox_full' => 'getIsMailboxFull',
         'is_reachable' => 'getIsReachable',
         'email_dns' => 'getEmailDns',
-        'risk_report' => 'getRiskReport',
+        'risk_report' => 'getRiskReport'
     ];
 
     /**
@@ -286,6 +288,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -296,8 +299,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Constructor
      *
-     * @param  mixed[]  $data  Associated array of property values
-     *                         initializing the model
+     * @param mixed[]|null $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(?array $data = null)
     {
@@ -315,12 +318,14 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     }
 
     /**
-     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-     * $this->openAPINullablesSetToNull array
-     *
-     * @param  mixed  $defaultValue
-     */
+    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+    * $this->openAPINullablesSetToNull array
+    *
+    * @param string $variableName
+    * @param array  $fields
+    * @param mixed  $defaultValue
+    */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -372,7 +377,6 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         if ($this->container['risk_report'] === null) {
             $invalidProperties[] = "'risk_report' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -387,6 +391,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets email_address
      *
@@ -400,7 +405,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_address
      *
-     * @param  string  $email_address  The validated email address.
+     * @param string $email_address The validated email address.
+     *
      * @return self
      */
     public function setEmailAddress($email_address)
@@ -426,7 +432,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_provider
      *
-     * @param  string  $email_provider  The email provider or domain name.
+     * @param string $email_provider The email provider or domain name.
+     *
      * @return self
      */
     public function setEmailProvider($email_provider)
@@ -452,7 +459,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_type
      *
-     * @param  string  $email_type  Type of email address (e.g., free, disposable, private, unknown).
+     * @param string $email_type Type of email address (e.g., free, disposable, private, unknown).
+     *
      * @return self
      */
     public function setEmailType($email_type)
@@ -478,7 +486,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_format_valid
      *
-     * @param  bool  $is_format_valid  Indicates if the email address has a valid format.
+     * @param bool $is_format_valid Indicates if the email address has a valid format.
+     *
      * @return self
      */
     public function setIsFormatValid($is_format_valid)
@@ -504,7 +513,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_correction
      *
-     * @param  string  $email_correction  Suggested corrected email address, if applicable.
+     * @param string $email_correction Suggested corrected email address, if applicable.
+     *
      * @return self
      */
     public function setEmailCorrection($email_correction)
@@ -530,7 +540,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_deliverable
      *
-     * @param  string  $is_deliverable  Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification.
+     * @param string $is_deliverable Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification.
+     *
      * @return self
      */
     public function setIsDeliverable($is_deliverable)
@@ -556,7 +567,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_catch_all
      *
-     * @param  bool  $is_catch_all  Determines if the email domain is configured as a catch-all, which accepts emails for all addresses within the domain. This is verified through multiple email tests.
+     * @param bool $is_catch_all Determines if the email domain is configured as a catch-all, which accepts emails for all addresses within the domain. This is verified through multiple email tests.
+     *
      * @return self
      */
     public function setIsCatchAll($is_catch_all)
@@ -582,7 +594,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_mailbox_full
      *
-     * @param  bool  $is_mailbox_full  Determines if the mailbox associated with the email is full, in association with isDeliverable field, it can give a reason why the email is not deliverable.
+     * @param bool $is_mailbox_full Determines if the mailbox associated with the email is full, in association with isDeliverable field, it can give a reason why the email is not deliverable.
+     *
      * @return self
      */
     public function setIsMailboxFull($is_mailbox_full)
@@ -608,7 +621,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_reachable
      *
-     * @param  bool  $is_reachable  Confirms if the email domain has valid MX DNS records using DNS lookup.
+     * @param bool $is_reachable Confirms if the email domain has valid MX DNS records using DNS lookup.
+     *
      * @return self
      */
     public function setIsReachable($is_reachable)
@@ -634,7 +648,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_dns
      *
-     * @param  \OpenAPI\Client\Model\EmailDNS  $email_dns  email_dns
+     * @param \OpenAPI\Client\Model\EmailDNS $email_dns email_dns
+     *
      * @return self
      */
     public function setEmailDns($email_dns)
@@ -660,7 +675,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets risk_report
      *
-     * @param  \OpenAPI\Client\Model\RiskReportEmail  $risk_report  risk_report
+     * @param \OpenAPI\Client\Model\RiskReportEmail $risk_report risk_report
+     *
      * @return self
      */
     public function setRiskReport($risk_report)
@@ -672,11 +688,12 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
 
         return $this;
     }
-
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return boolean
      */
     public function offsetExists($offset): bool
     {
@@ -686,7 +703,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -698,8 +716,10 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets value based on offset.
      *
-     * @param  int|null  $offset  Offset
-     * @param  mixed  $value  Value to be set
+     * @param int|null $offset Offset
+     * @param mixed    $value  Value to be set
+     *
+     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -713,7 +733,9 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Unsets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -722,16 +744,15 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     *               of any type other than a resource.
+     * of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-        return ObjectSerializer::sanitizeForSerialization($this);
+       return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -757,3 +778,5 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

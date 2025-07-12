@@ -1,6 +1,6 @@
 <?php
 /**
- * TrustedProvider
+ * BatchAnalyzeEmails202Response
  *
  * PHP version 7.4
  *
@@ -32,16 +32,15 @@ use \ArrayAccess;
 use \OpenAPI\Client\ObjectSerializer;
 
 /**
- * TrustedProvider Class Doc Comment
+ * BatchAnalyzeEmails202Response Class Doc Comment
  *
  * @category Class
- * @description Details of trusted providers for an IP address.
  * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
+class BatchAnalyzeEmails202Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'TrustedProvider';
+    protected static $openAPIModelName = 'batchAnalyzeEmails_202_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,10 +57,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'is_known_provider' => 'bool',
-        'provider' => 'string',
-        'provider_type' => 'string',
-        'description' => 'string'
+        'job_id' => 'string',
+        'status' => 'string',
+        'status_description' => 'string'
     ];
 
     /**
@@ -72,10 +70,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'is_known_provider' => null,
-        'provider' => null,
-        'provider_type' => null,
-        'description' => null
+        'job_id' => null,
+        'status' => null,
+        'status_description' => null
     ];
 
     /**
@@ -84,10 +81,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'is_known_provider' => false,
-        'provider' => false,
-        'provider_type' => false,
-        'description' => false
+        'job_id' => false,
+        'status' => false,
+        'status_description' => false
     ];
 
     /**
@@ -176,10 +172,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'is_known_provider' => 'isKnownProvider',
-        'provider' => 'provider',
-        'provider_type' => 'providerType',
-        'description' => 'description'
+        'job_id' => 'jobId',
+        'status' => 'status',
+        'status_description' => 'statusDescription'
     ];
 
     /**
@@ -188,10 +183,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'is_known_provider' => 'setIsKnownProvider',
-        'provider' => 'setProvider',
-        'provider_type' => 'setProviderType',
-        'description' => 'setDescription'
+        'job_id' => 'setJobId',
+        'status' => 'setStatus',
+        'status_description' => 'setStatusDescription'
     ];
 
     /**
@@ -200,10 +194,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'is_known_provider' => 'getIsKnownProvider',
-        'provider' => 'getProvider',
-        'provider_type' => 'getProviderType',
-        'description' => 'getDescription'
+        'job_id' => 'getJobId',
+        'status' => 'getStatus',
+        'status_description' => 'getStatusDescription'
     ];
 
     /**
@@ -247,6 +240,23 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const STATUS_QUEUED = 'QUEUED';
+    public const STATUS_COMPLETED = 'COMPLETED';
+    public const STATUS_ERROR = 'ERROR';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_QUEUED,
+            self::STATUS_COMPLETED,
+            self::STATUS_ERROR,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -263,10 +273,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('is_known_provider', $data ?? [], null);
-        $this->setIfExists('provider', $data ?? [], null);
-        $this->setIfExists('provider_type', $data ?? [], null);
-        $this->setIfExists('description', $data ?? [], null);
+        $this->setIfExists('job_id', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
+        $this->setIfExists('status_description', $data ?? [], null);
     }
 
     /**
@@ -296,9 +305,15 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['is_known_provider'] === null) {
-            $invalidProperties[] = "'is_known_provider' can't be null";
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
         }
+
         return $invalidProperties;
     }
 
@@ -315,109 +330,92 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets is_known_provider
+     * Gets job_id
      *
-     * @return bool
+     * @return string|null
      */
-    public function getIsKnownProvider()
+    public function getJobId()
     {
-        return $this->container['is_known_provider'];
+        return $this->container['job_id'];
     }
 
     /**
-     * Sets is_known_provider
+     * Sets job_id
      *
-     * @param bool $is_known_provider Indicates if the IP belongs to a trusted provider.
+     * @param string|null $job_id Unique identifier for the batch job.
      *
      * @return self
      */
-    public function setIsKnownProvider($is_known_provider)
+    public function setJobId($job_id)
     {
-        if (is_null($is_known_provider)) {
-            throw new \InvalidArgumentException('non-nullable is_known_provider cannot be null');
+        if (is_null($job_id)) {
+            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
         }
-        $this->container['is_known_provider'] = $is_known_provider;
+        $this->container['job_id'] = $job_id;
 
         return $this;
     }
 
     /**
-     * Gets provider
+     * Gets status
      *
      * @return string|null
      */
-    public function getProvider()
+    public function getStatus()
     {
-        return $this->container['provider'];
+        return $this->container['status'];
     }
 
     /**
-     * Sets provider
+     * Sets status
      *
-     * @param string|null $provider Name of the trusted provider.
+     * @param string|null $status Current status of the batch job.
      *
      * @return self
      */
-    public function setProvider($provider)
+    public function setStatus($status)
     {
-        if (is_null($provider)) {
-            throw new \InvalidArgumentException('non-nullable provider cannot be null');
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
         }
-        $this->container['provider'] = $provider;
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
 
         return $this;
     }
 
     /**
-     * Gets provider_type
+     * Gets status_description
      *
      * @return string|null
      */
-    public function getProviderType()
+    public function getStatusDescription()
     {
-        return $this->container['provider_type'];
+        return $this->container['status_description'];
     }
 
     /**
-     * Sets provider_type
+     * Sets status_description
      *
-     * @param string|null $provider_type Type of the trusted provider.
+     * @param string|null $status_description Description of the status, particularly useful when status is ERROR.
      *
      * @return self
      */
-    public function setProviderType($provider_type)
+    public function setStatusDescription($status_description)
     {
-        if (is_null($provider_type)) {
-            throw new \InvalidArgumentException('non-nullable provider_type cannot be null');
+        if (is_null($status_description)) {
+            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
         }
-        $this->container['provider_type'] = $provider_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets description
-     *
-     * @return string|null
-     */
-    public function getDescription()
-    {
-        return $this->container['description'];
-    }
-
-    /**
-     * Sets description
-     *
-     * @param string|null $description Provider a short description.
-     *
-     * @return self
-     */
-    public function setDescription($description)
-    {
-        if (is_null($description)) {
-            throw new \InvalidArgumentException('non-nullable description cannot be null');
-        }
-        $this->container['description'] = $description;
+        $this->container['status_description'] = $status_description;
 
         return $this;
     }

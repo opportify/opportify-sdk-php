@@ -1,6 +1,6 @@
 <?php
 /**
- * TrustedProvider
+ * BatchAnalyzeEmails400Response
  *
  * PHP version 7.4
  *
@@ -32,16 +32,15 @@ use \ArrayAccess;
 use \OpenAPI\Client\ObjectSerializer;
 
 /**
- * TrustedProvider Class Doc Comment
+ * BatchAnalyzeEmails400Response Class Doc Comment
  *
  * @category Class
- * @description Details of trusted providers for an IP address.
  * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
+class BatchAnalyzeEmails400Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'TrustedProvider';
+    protected static $openAPIModelName = 'batchAnalyzeEmails_400_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,10 +57,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'is_known_provider' => 'bool',
-        'provider' => 'string',
-        'provider_type' => 'string',
-        'description' => 'string'
+        'error' => '\OpenAPI\Client\Model\BatchAnalyzeEmails400ResponseError'
     ];
 
     /**
@@ -72,10 +68,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'is_known_provider' => null,
-        'provider' => null,
-        'provider_type' => null,
-        'description' => null
+        'error' => null
     ];
 
     /**
@@ -84,10 +77,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'is_known_provider' => false,
-        'provider' => false,
-        'provider_type' => false,
-        'description' => false
+        'error' => false
     ];
 
     /**
@@ -176,10 +166,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'is_known_provider' => 'isKnownProvider',
-        'provider' => 'provider',
-        'provider_type' => 'providerType',
-        'description' => 'description'
+        'error' => 'error'
     ];
 
     /**
@@ -188,10 +175,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'is_known_provider' => 'setIsKnownProvider',
-        'provider' => 'setProvider',
-        'provider_type' => 'setProviderType',
-        'description' => 'setDescription'
+        'error' => 'setError'
     ];
 
     /**
@@ -200,10 +184,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'is_known_provider' => 'getIsKnownProvider',
-        'provider' => 'getProvider',
-        'provider_type' => 'getProviderType',
-        'description' => 'getDescription'
+        'error' => 'getError'
     ];
 
     /**
@@ -263,10 +244,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('is_known_provider', $data ?? [], null);
-        $this->setIfExists('provider', $data ?? [], null);
-        $this->setIfExists('provider_type', $data ?? [], null);
-        $this->setIfExists('description', $data ?? [], null);
+        $this->setIfExists('error', $data ?? [], null);
     }
 
     /**
@@ -296,9 +274,6 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['is_known_provider'] === null) {
-            $invalidProperties[] = "'is_known_provider' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -315,109 +290,28 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets is_known_provider
+     * Gets error
      *
-     * @return bool
+     * @return \OpenAPI\Client\Model\BatchAnalyzeEmails400ResponseError|null
      */
-    public function getIsKnownProvider()
+    public function getError()
     {
-        return $this->container['is_known_provider'];
+        return $this->container['error'];
     }
 
     /**
-     * Sets is_known_provider
+     * Sets error
      *
-     * @param bool $is_known_provider Indicates if the IP belongs to a trusted provider.
+     * @param \OpenAPI\Client\Model\BatchAnalyzeEmails400ResponseError|null $error error
      *
      * @return self
      */
-    public function setIsKnownProvider($is_known_provider)
+    public function setError($error)
     {
-        if (is_null($is_known_provider)) {
-            throw new \InvalidArgumentException('non-nullable is_known_provider cannot be null');
+        if (is_null($error)) {
+            throw new \InvalidArgumentException('non-nullable error cannot be null');
         }
-        $this->container['is_known_provider'] = $is_known_provider;
-
-        return $this;
-    }
-
-    /**
-     * Gets provider
-     *
-     * @return string|null
-     */
-    public function getProvider()
-    {
-        return $this->container['provider'];
-    }
-
-    /**
-     * Sets provider
-     *
-     * @param string|null $provider Name of the trusted provider.
-     *
-     * @return self
-     */
-    public function setProvider($provider)
-    {
-        if (is_null($provider)) {
-            throw new \InvalidArgumentException('non-nullable provider cannot be null');
-        }
-        $this->container['provider'] = $provider;
-
-        return $this;
-    }
-
-    /**
-     * Gets provider_type
-     *
-     * @return string|null
-     */
-    public function getProviderType()
-    {
-        return $this->container['provider_type'];
-    }
-
-    /**
-     * Sets provider_type
-     *
-     * @param string|null $provider_type Type of the trusted provider.
-     *
-     * @return self
-     */
-    public function setProviderType($provider_type)
-    {
-        if (is_null($provider_type)) {
-            throw new \InvalidArgumentException('non-nullable provider_type cannot be null');
-        }
-        $this->container['provider_type'] = $provider_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets description
-     *
-     * @return string|null
-     */
-    public function getDescription()
-    {
-        return $this->container['description'];
-    }
-
-    /**
-     * Sets description
-     *
-     * @param string|null $description Provider a short description.
-     *
-     * @return self
-     */
-    public function setDescription($description)
-    {
-        if (is_null($description)) {
-            throw new \InvalidArgumentException('non-nullable description cannot be null');
-        }
-        $this->container['description'] = $description;
+        $this->container['error'] = $error;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * TrustedProvider
+ * BatchAnalyzeEmailsRequest
  *
  * PHP version 7.4
  *
@@ -32,16 +32,15 @@ use \ArrayAccess;
 use \OpenAPI\Client\ObjectSerializer;
 
 /**
- * TrustedProvider Class Doc Comment
+ * BatchAnalyzeEmailsRequest Class Doc Comment
  *
  * @category Class
- * @description Details of trusted providers for an IP address.
  * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
+class BatchAnalyzeEmailsRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'TrustedProvider';
+    protected static $openAPIModelName = 'batchAnalyzeEmails_request';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,10 +57,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'is_known_provider' => 'bool',
-        'provider' => 'string',
-        'provider_type' => 'string',
-        'description' => 'string'
+        'emails' => 'string[]',
+        'enable_ai' => 'bool',
+        'enable_auto_correction' => 'bool'
     ];
 
     /**
@@ -72,10 +70,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'is_known_provider' => null,
-        'provider' => null,
-        'provider_type' => null,
-        'description' => null
+        'emails' => null,
+        'enable_ai' => null,
+        'enable_auto_correction' => null
     ];
 
     /**
@@ -84,10 +81,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'is_known_provider' => false,
-        'provider' => false,
-        'provider_type' => false,
-        'description' => false
+        'emails' => false,
+        'enable_ai' => false,
+        'enable_auto_correction' => false
     ];
 
     /**
@@ -176,10 +172,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'is_known_provider' => 'isKnownProvider',
-        'provider' => 'provider',
-        'provider_type' => 'providerType',
-        'description' => 'description'
+        'emails' => 'emails',
+        'enable_ai' => 'enableAI',
+        'enable_auto_correction' => 'enableAutoCorrection'
     ];
 
     /**
@@ -188,10 +183,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'is_known_provider' => 'setIsKnownProvider',
-        'provider' => 'setProvider',
-        'provider_type' => 'setProviderType',
-        'description' => 'setDescription'
+        'emails' => 'setEmails',
+        'enable_ai' => 'setEnableAi',
+        'enable_auto_correction' => 'setEnableAutoCorrection'
     ];
 
     /**
@@ -200,10 +194,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'is_known_provider' => 'getIsKnownProvider',
-        'provider' => 'getProvider',
-        'provider_type' => 'getProviderType',
-        'description' => 'getDescription'
+        'emails' => 'getEmails',
+        'enable_ai' => 'getEnableAi',
+        'enable_auto_correction' => 'getEnableAutoCorrection'
     ];
 
     /**
@@ -263,10 +256,9 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('is_known_provider', $data ?? [], null);
-        $this->setIfExists('provider', $data ?? [], null);
-        $this->setIfExists('provider_type', $data ?? [], null);
-        $this->setIfExists('description', $data ?? [], null);
+        $this->setIfExists('emails', $data ?? [], null);
+        $this->setIfExists('enable_ai', $data ?? [], null);
+        $this->setIfExists('enable_auto_correction', $data ?? [], null);
     }
 
     /**
@@ -296,8 +288,8 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['is_known_provider'] === null) {
-            $invalidProperties[] = "'is_known_provider' can't be null";
+        if ($this->container['emails'] === null) {
+            $invalidProperties[] = "'emails' can't be null";
         }
         return $invalidProperties;
     }
@@ -315,109 +307,82 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets is_known_provider
+     * Gets emails
      *
-     * @return bool
+     * @return string[]
      */
-    public function getIsKnownProvider()
+    public function getEmails()
     {
-        return $this->container['is_known_provider'];
+        return $this->container['emails'];
     }
 
     /**
-     * Sets is_known_provider
+     * Sets emails
      *
-     * @param bool $is_known_provider Indicates if the IP belongs to a trusted provider.
+     * @param string[] $emails Array of email addresses to analyze.
      *
      * @return self
      */
-    public function setIsKnownProvider($is_known_provider)
+    public function setEmails($emails)
     {
-        if (is_null($is_known_provider)) {
-            throw new \InvalidArgumentException('non-nullable is_known_provider cannot be null');
+        if (is_null($emails)) {
+            throw new \InvalidArgumentException('non-nullable emails cannot be null');
         }
-        $this->container['is_known_provider'] = $is_known_provider;
+        $this->container['emails'] = $emails;
 
         return $this;
     }
 
     /**
-     * Gets provider
+     * Gets enable_ai
      *
-     * @return string|null
+     * @return bool|null
      */
-    public function getProvider()
+    public function getEnableAi()
     {
-        return $this->container['provider'];
+        return $this->container['enable_ai'];
     }
 
     /**
-     * Sets provider
+     * Sets enable_ai
      *
-     * @param string|null $provider Name of the trusted provider.
+     * @param bool|null $enable_ai Enable AI-based analysis for insights.
      *
      * @return self
      */
-    public function setProvider($provider)
+    public function setEnableAi($enable_ai)
     {
-        if (is_null($provider)) {
-            throw new \InvalidArgumentException('non-nullable provider cannot be null');
+        if (is_null($enable_ai)) {
+            throw new \InvalidArgumentException('non-nullable enable_ai cannot be null');
         }
-        $this->container['provider'] = $provider;
+        $this->container['enable_ai'] = $enable_ai;
 
         return $this;
     }
 
     /**
-     * Gets provider_type
+     * Gets enable_auto_correction
      *
-     * @return string|null
+     * @return bool|null
      */
-    public function getProviderType()
+    public function getEnableAutoCorrection()
     {
-        return $this->container['provider_type'];
+        return $this->container['enable_auto_correction'];
     }
 
     /**
-     * Sets provider_type
+     * Sets enable_auto_correction
      *
-     * @param string|null $provider_type Type of the trusted provider.
+     * @param bool|null $enable_auto_correction Suggest possible corrections for misspelled emails.
      *
      * @return self
      */
-    public function setProviderType($provider_type)
+    public function setEnableAutoCorrection($enable_auto_correction)
     {
-        if (is_null($provider_type)) {
-            throw new \InvalidArgumentException('non-nullable provider_type cannot be null');
+        if (is_null($enable_auto_correction)) {
+            throw new \InvalidArgumentException('non-nullable enable_auto_correction cannot be null');
         }
-        $this->container['provider_type'] = $provider_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets description
-     *
-     * @return string|null
-     */
-    public function getDescription()
-    {
-        return $this->container['description'];
-    }
-
-    /**
-     * Sets description
-     *
-     * @param string|null $description Provider a short description.
-     *
-     * @return self
-     */
-    public function setDescription($description)
-    {
-        if (is_null($description)) {
-            throw new \InvalidArgumentException('non-nullable description cannot be null');
-        }
-        $this->container['description'] = $description;
+        $this->container['enable_auto_correction'] = $enable_auto_correction;
 
         return $this;
     }
