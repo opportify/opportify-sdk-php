@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchAnalyzeEmails202Response
+ * GetEmailBatchStatus200Response
  *
  * PHP version 7.4
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * BatchAnalyzeEmails202Response Class Doc Comment
+ * GetEmailBatchStatus200Response Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      *
      * @var string
      */
-    protected static $openAPIModelName = 'batchAnalyzeEmails_202_response';
+    protected static $openAPIModelName = 'getEmailBatchStatus_200_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -64,6 +64,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         'job_id' => 'string',
         'status' => 'string',
         'status_description' => 'string',
+        'progress' => 'int',
     ];
 
     /**
@@ -79,6 +80,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         'job_id' => null,
         'status' => null,
         'status_description' => null,
+        'progress' => null,
     ];
 
     /**
@@ -90,6 +92,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         'job_id' => false,
         'status' => false,
         'status_description' => false,
+        'progress' => false,
     ];
 
     /**
@@ -173,6 +176,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         'job_id' => 'jobId',
         'status' => 'status',
         'status_description' => 'statusDescription',
+        'progress' => 'progress',
     ];
 
     /**
@@ -184,6 +188,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         'job_id' => 'setJobId',
         'status' => 'setStatus',
         'status_description' => 'setStatusDescription',
+        'progress' => 'setProgress',
     ];
 
     /**
@@ -195,6 +200,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         'job_id' => 'getJobId',
         'status' => 'getStatus',
         'status_description' => 'getStatusDescription',
+        'progress' => 'getProgress',
     ];
 
     /**
@@ -279,6 +285,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         $this->setIfExists('job_id', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
         $this->setIfExists('status_description', $data ?? [], null);
+        $this->setIfExists('progress', $data ?? [], null);
     }
 
     /**
@@ -413,6 +420,32 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
             throw new \InvalidArgumentException('non-nullable status_description cannot be null');
         }
         $this->container['status_description'] = $status_description;
+
+        return $this;
+    }
+
+    /**
+     * Gets progress
+     *
+     * @return int|null
+     */
+    public function getProgress()
+    {
+        return $this->container['progress'];
+    }
+
+    /**
+     * Sets progress
+     *
+     * @param  int|null  $progress  Percentage of completion for the batch job (0-100).
+     * @return self
+     */
+    public function setProgress($progress)
+    {
+        if (is_null($progress)) {
+            throw new \InvalidArgumentException('non-nullable progress cannot be null');
+        }
+        $this->container['progress'] = $progress;
 
         return $this;
     }

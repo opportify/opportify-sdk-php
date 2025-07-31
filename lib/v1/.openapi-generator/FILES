@@ -36,6 +36,9 @@ docs/Model/BatchAnalyzeIpsRequest.md
 docs/Model/BlockListed.md
 docs/Model/EmailDNS.md
 docs/Model/Geo.md
+docs/Model/GetEmailBatchStatus200Response.md
+docs/Model/GetEmailBatchStatus404Response.md
+docs/Model/GetEmailBatchStatus404ResponseError.md
 docs/Model/INTERNALERROR.md
 docs/Model/INVALIDDATA.md
 docs/Model/INVALIDDATA1.md
@@ -90,6 +93,9 @@ lib/Model/BatchAnalyzeIpsRequest.php
 lib/Model/BlockListed.php
 lib/Model/EmailDNS.php
 lib/Model/Geo.php
+lib/Model/GetEmailBatchStatus200Response.php
+lib/Model/GetEmailBatchStatus404Response.php
+lib/Model/GetEmailBatchStatus404ResponseError.php
 lib/Model/INTERNALERROR.php
 lib/Model/INVALIDDATA.php
 lib/Model/INVALIDDATA1.php
@@ -143,6 +149,9 @@ test/Model/BatchAnalyzeIpsRequestTest.php
 test/Model/BlockListedTest.php
 test/Model/EmailDNSTest.php
 test/Model/GeoTest.php
+test/Model/GetEmailBatchStatus200ResponseTest.php
+test/Model/GetEmailBatchStatus404ResponseErrorTest.php
+test/Model/GetEmailBatchStatus404ResponseTest.php
 test/Model/INTERNALERRORTest.php
 test/Model/INVALIDDATA1Test.php
 test/Model/INVALIDDATATest.php

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchAnalyzeEmails202Response
+ * GetEmailBatchStatus404ResponseError
  *
  * PHP version 7.4
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * BatchAnalyzeEmails202Response Class Doc Comment
+ * GetEmailBatchStatus404ResponseError Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class GetEmailBatchStatus404ResponseError implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      *
      * @var string
      */
-    protected static $openAPIModelName = 'batchAnalyzeEmails_202_response';
+    protected static $openAPIModelName = 'getEmailBatchStatus_404_response_error';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,9 +61,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      * @var string[]
      */
     protected static $openAPITypes = [
-        'job_id' => 'string',
-        'status' => 'string',
-        'status_description' => 'string',
+        'message' => 'string',
+        'code' => 'string',
     ];
 
     /**
@@ -76,9 +75,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'job_id' => null,
-        'status' => null,
-        'status_description' => null,
+        'message' => null,
+        'code' => null,
     ];
 
     /**
@@ -87,9 +85,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'job_id' => false,
-        'status' => false,
-        'status_description' => false,
+        'message' => false,
+        'code' => false,
     ];
 
     /**
@@ -170,9 +167,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      * @var string[]
      */
     protected static $attributeMap = [
-        'job_id' => 'jobId',
-        'status' => 'status',
-        'status_description' => 'statusDescription',
+        'message' => 'message',
+        'code' => 'code',
     ];
 
     /**
@@ -181,9 +177,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      * @var string[]
      */
     protected static $setters = [
-        'job_id' => 'setJobId',
-        'status' => 'setStatus',
-        'status_description' => 'setStatusDescription',
+        'message' => 'setMessage',
+        'code' => 'setCode',
     ];
 
     /**
@@ -192,9 +187,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      * @var string[]
      */
     protected static $getters = [
-        'job_id' => 'getJobId',
-        'status' => 'getStatus',
-        'status_description' => 'getStatusDescription',
+        'message' => 'getMessage',
+        'code' => 'getCode',
     ];
 
     /**
@@ -238,29 +232,6 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
         return self::$openAPIModelName;
     }
 
-    public const STATUS_QUEUED = 'QUEUED';
-
-    public const STATUS_PROCESSING = 'PROCESSING';
-
-    public const STATUS_COMPLETED = 'COMPLETED';
-
-    public const STATUS_ERROR = 'ERROR';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_QUEUED,
-            self::STATUS_PROCESSING,
-            self::STATUS_COMPLETED,
-            self::STATUS_ERROR,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -276,9 +247,8 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('job_id', $data ?? [], null);
-        $this->setIfExists('status', $data ?? [], null);
-        $this->setIfExists('status_description', $data ?? [], null);
+        $this->setIfExists('message', $data ?? [], null);
+        $this->setIfExists('code', $data ?? [], null);
     }
 
     /**
@@ -306,15 +276,6 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -330,89 +291,53 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
     }
 
     /**
-     * Gets job_id
+     * Gets message
      *
      * @return string|null
      */
-    public function getJobId()
+    public function getMessage()
     {
-        return $this->container['job_id'];
+        return $this->container['message'];
     }
 
     /**
-     * Sets job_id
+     * Sets message
      *
-     * @param  string|null  $job_id  Unique identifier for the batch job.
+     * @param  string|null  $message  message
      * @return self
      */
-    public function setJobId($job_id)
+    public function setMessage($message)
     {
-        if (is_null($job_id)) {
-            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
+        if (is_null($message)) {
+            throw new \InvalidArgumentException('non-nullable message cannot be null');
         }
-        $this->container['job_id'] = $job_id;
+        $this->container['message'] = $message;
 
         return $this;
     }
 
     /**
-     * Gets status
+     * Gets code
      *
      * @return string|null
      */
-    public function getStatus()
+    public function getCode()
     {
-        return $this->container['status'];
+        return $this->container['code'];
     }
 
     /**
-     * Sets status
+     * Sets code
      *
-     * @param  string|null  $status  Current status of the batch job.
+     * @param  string|null  $code  code
      * @return self
      */
-    public function setStatus($status)
+    public function setCode($code)
     {
-        if (is_null($status)) {
-            throw new \InvalidArgumentException('non-nullable status cannot be null');
+        if (is_null($code)) {
+            throw new \InvalidArgumentException('non-nullable code cannot be null');
         }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['status'] = $status;
-
-        return $this;
-    }
-
-    /**
-     * Gets status_description
-     *
-     * @return string|null
-     */
-    public function getStatusDescription()
-    {
-        return $this->container['status_description'];
-    }
-
-    /**
-     * Sets status_description
-     *
-     * @param  string|null  $status_description  Description of the status, particularly useful when status is ERROR.
-     * @return self
-     */
-    public function setStatusDescription($status_description)
-    {
-        if (is_null($status_description)) {
-            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
-        }
-        $this->container['status_description'] = $status_description;
+        $this->container['code'] = $code;
 
         return $this;
     }
