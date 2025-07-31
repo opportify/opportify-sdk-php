@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use OpenAPI\Client\Api\EmailInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeEmailRequest;
+use OpenAPI\Client\Model\BatchAnalyzeEmailsRequest;
 
 class EmailInsights
 {
@@ -136,6 +137,39 @@ class EmailInsights
     }
 
     /**
+     * Submit a batch of emails for analysis.
+     *
+     * @throws \Exception
+     */
+    public function batchAnalyze(array $params): object
+    {
+        // Ensure latest config before API call
+        $this->refreshApiInstance();
+
+        $params = $this->normalizeBatchRequest($params);
+        $batchAnalyzeEmailsRequest = new BatchAnalyzeEmailsRequest($params);
+
+        $result = $this->apiInstance->batchAnalyzeEmails($batchAnalyzeEmailsRequest);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
+     * Get the status of a batch job.
+     *
+     * @throws \Exception
+     */
+    public function getBatchStatus(string $jobId): object
+    {
+        // Ensure latest config before API call
+        $this->refreshApiInstance();
+
+        $result = $this->apiInstance->getEmailBatchStatus($jobId);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
      * Normalize the request parameters.
      */
     private function normalizeRequest(array $params): array
@@ -155,6 +189,35 @@ class EmailInsights
 
         $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
         $normalized['enable_auto_correction'] = filter_var($params['enable_auto_correction'], FILTER_VALIDATE_BOOLEAN);
+
+        return $normalized;
+    }
+
+    /**
+     * Normalize the batch request parameters.
+     */
+    private function normalizeBatchRequest(array $params): array
+    {
+        $normalized = [];
+        $normalized['emails'] = $params['emails'] ?? [];
+
+        if (isset($params['enableAi'])) {
+            $params['enable_ai'] = $params['enableAi'];
+            unset($params['enableAi']);
+        }
+
+        if (isset($params['enableAutoCorrection'])) {
+            $params['enable_auto_correction'] = filter_var($params['enableAutoCorrection'], FILTER_VALIDATE_BOOLEAN);
+            unset($params['enableAutoCorrection']);
+        }
+
+        if (isset($params['enable_ai'])) {
+            $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+        }
+
+        if (isset($params['enable_auto_correction'])) {
+            $normalized['enable_auto_correction'] = filter_var($params['enable_auto_correction'], FILTER_VALIDATE_BOOLEAN);
+        }
 
         return $normalized;
     }

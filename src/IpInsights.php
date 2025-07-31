@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use OpenAPI\Client\Api\IPInsightsApi as IpInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
+use OpenAPI\Client\Model\BatchAnalyzeIpsRequest;
 
 /**
  * Class IpInsights
@@ -136,6 +137,39 @@ class IpInsights
     }
 
     /**
+     * Submit a batch of IPs for analysis.
+     *
+     * @throws \Exception
+     */
+    public function batchAnalyze(array $params): object
+    {
+        // Ensure latest config before API call
+        $this->refreshApiInstance();
+
+        $params = $this->normalizeBatchRequest($params);
+        $batchAnalyzeIpsRequest = new BatchAnalyzeIpsRequest($params);
+
+        $result = $this->apiInstance->batchAnalyzeIps($batchAnalyzeIpsRequest);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
+     * Get the status of a batch job.
+     *
+     * @throws \Exception
+     */
+    public function getBatchStatus(string $jobId): object
+    {
+        // Ensure latest config before API call
+        $this->refreshApiInstance();
+
+        $result = $this->apiInstance->getIpBatchStatus($jobId);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
      * Normalizes the request parameters.
      */
     private function normalizeRequest(array $params): array
@@ -149,6 +183,26 @@ class IpInsights
         }
 
         $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+
+        return $normalized;
+    }
+
+    /**
+     * Normalizes the batch request parameters.
+     */
+    private function normalizeBatchRequest(array $params): array
+    {
+        $normalized = [];
+        $normalized['ips'] = $params['ips'] ?? [];
+
+        if (isset($params['enableAi'])) {
+            $params['enable_ai'] = $params['enableAi'];
+            unset($params['enableAi']);
+        }
+
+        if (isset($params['enable_ai'])) {
+            $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+        }
 
         return $normalized;
     }

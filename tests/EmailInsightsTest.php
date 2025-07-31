@@ -149,4 +149,93 @@ class EmailInsightsTest extends TestCase
             'enableAutoCorrection' => false,
         ]);
     }
+
+    public function test_normalize_batch_request()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $input = [
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'enableAi' => true,
+            'enableAutoCorrection' => 'false',
+        ];
+
+        $expectedOutput = [
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'enable_ai' => true,
+            'enable_auto_correction' => false,
+        ];
+
+        $reflection = new \ReflectionClass($emailInsights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($emailInsights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+    }
+
+    public function test_batch_analyze_success()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeEmails')
+            ->once()
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->batchAnalyze([
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'enableAi' => true,
+            'enableAutoCorrection' => false,
+        ]);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_get_batch_status_success()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'COMPLETED',
+            'statusDescription' => '',
+            'progress' => 100,
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('getEmailBatchStatus')
+            ->once()
+            ->with('job-123456')
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->getBatchStatus('job-123456');
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('COMPLETED', $response->status);
+        $this->assertEquals(100, $response->progress);
+    }
 }

@@ -166,4 +166,90 @@ class IpInsightsTest extends TestCase
 
         $this->assertEquals($expectedOutput, $normalized);
     }
+
+    public function test_normalize_batch_request()
+    {
+        $insights = new IpInsights('fake_api_key');
+
+        $input = [
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'enableAi' => true,
+        ];
+
+        $expectedOutput = [
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'enable_ai' => true,
+        ];
+
+        $reflection = new \ReflectionClass($insights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($insights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+    }
+
+    public function test_batch_analyze_success()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $insights->batchAnalyze([
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'enableAi' => true,
+        ]);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_get_batch_status_success()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'COMPLETED',
+            'statusDescription' => '',
+            'progress' => 100,
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('getIpBatchStatus')
+            ->once()
+            ->with('job-123456')
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $insights->getBatchStatus('job-123456');
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('COMPLETED', $response->status);
+        $this->assertEquals(100, $response->progress);
+    }
 }
