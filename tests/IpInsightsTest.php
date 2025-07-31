@@ -221,6 +221,114 @@ class IpInsightsTest extends TestCase
         $this->assertEquals('QUEUED', $response->status);
     }
 
+    public function test_batch_analyze_with_file_content_type()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->with(Mockery::type('array'), 'multipart/form-data')
+            ->andReturn($mockResponse);
+
+        // Create a temporary file for testing
+        $tempFilePath = sys_get_temp_dir().'/test_ips.csv';
+        file_put_contents($tempFilePath, '192.168.1.1'.PHP_EOL.'10.0.0.1');
+
+        // Inject the mock API instance via constructor
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $insights->batchAnalyze([
+            'file' => $tempFilePath,
+            'enableAi' => true,
+        ], 'multipart/form-data');
+
+        // Clean up
+        unlink($tempFilePath);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_batch_analyze_with_text_plain_content_type()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->with(Mockery::type('string'), 'text/plain')
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $insights->batchAnalyze([
+            'text' => "192.168.1.1\n10.0.0.1",
+        ], 'text/plain');
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_batch_analyze_file_helper_method()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->andReturn($mockResponse);
+
+        // Create a temporary file for testing
+        $tempFilePath = sys_get_temp_dir().'/test_ips.csv';
+        file_put_contents($tempFilePath, '192.168.1.1'.PHP_EOL.'10.0.0.1');
+
+        // Inject the mock API instance via constructor
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $insights->batchAnalyzeFile($tempFilePath, ['enableAi' => true]);
+
+        // Clean up
+        unlink($tempFilePath);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
     public function test_get_batch_status_success()
     {
         $mockResponseData = [
