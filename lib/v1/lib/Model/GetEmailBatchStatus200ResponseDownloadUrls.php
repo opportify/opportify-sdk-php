@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GetEmailBatchStatus200Response
+ * GetEmailBatchStatus200ResponseDownloadUrls
  *
  * PHP version 7.4
  *
@@ -34,9 +34,11 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * GetEmailBatchStatus200Response Class Doc Comment
+ * GetEmailBatchStatus200ResponseDownloadUrls Class Doc Comment
  *
  * @category Class
+ *
+ * @description Available download URLs for the batch job results. Only present when status is \&quot;COMPLETED\&quot;.
  *
  * @author   OpenAPI Generator team
  *
@@ -44,7 +46,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class GetEmailBatchStatus200ResponseDownloadUrls implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +55,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      *
      * @var string
      */
-    protected static $openAPIModelName = 'getEmailBatchStatus_200_response';
+    protected static $openAPIModelName = 'getEmailBatchStatus_200_response_downloadUrls';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,11 +63,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $openAPITypes = [
-        'job_id' => 'string',
-        'status' => 'string',
-        'status_description' => 'string',
-        'progress' => 'int',
-        'download_urls' => '\OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls',
+        'csv' => 'string',
+        'json' => 'string',
+        'csv_compressed' => 'string',
+        'json_compressed' => 'string',
     ];
 
     /**
@@ -78,11 +79,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'job_id' => null,
-        'status' => null,
-        'status_description' => null,
-        'progress' => null,
-        'download_urls' => null,
+        'csv' => null,
+        'json' => null,
+        'csv_compressed' => null,
+        'json_compressed' => null,
     ];
 
     /**
@@ -91,11 +91,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'job_id' => false,
-        'status' => false,
-        'status_description' => false,
-        'progress' => false,
-        'download_urls' => false,
+        'csv' => false,
+        'json' => false,
+        'csv_compressed' => false,
+        'json_compressed' => false,
     ];
 
     /**
@@ -176,11 +175,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $attributeMap = [
-        'job_id' => 'jobId',
-        'status' => 'status',
-        'status_description' => 'statusDescription',
-        'progress' => 'progress',
-        'download_urls' => 'downloadUrls',
+        'csv' => 'csv',
+        'json' => 'json',
+        'csv_compressed' => 'csvCompressed',
+        'json_compressed' => 'jsonCompressed',
     ];
 
     /**
@@ -189,11 +187,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $setters = [
-        'job_id' => 'setJobId',
-        'status' => 'setStatus',
-        'status_description' => 'setStatusDescription',
-        'progress' => 'setProgress',
-        'download_urls' => 'setDownloadUrls',
+        'csv' => 'setCsv',
+        'json' => 'setJson',
+        'csv_compressed' => 'setCsvCompressed',
+        'json_compressed' => 'setJsonCompressed',
     ];
 
     /**
@@ -202,11 +199,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $getters = [
-        'job_id' => 'getJobId',
-        'status' => 'getStatus',
-        'status_description' => 'getStatusDescription',
-        'progress' => 'getProgress',
-        'download_urls' => 'getDownloadUrls',
+        'csv' => 'getCsv',
+        'json' => 'getJson',
+        'csv_compressed' => 'getCsvCompressed',
+        'json_compressed' => 'getJsonCompressed',
     ];
 
     /**
@@ -250,29 +246,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         return self::$openAPIModelName;
     }
 
-    public const STATUS_QUEUED = 'QUEUED';
-
-    public const STATUS_PROCESSING = 'PROCESSING';
-
-    public const STATUS_COMPLETED = 'COMPLETED';
-
-    public const STATUS_ERROR = 'ERROR';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_QUEUED,
-            self::STATUS_PROCESSING,
-            self::STATUS_COMPLETED,
-            self::STATUS_ERROR,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -288,11 +261,10 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('job_id', $data ?? [], null);
-        $this->setIfExists('status', $data ?? [], null);
-        $this->setIfExists('status_description', $data ?? [], null);
-        $this->setIfExists('progress', $data ?? [], null);
-        $this->setIfExists('download_urls', $data ?? [], null);
+        $this->setIfExists('csv', $data ?? [], null);
+        $this->setIfExists('json', $data ?? [], null);
+        $this->setIfExists('csv_compressed', $data ?? [], null);
+        $this->setIfExists('json_compressed', $data ?? [], null);
     }
 
     /**
@@ -320,15 +292,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -344,141 +307,105 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     }
 
     /**
-     * Gets job_id
+     * Gets csv
      *
      * @return string|null
      */
-    public function getJobId()
+    public function getCsv()
     {
-        return $this->container['job_id'];
+        return $this->container['csv'];
     }
 
     /**
-     * Sets job_id
+     * Sets csv
      *
-     * @param  string|null  $job_id  Unique identifier for the batch job.
+     * @param  string|null  $csv  Pre-signed URL to download results in CSV format.
      * @return self
      */
-    public function setJobId($job_id)
+    public function setCsv($csv)
     {
-        if (is_null($job_id)) {
-            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
+        if (is_null($csv)) {
+            throw new \InvalidArgumentException('non-nullable csv cannot be null');
         }
-        $this->container['job_id'] = $job_id;
+        $this->container['csv'] = $csv;
 
         return $this;
     }
 
     /**
-     * Gets status
+     * Gets json
      *
      * @return string|null
      */
-    public function getStatus()
+    public function getJson()
     {
-        return $this->container['status'];
+        return $this->container['json'];
     }
 
     /**
-     * Sets status
+     * Sets json
      *
-     * @param  string|null  $status  Current status of the batch job.
+     * @param  string|null  $json  Pre-signed URL to download results in JSON format.
      * @return self
      */
-    public function setStatus($status)
+    public function setJson($json)
     {
-        if (is_null($status)) {
-            throw new \InvalidArgumentException('non-nullable status cannot be null');
+        if (is_null($json)) {
+            throw new \InvalidArgumentException('non-nullable json cannot be null');
         }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['status'] = $status;
+        $this->container['json'] = $json;
 
         return $this;
     }
 
     /**
-     * Gets status_description
+     * Gets csv_compressed
      *
      * @return string|null
      */
-    public function getStatusDescription()
+    public function getCsvCompressed()
     {
-        return $this->container['status_description'];
+        return $this->container['csv_compressed'];
     }
 
     /**
-     * Sets status_description
+     * Sets csv_compressed
      *
-     * @param  string|null  $status_description  Description of the status, particularly useful when status is ERROR.
+     * @param  string|null  $csv_compressed  Pre-signed URL to download compressed results in CSV format (gzip).
      * @return self
      */
-    public function setStatusDescription($status_description)
+    public function setCsvCompressed($csv_compressed)
     {
-        if (is_null($status_description)) {
-            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
+        if (is_null($csv_compressed)) {
+            throw new \InvalidArgumentException('non-nullable csv_compressed cannot be null');
         }
-        $this->container['status_description'] = $status_description;
+        $this->container['csv_compressed'] = $csv_compressed;
 
         return $this;
     }
 
     /**
-     * Gets progress
+     * Gets json_compressed
      *
-     * @return int|null
+     * @return string|null
      */
-    public function getProgress()
+    public function getJsonCompressed()
     {
-        return $this->container['progress'];
+        return $this->container['json_compressed'];
     }
 
     /**
-     * Sets progress
+     * Sets json_compressed
      *
-     * @param  int|null  $progress  Percentage of completion for the batch job (0-100).
+     * @param  string|null  $json_compressed  Pre-signed URL to download compressed results in JSON format (gzip).
      * @return self
      */
-    public function setProgress($progress)
+    public function setJsonCompressed($json_compressed)
     {
-        if (is_null($progress)) {
-            throw new \InvalidArgumentException('non-nullable progress cannot be null');
+        if (is_null($json_compressed)) {
+            throw new \InvalidArgumentException('non-nullable json_compressed cannot be null');
         }
-        $this->container['progress'] = $progress;
-
-        return $this;
-    }
-
-    /**
-     * Gets download_urls
-     *
-     * @return \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null
-     */
-    public function getDownloadUrls()
-    {
-        return $this->container['download_urls'];
-    }
-
-    /**
-     * Sets download_urls
-     *
-     * @param  \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null  $download_urls  download_urls
-     * @return self
-     */
-    public function setDownloadUrls($download_urls)
-    {
-        if (is_null($download_urls)) {
-            throw new \InvalidArgumentException('non-nullable download_urls cannot be null');
-        }
-        $this->container['download_urls'] = $download_urls;
+        $this->container['json_compressed'] = $json_compressed;
 
         return $this;
     }
