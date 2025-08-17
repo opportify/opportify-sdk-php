@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use OpenAPI\Client\Api\IPInsightsApi as IpInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
+use OpenAPI\Client\Model\BatchAnalyzeIpsRequest;
 
 /**
  * Class IpInsights
@@ -136,6 +137,106 @@ class IpInsights
     }
 
     /**
+     * Submit a batch of IPs for analysis.
+     *
+     * @param  array  $params  Parameters for the batch analysis
+     * @param  string|null  $contentType  Optional content type (defaults to application/json)
+     *
+     * @throws \Exception
+     */
+    public function batchAnalyze(array $params, ?string $contentType = null): object
+    {
+        // Ensure latest config before API call
+        $this->refreshApiInstance();
+
+        // Default to application/json if not specified
+        $contentType = $contentType ?? 'application/json';
+
+        if ($contentType === 'application/json') {
+            $params = $this->normalizeBatchRequest($params);
+            $batchAnalyzeIpsRequest = new BatchAnalyzeIpsRequest($params);
+            $result = $this->apiInstance->batchAnalyzeIps($batchAnalyzeIpsRequest, $contentType);
+        } elseif ($contentType === 'multipart/form-data') {
+            // For file uploads
+            if (!isset($params['file']) || !file_exists($params['file'])) {
+                throw new \InvalidArgumentException('File parameter is required and must be a valid file path');
+            }
+
+            // Create a multipart request with the file
+            $fileContent = file_get_contents($params['file']);
+            if ($fileContent === false) {
+                throw new \InvalidArgumentException('Unable to read file content');
+            }
+
+            // Create a new request with the file
+            $multipartParams = [
+                'file' => $fileContent,
+            ];
+
+            // Add optional parameters
+            if (isset($params['enable_ai'])) {
+                $multipartParams['enable_ai'] = $params['enable_ai'];
+            } elseif (isset($params['enableAi'])) {
+                $multipartParams['enable_ai'] = $params['enableAi'];
+            }
+
+            $result = $this->apiInstance->batchAnalyzeIps($multipartParams, $contentType);
+        } elseif ($contentType === 'text/plain') {
+            // For plain text with one IP per line
+            if (!isset($params['text'])) {
+                throw new \InvalidArgumentException('Text parameter is required for text/plain content type');
+            }
+
+            $result = $this->apiInstance->batchAnalyzeIps($params['text'], $contentType);
+        } else {
+            throw new \InvalidArgumentException('Unsupported content type: '.$contentType);
+        }
+
+        return $result->jsonSerialize();
+    }
+
+    /**
+     * Submit a batch of IPs for analysis using a file.
+     *
+     * @param  string  $filePath  Path to the file containing IPs (CSV or text)
+     * @param  array  $options  Additional options like enableAi
+     *
+     * @throws \Exception
+     */
+    public function batchAnalyzeFile(string $filePath, array $options = []): object
+    {
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $contentType = $extension === 'csv' ? 'multipart/form-data' : 'text/plain';
+
+        if ($contentType === 'multipart/form-data') {
+            return $this->batchAnalyze(['file' => $filePath] + $options, $contentType);
+        } else {
+            // For text files, read the content and pass it directly
+            $content = file_get_contents($filePath);
+            if ($content === false) {
+                throw new \InvalidArgumentException('Unable to read file content');
+            }
+
+            return $this->batchAnalyze(['text' => $content] + $options, $contentType);
+        }
+    }
+
+    /**
+     * Get the status of a batch job.
+     *
+     * @throws \Exception
+     */
+    public function getBatchStatus(string $jobId): object
+    {
+        // Ensure latest config before API call
+        $this->refreshApiInstance();
+
+        $result = $this->apiInstance->getIpBatchStatus($jobId);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
      * Normalizes the request parameters.
      */
     private function normalizeRequest(array $params): array
@@ -149,6 +250,26 @@ class IpInsights
         }
 
         $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+
+        return $normalized;
+    }
+
+    /**
+     * Normalizes the batch request parameters.
+     */
+    private function normalizeBatchRequest(array $params): array
+    {
+        $normalized = [];
+        $normalized['ips'] = $params['ips'] ?? [];
+
+        if (isset($params['enableAi'])) {
+            $params['enable_ai'] = $params['enableAi'];
+            unset($params['enableAi']);
+        }
+
+        if (isset($params['enable_ai'])) {
+            $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+        }
 
         return $normalized;
     }

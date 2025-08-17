@@ -1,25 +1,23 @@
 <?php
-
 /**
  * Geo
  *
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 
 /**
  * Opportify Insights API
  *
- * ## Overview  The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.  ### Base URL Use the following base URL for all API requests:  ```plaintext https://api.opportify.ai/insights/v1/<service>/<endpoint> ```  ### Features - [**Email Insights:**](/docs/api/api-reference/email-insights)   - Validate email syntax.   - Identify email types (free, disposable, corporate or unknown).   - Real time verifications:     - Reachable: Confirms if the email domain has valid MX DNS records using DNS lookup.     - Deliverable: Simulates an SMTP handshake to check if the email address exists and is deliverable.     - Catch-All: Detects if the domain accepts all emails (catch-all configuration).   - Intelligent Error Correction: Automatically corrects well-known misspelled email addresses.   - Risk Report: Provides an AI-driven normalized score (200-1000) to evaluate email risk, using predefined thresholds.      [Access Documentation >>](/docs/api/api-reference/email-insights)  - [**IP Insights:**](/docs/api/api-reference/ip-insights)   - Connection types: Detects connection types such as `wired`, `mobile`, `enterprise`, `satellite`, `VPN`, `cloud-provider`, `open-proxy`, or `Tor`.   - Geo location: Delivers detailed insights such as country, city, timezone, language preferences, and additional location-based information to enhance regional understanding.   - WHOIS: Provides main details including RIR, ASN, organization, and abuse/admin/technical contacts.   - Trusted Provider Recognition: Identifies if the IP is part of a known trusted provider (e.g., ZTNA - Zero Trust Network Access).   - Blocklist Reports: Retrieves up-to-date blocklist statuses, active reports, and the latest detections.   - Risk Report: Delivers an AI-driven normalized score (200-1000) to evaluate IP risk, supported by predefined thresholds.    [Access Documentation >>](/docs/api/api-reference/ip-insights)  ### Authentication & Security - **API Key:** Access to the API requires an API key, which must be included in the request headers. Businesses can generate unlimited API keys directly from their account, offering flexibility and ease of use.  - **ACL Rules:** Enhance security with Access Control Lists (ACL), allowing you to restrict API access from specific IP addresses or ranges. This feature provides an additional layer of protection by ensuring only authorized IPs can interact with the API. - **No Query Parameters:** As a precautionary measure, our API avoids the use of query parameters for all operations, including authentication and handling Personally Identifiable Information (PII). This approach minimizes security risks by preventing sensitive data from being exposed in access logs, browser history, cached URLs, debugging tools, or inadvertently shared URLs. All sensitive information is securely transmitted through headers or the request body.
+ * ## Overview  The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.  ### Base URL Use the following base URL for all API requests:  ```plaintext https://api.opportify.ai/insights/v1/<service>/<endpoint> ```  ### Features - [**Email Insights:**](/docs/api/api-reference/email-insights)   - Validate email syntax.   - Identify email types (free, disposable, private or unknown).   - Real time verifications:     - Reachable: Confirms if the email domain has valid MX DNS records using DNS lookup.     - Deliverable: Simulates an SMTP handshake to check if the email address exists and is deliverable.     - Catch-All: Detects if the domain accepts all emails (catch-all configuration).   - Intelligent Error Correction: Automatically corrects well-known misspelled email addresses.   - Risk Report: Provides an AI-driven normalized score (200-1000) to evaluate email risk, using predefined thresholds.      [Access Documentation >>](/docs/api/api-reference/email-insights)  - [**IP Insights:**](/docs/api/api-reference/ip-insights)   - Connection types: Detects connection types such as `wired`, `mobile`, `enterprise`, `satellite`, `VPN`, `cloud-provider`, `open-proxy`, or `Tor`.   - Geo location: Delivers detailed insights such as country, city, timezone, language preferences, and additional location-based information to enhance regional understanding.   - WHOIS: Provides main details including RIR, ASN, organization, and abuse/admin/technical contacts.   - Trusted Provider Recognition: Identifies if the IP is part of a known trusted provider (e.g., ZTNA - Zero Trust Network Access).   - Blocklist Reports: Retrieves up-to-date blocklist statuses, active reports, and the latest detections.   - Risk Report: Delivers an AI-driven normalized score (200-1000) to evaluate IP risk, supported by predefined thresholds.    [Access Documentation >>](/docs/api/api-reference/ip-insights)  ### Authentication & Security - **API Key:** Access to the API requires an API key, which must be included in the request headers. Businesses can generate unlimited API keys directly from their account, offering flexibility and ease of use.  - **ACL Rules:** Enhance security with Access Control Lists (ACL), allowing you to restrict API access from specific IP addresses or ranges. This feature provides an additional layer of protection by ensuring only authorized IPs can interact with the API. - **No Query Parameters:** As a precautionary measure, our API avoids the use of query parameters for all operations, including authentication and handling Personally Identifiable Information (PII). This approach minimizes security risks by preventing sensitive data from being exposed in access logs, browser history, cached URLs, debugging tools, or inadvertently shared URLs. All sensitive information is securely transmitted through headers or the request body.
  *
  * The version of the OpenAPI document: 1.0.0
  * Generated by: https://openapi-generator.tech
- * Generator version: 7.10.0
+ * Generator version: 7.11.0
  */
 
 /**
@@ -30,38 +28,35 @@
 
 namespace OpenAPI\Client\Model;
 
-use ArrayAccess;
-use OpenAPI\Client\ObjectSerializer;
+use \ArrayAccess;
+use \OpenAPI\Client\ObjectSerializer;
 
 /**
  * Geo Class Doc Comment
  *
  * @category Class
- *
  * @description ### Geolocation Determination &amp; Confidence Levels Geolocation details are derived by analyzing the provided IP address using data aggregated from a wide range of sources, both official and unofficial (such as user-generated data, open-source, or crowdsourced). This data is meticulously evaluated and ranked using a proprietary weighted reliability score that is tailored to the specific characteristics and trustworthiness of each data source.  ---  #### Confidence Levels  The geolocation process assigns a confidence level to each level of granularity. These levels reflect the probability of accuracy based on the reliability of the data and analysis:  - **Continent-Level (99%)**: The determination of the continent is highly reliable, with a near-certain accuracy rate of 99%. - **Country-Level (98%)**: Locating the specific country has a very high accuracy of 98%, reflecting reliable cross-verification. - **Region-Level (70–90%)**: Identifying regions (such as states or provinces) has moderate to high accuracy, depending on the data quality and density for the given area. - **City-Level (50–70%)**: Pinpointing the specific city is moderately accurate, influenced by factors such as ISP data resolution and urban vs. rural settings. - **Specific Area/Point (5–40%)**: Pinpointing a highly specific area (e.g., a neighborhood or street) has a significantly lower confidence level due to inherent limitations in IP-based geolocation technology.  ---  #### Key Features  - **Alphabetical Object Sorting**:     The keys in the returned geolocation object are consistently sorted alphabetically, ensuring a predictable structure for easier integration and parsing.  ---  ### Response Elements
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
- *
  * @implements \ArrayAccess<string, mixed>
  */
-class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
+class Geo implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
     /**
-     * The original name of the model.
-     *
-     * @var string
-     */
+      * The original name of the model.
+      *
+      * @var string
+      */
     protected static $openAPIModelName = 'Geo';
 
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @var string[]
-     */
+      * Array of property to type mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
     protected static $openAPITypes = [
         'continent' => 'string',
         'country_code' => 'string',
@@ -76,18 +71,16 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         'postal_code' => 'string',
         'phone_int_code' => 'string',
         'region' => 'string',
-        'timezone' => 'string',
+        'timezone' => 'string'
     ];
 
     /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @var string[]
-     *
-     * @phpstan-var array<string, string|null>
-     *
-     * @psalm-var array<string, string|null>
-     */
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      * @phpstan-var array<string, string|null>
+      * @psalm-var array<string, string|null>
+      */
     protected static $openAPIFormats = [
         'continent' => null,
         'country_code' => null,
@@ -102,14 +95,14 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         'postal_code' => null,
         'phone_int_code' => null,
         'region' => null,
-        'timezone' => null,
+        'timezone' => null
     ];
 
     /**
-     * Array of nullable properties. Used for (de)serialization
-     *
-     * @var bool[]
-     */
+      * Array of nullable properties. Used for (de)serialization
+      *
+      * @var boolean[]
+      */
     protected static array $openAPINullables = [
         'continent' => false,
         'country_code' => false,
@@ -124,14 +117,14 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         'postal_code' => false,
         'phone_int_code' => false,
         'region' => false,
-        'timezone' => false,
+        'timezone' => false
     ];
 
     /**
-     * If a nullable field gets set to null, insert it here
-     *
-     * @var bool[]
-     */
+      * If a nullable field gets set to null, insert it here
+      *
+      * @var boolean[]
+      */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -156,6 +149,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Array of nullable properties
+     *
+     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -165,7 +160,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return bool[]
+     * @return boolean[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -175,7 +170,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param  bool[]  $openAPINullablesSetToNull
+     * @param boolean[] $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -184,6 +179,9 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Checks if a property is nullable
+     *
+     * @param string $property
+     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -192,6 +190,9 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Checks if a nullable property is set to null.
+     *
+     * @param string $property
+     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -218,7 +219,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         'postal_code' => 'postalCode',
         'phone_int_code' => 'phoneIntCode',
         'region' => 'region',
-        'timezone' => 'timezone',
+        'timezone' => 'timezone'
     ];
 
     /**
@@ -240,7 +241,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         'postal_code' => 'setPostalCode',
         'phone_int_code' => 'setPhoneIntCode',
         'region' => 'setRegion',
-        'timezone' => 'setTimezone',
+        'timezone' => 'setTimezone'
     ];
 
     /**
@@ -262,7 +263,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         'postal_code' => 'getPostalCode',
         'phone_int_code' => 'getPhoneIntCode',
         'region' => 'getRegion',
-        'timezone' => 'getTimezone',
+        'timezone' => 'getTimezone'
     ];
 
     /**
@@ -306,6 +307,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
+
     /**
      * Associative array for storing property values
      *
@@ -316,8 +318,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Constructor
      *
-     * @param  mixed[]  $data  Associated array of property values
-     *                         initializing the model
+     * @param mixed[]|null $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(?array $data = null)
     {
@@ -338,12 +340,14 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     }
 
     /**
-     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-     * $this->openAPINullablesSetToNull array
-     *
-     * @param  mixed  $defaultValue
-     */
+    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+    * $this->openAPINullablesSetToNull array
+    *
+    * @param string $variableName
+    * @param array  $fields
+    * @param mixed  $defaultValue
+    */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -376,6 +380,7 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         return count($this->listInvalidProperties()) === 0;
     }
 
+
     /**
      * Gets continent
      *
@@ -389,7 +394,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets continent
      *
-     * @param  string|null  $continent  Name of the continent. Normalized as \"Title Case\".
+     * @param string|null $continent Name of the continent. Normalized as \"Title Case\".
+     *
      * @return self
      */
     public function setContinent($continent)
@@ -415,7 +421,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets country_code
      *
-     * @param  string|null  $country_code  ISO 3166-1 alpha-2 country code.
+     * @param string|null $country_code ISO 3166-1 alpha-2 country code.
+     *
      * @return self
      */
     public function setCountryCode($country_code)
@@ -441,7 +448,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets country_name
      *
-     * @param  string|null  $country_name  Full name of the country. Normalized as \"Title Case\".
+     * @param string|null $country_name Full name of the country. Normalized as \"Title Case\".
+     *
      * @return self
      */
     public function setCountryName($country_name)
@@ -467,7 +475,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets country_short_name
      *
-     * @param  string|null  $country_short_name  ISO 3166-1 English short version. Normalized as \"Title Case\".
+     * @param string|null $country_short_name ISO 3166-1 English short version. Normalized as \"Title Case\".
+     *
      * @return self
      */
     public function setCountryShortName($country_short_name)
@@ -493,7 +502,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets city
      *
-     * @param  string|null  $city  Name of the city. Normalized as \"Title Case\".
+     * @param string|null $city Name of the city. Normalized as \"Title Case\".
+     *
      * @return self
      */
     public function setCity($city)
@@ -519,7 +529,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets currency_code
      *
-     * @param  string|null  $currency_code  ISO 4217 currency code.
+     * @param string|null $currency_code ISO 4217 currency code.
+     *
      * @return self
      */
     public function setCurrencyCode($currency_code)
@@ -545,7 +556,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets domain_extension
      *
-     * @param  string|null  $domain_extension  Top-level domain (TLD) for the country. 63 characters limit. IANA / ICANN defined.
+     * @param string|null $domain_extension Top-level domain (TLD) for the country. 63 characters limit. IANA / ICANN defined.
+     *
      * @return self
      */
     public function setDomainExtension($domain_extension)
@@ -571,7 +583,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets languages
      *
-     * @param  string|null  $languages  List of languages spoken in the country separated by commas. (BCP 47 (Best Current Practice 47))
+     * @param string|null $languages List of languages spoken in the country separated by commas. (BCP 47 (Best Current Practice 47))
+     *
      * @return self
      */
     public function setLanguages($languages)
@@ -597,7 +610,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets latitude
      *
-     * @param  float|null  $latitude  Latitude coordinate.
+     * @param float|null $latitude Latitude coordinate.
+     *
      * @return self
      */
     public function setLatitude($latitude)
@@ -623,7 +637,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets longitude
      *
-     * @param  float|null  $longitude  Longitude coordinate.
+     * @param float|null $longitude Longitude coordinate.
+     *
      * @return self
      */
     public function setLongitude($longitude)
@@ -649,7 +664,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets postal_code
      *
-     * @param  string|null  $postal_code  Postal code. Normalized to all capital letters when applicable.
+     * @param string|null $postal_code Postal code. Normalized to all capital letters when applicable.
+     *
      * @return self
      */
     public function setPostalCode($postal_code)
@@ -675,7 +691,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets phone_int_code
      *
-     * @param  string|null  $phone_int_code  International dialing code.
+     * @param string|null $phone_int_code International dialing code.
+     *
      * @return self
      */
     public function setPhoneIntCode($phone_int_code)
@@ -701,7 +718,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets region
      *
-     * @param  string|null  $region  Name of the region, province, or state. Normalized as \"Title Case\".
+     * @param string|null $region Name of the region, province, or state. Normalized as \"Title Case\".
+     *
      * @return self
      */
     public function setRegion($region)
@@ -727,7 +745,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets timezone
      *
-     * @param  string|null  $timezone  Timezone in IANA format.
+     * @param string|null $timezone Timezone in IANA format.
+     *
      * @return self
      */
     public function setTimezone($timezone)
@@ -739,11 +758,12 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
 
         return $this;
     }
-
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return boolean
      */
     public function offsetExists($offset): bool
     {
@@ -753,7 +773,8 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -765,8 +786,10 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets value based on offset.
      *
-     * @param  int|null  $offset  Offset
-     * @param  mixed  $value  Value to be set
+     * @param int|null $offset Offset
+     * @param mixed    $value  Value to be set
+     *
+     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -780,7 +803,9 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Unsets offset.
      *
-     * @param  int  $offset  Offset
+     * @param integer $offset Offset
+     *
+     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -789,16 +814,15 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     *               of any type other than a resource.
+     * of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-        return ObjectSerializer::sanitizeForSerialization($this);
+       return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -824,3 +848,5 @@ class Geo implements \JsonSerializable, ArrayAccess, ModelInterface
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
+

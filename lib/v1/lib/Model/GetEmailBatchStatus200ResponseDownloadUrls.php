@@ -1,12 +1,14 @@
 <?php
+
 /**
- * TrustedProvider
+ * GetEmailBatchStatus200ResponseDownloadUrls
  *
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -28,73 +30,78 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
- * TrustedProvider Class Doc Comment
+ * GetEmailBatchStatus200ResponseDownloadUrls Class Doc Comment
  *
  * @category Class
- * @description Details of trusted providers for an IP address.
- * @package  OpenAPI\Client
+ *
+ * @description Available download URLs for the batch job results. Only present when status is \&quot;COMPLETED\&quot;.
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetEmailBatchStatus200ResponseDownloadUrls implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
-    protected static $openAPIModelName = 'TrustedProvider';
+     * The original name of the model.
+     *
+     * @var string
+     */
+    protected static $openAPIModelName = 'getEmailBatchStatus_200_response_downloadUrls';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
-        'is_known_provider' => 'bool',
-        'provider' => 'string',
-        'provider_type' => 'string',
-        'description' => 'string'
+        'csv' => 'string',
+        'json' => 'string',
+        'csv_compressed' => 'string',
+        'json_compressed' => 'string',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
-        'is_known_provider' => null,
-        'provider' => null,
-        'provider_type' => null,
-        'description' => null
+        'csv' => null,
+        'json' => null,
+        'csv_compressed' => null,
+        'json_compressed' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
-        'is_known_provider' => false,
-        'provider' => false,
-        'provider_type' => false,
-        'description' => false
+        'csv' => false,
+        'json' => false,
+        'csv_compressed' => false,
+        'json_compressed' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -119,8 +126,6 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -130,7 +135,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -140,7 +145,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -149,9 +154,6 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -160,9 +162,6 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -176,10 +175,10 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'is_known_provider' => 'isKnownProvider',
-        'provider' => 'provider',
-        'provider_type' => 'providerType',
-        'description' => 'description'
+        'csv' => 'csv',
+        'json' => 'json',
+        'csv_compressed' => 'csvCompressed',
+        'json_compressed' => 'jsonCompressed',
     ];
 
     /**
@@ -188,10 +187,10 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'is_known_provider' => 'setIsKnownProvider',
-        'provider' => 'setProvider',
-        'provider_type' => 'setProviderType',
-        'description' => 'setDescription'
+        'csv' => 'setCsv',
+        'json' => 'setJson',
+        'csv_compressed' => 'setCsvCompressed',
+        'json_compressed' => 'setJsonCompressed',
     ];
 
     /**
@@ -200,10 +199,10 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'is_known_provider' => 'getIsKnownProvider',
-        'provider' => 'getProvider',
-        'provider_type' => 'getProviderType',
-        'description' => 'getDescription'
+        'csv' => 'getCsv',
+        'json' => 'getJson',
+        'csv_compressed' => 'getCsvCompressed',
+        'json_compressed' => 'getJsonCompressed',
     ];
 
     /**
@@ -247,7 +246,6 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -258,26 +256,24 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Constructor
      *
-     * @param mixed[]|null $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]|null  $data  Associated array of property values
+     *                              initializing the model
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('is_known_provider', $data ?? [], null);
-        $this->setIfExists('provider', $data ?? [], null);
-        $this->setIfExists('provider_type', $data ?? [], null);
-        $this->setIfExists('description', $data ?? [], null);
+        $this->setIfExists('csv', $data ?? [], null);
+        $this->setIfExists('json', $data ?? [], null);
+        $this->setIfExists('csv_compressed', $data ?? [], null);
+        $this->setIfExists('json_compressed', $data ?? [], null);
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -296,9 +292,6 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['is_known_provider'] === null) {
-            $invalidProperties[] = "'is_known_provider' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -313,120 +306,114 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
-     * Gets is_known_provider
-     *
-     * @return bool
-     */
-    public function getIsKnownProvider()
-    {
-        return $this->container['is_known_provider'];
-    }
-
-    /**
-     * Sets is_known_provider
-     *
-     * @param bool $is_known_provider Indicates if the IP belongs to a trusted provider.
-     *
-     * @return self
-     */
-    public function setIsKnownProvider($is_known_provider)
-    {
-        if (is_null($is_known_provider)) {
-            throw new \InvalidArgumentException('non-nullable is_known_provider cannot be null');
-        }
-        $this->container['is_known_provider'] = $is_known_provider;
-
-        return $this;
-    }
-
-    /**
-     * Gets provider
+     * Gets csv
      *
      * @return string|null
      */
-    public function getProvider()
+    public function getCsv()
     {
-        return $this->container['provider'];
+        return $this->container['csv'];
     }
 
     /**
-     * Sets provider
+     * Sets csv
      *
-     * @param string|null $provider Name of the trusted provider.
-     *
+     * @param  string|null  $csv  Pre-signed URL to download results in CSV format.
      * @return self
      */
-    public function setProvider($provider)
+    public function setCsv($csv)
     {
-        if (is_null($provider)) {
-            throw new \InvalidArgumentException('non-nullable provider cannot be null');
+        if (is_null($csv)) {
+            throw new \InvalidArgumentException('non-nullable csv cannot be null');
         }
-        $this->container['provider'] = $provider;
+        $this->container['csv'] = $csv;
 
         return $this;
     }
 
     /**
-     * Gets provider_type
+     * Gets json
      *
      * @return string|null
      */
-    public function getProviderType()
+    public function getJson()
     {
-        return $this->container['provider_type'];
+        return $this->container['json'];
     }
 
     /**
-     * Sets provider_type
+     * Sets json
      *
-     * @param string|null $provider_type Type of the trusted provider.
-     *
+     * @param  string|null  $json  Pre-signed URL to download results in JSON format.
      * @return self
      */
-    public function setProviderType($provider_type)
+    public function setJson($json)
     {
-        if (is_null($provider_type)) {
-            throw new \InvalidArgumentException('non-nullable provider_type cannot be null');
+        if (is_null($json)) {
+            throw new \InvalidArgumentException('non-nullable json cannot be null');
         }
-        $this->container['provider_type'] = $provider_type;
+        $this->container['json'] = $json;
 
         return $this;
     }
 
     /**
-     * Gets description
+     * Gets csv_compressed
      *
      * @return string|null
      */
-    public function getDescription()
+    public function getCsvCompressed()
     {
-        return $this->container['description'];
+        return $this->container['csv_compressed'];
     }
 
     /**
-     * Sets description
+     * Sets csv_compressed
      *
-     * @param string|null $description Provider a short description.
-     *
+     * @param  string|null  $csv_compressed  Pre-signed URL to download compressed results in CSV format (gzip).
      * @return self
      */
-    public function setDescription($description)
+    public function setCsvCompressed($csv_compressed)
     {
-        if (is_null($description)) {
-            throw new \InvalidArgumentException('non-nullable description cannot be null');
+        if (is_null($csv_compressed)) {
+            throw new \InvalidArgumentException('non-nullable csv_compressed cannot be null');
         }
-        $this->container['description'] = $description;
+        $this->container['csv_compressed'] = $csv_compressed;
 
         return $this;
     }
+
+    /**
+     * Gets json_compressed
+     *
+     * @return string|null
+     */
+    public function getJsonCompressed()
+    {
+        return $this->container['json_compressed'];
+    }
+
+    /**
+     * Sets json_compressed
+     *
+     * @param  string|null  $json_compressed  Pre-signed URL to download compressed results in JSON format (gzip).
+     * @return self
+     */
+    public function setJsonCompressed($json_compressed)
+    {
+        if (is_null($json_compressed)) {
+            throw new \InvalidArgumentException('non-nullable json_compressed cannot be null');
+        }
+        $this->container['json_compressed'] = $json_compressed;
+
+        return $this;
+    }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -436,8 +423,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -449,10 +435,8 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -466,9 +450,7 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -477,15 +459,16 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -511,5 +494,3 @@ class TrustedProvider implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

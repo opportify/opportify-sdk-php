@@ -1,24 +1,22 @@
 <?php
-
 /**
  * Configuration
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 
 /**
  * Opportify Insights API
  *
- * ## Overview  The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.  ### Base URL Use the following base URL for all API requests:  ```plaintext https://api.opportify.ai/insights/v1/<service>/<endpoint> ```  ### Features - [**Email Insights:**](/docs/api/api-reference/email-insights)   - Validate email syntax.   - Identify email types (free, disposable, corporate or unknown).   - Real time verifications:     - Reachable: Confirms if the email domain has valid MX DNS records using DNS lookup.     - Deliverable: Simulates an SMTP handshake to check if the email address exists and is deliverable.     - Catch-All: Detects if the domain accepts all emails (catch-all configuration).   - Intelligent Error Correction: Automatically corrects well-known misspelled email addresses.   - Risk Report: Provides an AI-driven normalized score (200-1000) to evaluate email risk, using predefined thresholds.      [Access Documentation >>](/docs/api/api-reference/email-insights)  - [**IP Insights:**](/docs/api/api-reference/ip-insights)   - Connection types: Detects connection types such as `wired`, `mobile`, `enterprise`, `satellite`, `VPN`, `cloud-provider`, `open-proxy`, or `Tor`.   - Geo location: Delivers detailed insights such as country, city, timezone, language preferences, and additional location-based information to enhance regional understanding.   - WHOIS: Provides main details including RIR, ASN, organization, and abuse/admin/technical contacts.   - Trusted Provider Recognition: Identifies if the IP is part of a known trusted provider (e.g., ZTNA - Zero Trust Network Access).   - Blocklist Reports: Retrieves up-to-date blocklist statuses, active reports, and the latest detections.   - Risk Report: Delivers an AI-driven normalized score (200-1000) to evaluate IP risk, supported by predefined thresholds.    [Access Documentation >>](/docs/api/api-reference/ip-insights)  ### Authentication & Security - **API Key:** Access to the API requires an API key, which must be included in the request headers. Businesses can generate unlimited API keys directly from their account, offering flexibility and ease of use.  - **ACL Rules:** Enhance security with Access Control Lists (ACL), allowing you to restrict API access from specific IP addresses or ranges. This feature provides an additional layer of protection by ensuring only authorized IPs can interact with the API. - **No Query Parameters:** As a precautionary measure, our API avoids the use of query parameters for all operations, including authentication and handling Personally Identifiable Information (PII). This approach minimizes security risks by preventing sensitive data from being exposed in access logs, browser history, cached URLs, debugging tools, or inadvertently shared URLs. All sensitive information is securely transmitted through headers or the request body.
+ * ## Overview  The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.  ### Base URL Use the following base URL for all API requests:  ```plaintext https://api.opportify.ai/insights/v1/<service>/<endpoint> ```  ### Features - [**Email Insights:**](/docs/api/api-reference/email-insights)   - Validate email syntax.   - Identify email types (free, disposable, private or unknown).   - Real time verifications:     - Reachable: Confirms if the email domain has valid MX DNS records using DNS lookup.     - Deliverable: Simulates an SMTP handshake to check if the email address exists and is deliverable.     - Catch-All: Detects if the domain accepts all emails (catch-all configuration).   - Intelligent Error Correction: Automatically corrects well-known misspelled email addresses.   - Risk Report: Provides an AI-driven normalized score (200-1000) to evaluate email risk, using predefined thresholds.      [Access Documentation >>](/docs/api/api-reference/email-insights)  - [**IP Insights:**](/docs/api/api-reference/ip-insights)   - Connection types: Detects connection types such as `wired`, `mobile`, `enterprise`, `satellite`, `VPN`, `cloud-provider`, `open-proxy`, or `Tor`.   - Geo location: Delivers detailed insights such as country, city, timezone, language preferences, and additional location-based information to enhance regional understanding.   - WHOIS: Provides main details including RIR, ASN, organization, and abuse/admin/technical contacts.   - Trusted Provider Recognition: Identifies if the IP is part of a known trusted provider (e.g., ZTNA - Zero Trust Network Access).   - Blocklist Reports: Retrieves up-to-date blocklist statuses, active reports, and the latest detections.   - Risk Report: Delivers an AI-driven normalized score (200-1000) to evaluate IP risk, supported by predefined thresholds.    [Access Documentation >>](/docs/api/api-reference/ip-insights)  ### Authentication & Security - **API Key:** Access to the API requires an API key, which must be included in the request headers. Businesses can generate unlimited API keys directly from their account, offering flexibility and ease of use.  - **ACL Rules:** Enhance security with Access Control Lists (ACL), allowing you to restrict API access from specific IP addresses or ranges. This feature provides an additional layer of protection by ensuring only authorized IPs can interact with the API. - **No Query Parameters:** As a precautionary measure, our API avoids the use of query parameters for all operations, including authentication and handling Personally Identifiable Information (PII). This approach minimizes security risks by preventing sensitive data from being exposed in access logs, browser history, cached URLs, debugging tools, or inadvertently shared URLs. All sensitive information is securely transmitted through headers or the request body.
  *
  * The version of the OpenAPI document: 1.0.0
  * Generated by: https://openapi-generator.tech
- * Generator version: 7.10.0
+ * Generator version: 7.11.0
  */
 
 /**
@@ -34,15 +32,13 @@ namespace OpenAPI\Client;
  * PHP version 7.4
  *
  * @category Class
- *
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
- *
  * @link     https://openapi-generator.tech
  */
 class Configuration
 {
     public const BOOLEAN_FORMAT_INT = 'int';
-
     public const BOOLEAN_FORMAT_STRING = 'string';
 
     /**
@@ -138,21 +134,22 @@ class Configuration
     /**
      * Sets API key
      *
-     * @param  string  $apiKeyIdentifier  API key identifier (authentication scheme)
-     * @param  string  $key  API key or token
+     * @param string $apiKeyIdentifier API key identifier (authentication scheme)
+     * @param string $key              API key or token
+     *
      * @return $this
      */
     public function setApiKey($apiKeyIdentifier, $key)
     {
         $this->apiKeys[$apiKeyIdentifier] = $key;
-
         return $this;
     }
 
     /**
      * Gets API key
      *
-     * @param  string  $apiKeyIdentifier  API key identifier (authentication scheme)
+     * @param string $apiKeyIdentifier API key identifier (authentication scheme)
+     *
      * @return null|string API key or token
      */
     public function getApiKey($apiKeyIdentifier)
@@ -163,21 +160,22 @@ class Configuration
     /**
      * Sets the prefix for API key (e.g. Bearer)
      *
-     * @param  string  $apiKeyIdentifier  API key identifier (authentication scheme)
-     * @param  string  $prefix  API key prefix, e.g. Bearer
+     * @param string $apiKeyIdentifier API key identifier (authentication scheme)
+     * @param string $prefix           API key prefix, e.g. Bearer
+     *
      * @return $this
      */
     public function setApiKeyPrefix($apiKeyIdentifier, $prefix)
     {
         $this->apiKeyPrefixes[$apiKeyIdentifier] = $prefix;
-
         return $this;
     }
 
     /**
      * Gets API key prefix
      *
-     * @param  string  $apiKeyIdentifier  API key identifier (authentication scheme)
+     * @param string $apiKeyIdentifier API key identifier (authentication scheme)
+     *
      * @return null|string
      */
     public function getApiKeyPrefix($apiKeyIdentifier)
@@ -188,13 +186,13 @@ class Configuration
     /**
      * Sets the access token for OAuth
      *
-     * @param  string  $accessToken  Token for OAuth
+     * @param string $accessToken Token for OAuth
+     *
      * @return $this
      */
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
-
         return $this;
     }
 
@@ -211,7 +209,8 @@ class Configuration
     /**
      * Sets boolean format for query string.
      *
-     * @param  string  $booleanFormat  Boolean format for query string
+     * @param string $booleanFormat Boolean format for query string
+     *
      * @return $this
      */
     public function setBooleanFormatForQueryString(string $booleanFormat)
@@ -234,13 +233,13 @@ class Configuration
     /**
      * Sets the username for HTTP basic authentication
      *
-     * @param  string  $username  Username for HTTP basic authentication
+     * @param string $username Username for HTTP basic authentication
+     *
      * @return $this
      */
     public function setUsername($username)
     {
         $this->username = $username;
-
         return $this;
     }
 
@@ -257,13 +256,13 @@ class Configuration
     /**
      * Sets the password for HTTP basic authentication
      *
-     * @param  string  $password  Password for HTTP basic authentication
+     * @param string $password Password for HTTP basic authentication
+     *
      * @return $this
      */
     public function setPassword($password)
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -280,13 +279,13 @@ class Configuration
     /**
      * Sets the host
      *
-     * @param  string  $host  Host
+     * @param string $host Host
+     *
      * @return $this
      */
     public function setHost($host)
     {
         $this->host = $host;
-
         return $this;
     }
 
@@ -303,10 +302,10 @@ class Configuration
     /**
      * Sets the user agent of the api client
      *
-     * @param  string  $userAgent  the user agent of the api client
-     * @return $this
+     * @param string $userAgent the user agent of the api client
      *
      * @throws \InvalidArgumentException
+     * @return $this
      */
     public function setUserAgent($userAgent)
     {
@@ -315,7 +314,6 @@ class Configuration
         }
 
         $this->userAgent = $userAgent;
-
         return $this;
     }
 
@@ -332,13 +330,13 @@ class Configuration
     /**
      * Sets debug flag
      *
-     * @param  bool  $debug  Debug flag
+     * @param bool $debug Debug flag
+     *
      * @return $this
      */
     public function setDebug($debug)
     {
         $this->debug = $debug;
-
         return $this;
     }
 
@@ -355,13 +353,13 @@ class Configuration
     /**
      * Sets the debug file
      *
-     * @param  string  $debugFile  Debug file
+     * @param string $debugFile Debug file
+     *
      * @return $this
      */
     public function setDebugFile($debugFile)
     {
         $this->debugFile = $debugFile;
-
         return $this;
     }
 
@@ -378,13 +376,13 @@ class Configuration
     /**
      * Sets the temp folder path
      *
-     * @param  string  $tempFolderPath  Temp folder path
+     * @param string $tempFolderPath Temp folder path
+     *
      * @return $this
      */
     public function setTempFolderPath($tempFolderPath)
     {
         $this->tempFolderPath = $tempFolderPath;
-
         return $this;
     }
 
@@ -406,7 +404,7 @@ class Configuration
     public static function getDefaultConfiguration()
     {
         if (self::$defaultConfiguration === null) {
-            self::$defaultConfiguration = new Configuration;
+            self::$defaultConfiguration = new Configuration();
         }
 
         return self::$defaultConfiguration;
@@ -415,7 +413,8 @@ class Configuration
     /**
      * Sets the default configuration instance
      *
-     * @param  Configuration  $config  An instance of the Configuration Object
+     * @param Configuration $config An instance of the Configuration Object
+     *
      * @return void
      */
     public static function setDefaultConfiguration(Configuration $config)
@@ -430,11 +429,11 @@ class Configuration
      */
     public static function toDebugReport()
     {
-        $report = 'PHP SDK (OpenAPI\Client) Debug Report:'.PHP_EOL;
-        $report .= '    OS: '.php_uname().PHP_EOL;
-        $report .= '    PHP Version: '.PHP_VERSION.PHP_EOL;
-        $report .= '    The version of the OpenAPI document: 1.0.0'.PHP_EOL;
-        $report .= '    Temp Folder Path: '.self::getDefaultConfiguration()->getTempFolderPath().PHP_EOL;
+        $report  = 'PHP SDK (OpenAPI\Client) Debug Report:' . PHP_EOL;
+        $report .= '    OS: ' . php_uname() . PHP_EOL;
+        $report .= '    PHP Version: ' . PHP_VERSION . PHP_EOL;
+        $report .= '    The version of the OpenAPI document: 1.0.0' . PHP_EOL;
+        $report .= '    Temp Folder Path: ' . self::getDefaultConfiguration()->getTempFolderPath() . PHP_EOL;
 
         return $report;
     }
@@ -442,7 +441,8 @@ class Configuration
     /**
      * Get API key (with prefix if set)
      *
-     * @param  string  $apiKeyIdentifier  name of apikey
+     * @param  string $apiKeyIdentifier name of apikey
+     *
      * @return null|string API key with the prefix
      */
     public function getApiKeyWithPrefix($apiKeyIdentifier)
@@ -457,7 +457,7 @@ class Configuration
         if ($prefix === null) {
             $keyWithPrefix = $apiKey;
         } else {
-            $keyWithPrefix = $prefix.' '.$apiKey;
+            $keyWithPrefix = $prefix . ' ' . $apiKey;
         }
 
         return $keyWithPrefix;
@@ -472,23 +472,23 @@ class Configuration
     {
         return [
             [
-                'url' => 'https://api.opportify.ai/insights/v1',
-                'description' => 'Production server',
-            ],
+                "url" => "https://api.opportify.ai/insights/v1",
+                "description" => "Production server",
+            ]
         ];
     }
 
     /**
-     * Returns URL based on host settings, index and variables
-     *
-     * @param  array  $hostSettings  array of host settings, generated from getHostSettings() or equivalent from the API clients
-     * @param  int  $hostIndex  index of the host settings
-     * @param  array|null  $variables  hash of variable and the corresponding value (optional)
-     * @return string URL based on host settings
-     */
+    * Returns URL based on host settings, index and variables
+    *
+    * @param array      $hostSettings array of host settings, generated from getHostSettings() or equivalent from the API clients
+    * @param int        $hostIndex    index of the host settings
+    * @param array|null $variables    hash of variable and the corresponding value (optional)
+    * @return string URL based on host settings
+    */
     public static function getHostString(array $hostSettings, $hostIndex, ?array $variables = null)
     {
-        if ($variables === null) {
+        if (null === $variables) {
             $variables = [];
         }
 
@@ -498,19 +498,19 @@ class Configuration
         }
 
         $host = $hostSettings[$hostIndex];
-        $url = $host['url'];
+        $url = $host["url"];
 
         // go through variable and assign a value
-        foreach ($host['variables'] ?? [] as $name => $variable) {
+        foreach ($host["variables"] ?? [] as $name => $variable) {
             if (array_key_exists($name, $variables)) { // check to see if it's in the variables provided by the user
-                if (!isset($variable['enum_values']) || in_array($variables[$name], $variable['enum_values'], true)) { // check to see if the value is in the enum
-                    $url = str_replace('{'.$name.'}', $variables[$name], $url);
+                if (!isset($variable['enum_values']) || in_array($variables[$name], $variable["enum_values"], true)) { // check to see if the value is in the enum
+                    $url = str_replace("{".$name."}", $variables[$name], $url);
                 } else {
-                    throw new \InvalidArgumentException("The variable `$name` in the host URL has invalid value ".$variables[$name].'. Must be '.implode(',', $variable['enum_values']).'.');
+                    throw new \InvalidArgumentException("The variable `$name` in the host URL has invalid value ".$variables[$name].". Must be ".join(',', $variable["enum_values"]).".");
                 }
             } else {
                 // use default value
-                $url = str_replace('{'.$name.'}', $variable['default_value'], $url);
+                $url = str_replace("{".$name."}", $variable["default_value"], $url);
             }
         }
 
@@ -520,8 +520,8 @@ class Configuration
     /**
      * Returns URL based on the index and variables
      *
-     * @param  int  $index  index of the host settings
-     * @param  array|null  $variables  hash of variable and the corresponding value (optional)
+     * @param int        $index     index of the host settings
+     * @param array|null $variables hash of variable and the corresponding value (optional)
      * @return string URL based on host settings
      */
     public function getHostFromSettings($index, $variables = null)
