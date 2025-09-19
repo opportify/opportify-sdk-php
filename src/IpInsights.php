@@ -71,7 +71,20 @@ class IpInsights
      */
     private function updateFinalUrl(): void
     {
-        $this->finalUrl = "{$this->host}/{$this->prefix}/{$this->version}";
+        $base = rtrim($this->host, '/');
+        $segments = [];
+
+        $prefix = trim($this->prefix, '/');
+        if ($prefix !== '') {
+            $segments[] = $prefix;
+        }
+
+        $version = trim($this->version, '/');
+        if ($version !== '') {
+            $segments[] = $version;
+        }
+
+        $this->finalUrl = $base.(count($segments) ? '/'.implode('/', $segments) : '');
     }
 
     /**
