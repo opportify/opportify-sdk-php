@@ -36,6 +36,18 @@ class IpInsightsTest extends TestCase
         $this->assertEquals('v2', $property->getValue($insights));
     }
 
+    public function test_set_prefix()
+    {
+        $insights = new IpInsights('fake_api_key');
+        $insights->setPrefix('new-prefix');
+
+        $reflection = new \ReflectionClass($insights);
+        $property = $reflection->getProperty('prefix');
+        $property->setAccessible(true);
+
+        $this->assertEquals('new-prefix', $property->getValue($insights));
+    }
+
     public function test_set_debug_mode()
     {
         $insights = new IpInsights('fake_api_key');
