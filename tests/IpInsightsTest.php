@@ -372,4 +372,52 @@ class IpInsightsTest extends TestCase
         $this->assertEquals('COMPLETED', $response->status);
         $this->assertEquals(100, $response->progress);
     }
+
+    public function urlScenariosProvider(): array
+    {
+        return [
+            'all segments' => [
+                'https://api.opportify.ai', 'insights', 'v1', 'https://api.opportify.ai/insights/v1',
+            ],
+            'empty prefix' => [
+                'https://api.opportify.ai', '', 'v1', 'https://api.opportify.ai/v1',
+            ],
+            'empty version' => [
+                'https://api.opportify.ai', 'insights', '', 'https://api.opportify.ai/insights',
+            ],
+            'empty both' => [
+                'https://api.opportify.ai', '', '', 'https://api.opportify.ai',
+            ],
+            'host with trailing slash, others normal' => [
+                'https://api.opportify.ai/', 'insights', 'v1', 'https://api.opportify.ai/insights/v1',
+            ],
+            'prefix with slashes' => [
+                'https://api.opportify.ai', '/insights/', 'v1', 'https://api.opportify.ai/insights/v1',
+            ],
+            'version with slashes' => [
+                'https://api.opportify.ai', 'insights', '/v2/', 'https://api.opportify.ai/insights/v2',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider urlScenariosProvider
+     */
+    public function test_final_url_building($host, $prefix, $version, $expected)
+    {
+        $insights = new IpInsights('fake_api_key');
+
+        $insights->setHost($host);
+        $insights->setPrefix($prefix);
+        $insights->setVersion($version);
+
+        $reflection = new \ReflectionClass($insights);
+        $method = $reflection->getMethod('refreshApiInstance');
+        $method->setAccessible(true);
+        $method->invokeArgs($insights, []);
+
+        $property = $reflection->getProperty('finalUrl');
+        $property->setAccessible(true);
+        $this->assertEquals($expected, $property->getValue($insights));
+    }
 }

@@ -358,4 +358,53 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals('COMPLETED', $response->status);
         $this->assertEquals(100, $response->progress);
     }
+
+    public function urlScenariosProvider(): array
+    {
+        return [
+            'all segments' => [
+                'https://api.opportify.ai', 'insights', 'v1', 'https://api.opportify.ai/insights/v1',
+            ],
+            'empty prefix' => [
+                'https://api.opportify.ai', '', 'v1', 'https://api.opportify.ai/v1',
+            ],
+            'empty version' => [
+                'https://api.opportify.ai', 'insights', '', 'https://api.opportify.ai/insights',
+            ],
+            'empty both' => [
+                'https://api.opportify.ai', '', '', 'https://api.opportify.ai',
+            ],
+            'host with trailing slash, others normal' => [
+                'https://api.opportify.ai/', 'insights', 'v1', 'https://api.opportify.ai/insights/v1',
+            ],
+            'prefix with slashes' => [
+                'https://api.opportify.ai', '/insights/', 'v1', 'https://api.opportify.ai/insights/v1',
+            ],
+            'version with slashes' => [
+                'https://api.opportify.ai', 'insights', '/v2/', 'https://api.opportify.ai/insights/v2',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider urlScenariosProvider
+     */
+    public function test_final_url_building($host, $prefix, $version, $expected)
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $emailInsights->setHost($host);
+        $emailInsights->setPrefix($prefix);
+        $emailInsights->setVersion($version);
+
+        // Force refresh to rebuild apiInstance & finalUrl
+        $reflection = new \ReflectionClass($emailInsights);
+        $method = $reflection->getMethod('refreshApiInstance');
+        $method->setAccessible(true);
+        $method->invokeArgs($emailInsights, []);
+
+        $property = $reflection->getProperty('finalUrl');
+        $property->setAccessible(true);
+        $this->assertEquals($expected, $property->getValue($emailInsights));
+    }
 }
