@@ -36,6 +36,18 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals('v2', $property->getValue($emailInsights));
     }
 
+    public function test_set_prefix()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+        $emailInsights->setPrefix('new-prefix');
+
+        $reflection = new \ReflectionClass($emailInsights);
+        $property = $reflection->getProperty('prefix');
+        $property->setAccessible(true);
+
+        $this->assertEquals('new-prefix', $property->getValue($emailInsights));
+    }
+
     public function test_set_debug_mode()
     {
         $emailInsights = new EmailInsights('fake_api_key');

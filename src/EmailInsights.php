@@ -122,6 +122,21 @@ class EmailInsights
     }
 
     /**
+     * Set the prefix.
+     *
+     * @return $this
+     */
+    public function setPrefix(string $prefix): self
+    {
+        if ($this->prefix !== $prefix) {
+            $this->prefix = trim($prefix, '/');
+            $this->configChanged = true;
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the debug mode.
      *
      * @return $this
