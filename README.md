@@ -44,6 +44,7 @@ $params = [
 ];
 
 $result = $emailInsights->analyze($params);
+```
 
 ### Batch Analysis (Email & IP)
 
