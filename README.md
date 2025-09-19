@@ -46,6 +46,22 @@ $params = [
 $result = $emailInsights->analyze($params);
 ```
 
+### Calling IP Insights
+
+```php
+use Opportify\Sdk\IpInsights;
+
+$ipInsights = new IpInsights("<YOUR-KEY-HERE>");
+
+$params = [
+    "ip" => "3.1.122.82",
+    "enableAi" => true
+];
+
+$result = $ipInsights->analyze($params);
+```
+
+
 ### Batch Analysis (Email & IP)
 
 You can submit multiple emails or IPs in a single request. Batch jobs are processed asynchronously; the response returns a job identifier (`jobId`) you can poll for status.
@@ -137,22 +153,6 @@ $status = $ipInsights->getBatchStatus($batch->jobId);
 - Always wrap calls in a try-catch (see Error Handling) to capture API errors.
 - Polling cadence depends on payload size; a short delay (1–3s) between status checks is recommended.
 
-```
-
-### Calling IP Insights
-
-```php
-use Opportify\Sdk\IpInsights;
-
-$ipInsights = new IpInsights("<YOUR-KEY-HERE>");
-
-$params = [
-    "ip" => "3.1.122.82",
-    "enableAi" => true
-];
-
-$result = $ipInsights->analyze($params);
-```
 
 ### Enabling Debug Mode
 
