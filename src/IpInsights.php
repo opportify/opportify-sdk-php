@@ -122,6 +122,21 @@ class IpInsights
     }
 
     /**
+     * Sets the prefix.
+     *
+     * @return $this
+     */
+    public function setPrefix(string $prefix): self
+    {
+        if ($this->prefix !== $prefix) {
+            $this->prefix = trim($prefix, '/');
+            $this->configChanged = true;
+        }
+
+        return $this;
+    }
+
+    /**
      * Sets the debug mode.
      *
      * @return $this
