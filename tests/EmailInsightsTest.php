@@ -284,6 +284,35 @@ class EmailInsightsTest extends TestCase
         ], 'multipart/form-data');
     }
 
+    public function test_batch_analyze_multipart_throws_exception_when_file_cannot_be_opened()
+    {
+        // Skip this test on systems where we can't reliably create unreadable files
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $this->markTestSkipped('File permission tests not reliable on Windows');
+        }
+
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        // Create a file and remove read permissions to trigger fopen failure
+        $tempFile = sys_get_temp_dir().'/test_unreadable_file.csv';
+        file_put_contents($tempFile, 'test@example.com');
+        chmod($tempFile, 0000); // Remove all permissions
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unable to open file for reading: '.$tempFile);
+
+        try {
+            $emailInsights->batchAnalyze([
+                'file' => $tempFile,
+                'enableAi' => true,
+            ], 'multipart/form-data');
+        } finally {
+            // Clean up - restore permissions first
+            chmod($tempFile, 0644);
+            unlink($tempFile);
+        }
+    }
+
     public function test_batch_analyze_multipart_with_all_parameters()
     {
         $mockResponseData = [
