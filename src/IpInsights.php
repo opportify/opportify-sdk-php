@@ -190,7 +190,7 @@ class IpInsights
             }
 
             // Open file handle and check for errors
-            $fileHandle = @fopen($params['file'], 'r');
+            $fileHandle = fopen($params['file'], 'r');
             if ($fileHandle === false) {
                 throw new \InvalidArgumentException('Unable to open file for reading: '.$params['file']);
             }
