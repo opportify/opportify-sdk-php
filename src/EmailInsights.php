@@ -190,43 +190,54 @@ class EmailInsights
                 throw new \InvalidArgumentException('File parameter is required and must be a valid file path');
             }
 
-            $multipartContents = [
-                [
-                    'name' => 'file',
-                    'contents' => fopen($params['file'], 'r'),
-                    'filename' => basename($params['file']),
-                ],
-            ];
-
-            // Add optional parameters as separate parts
-            if (isset($params['enable_ai'])) {
-                $multipartContents[] = [
-                    'name' => 'enable_ai',
-                    'contents' => $params['enable_ai'] ? 'true' : 'false',
-                ];
-            } elseif (isset($params['enableAi'])) {
-                $multipartContents[] = [
-                    'name' => 'enable_ai',
-                    'contents' => $params['enableAi'] ? 'true' : 'false',
-                ];
+            // Open file handle and check for errors
+            $fileHandle = @fopen($params['file'], 'r');
+            if ($fileHandle === false) {
+                throw new \InvalidArgumentException('Unable to open file for reading: '.$params['file']);
             }
 
-            if (isset($params['enable_auto_correction'])) {
-                $multipartContents[] = [
-                    'name' => 'enable_auto_correction',
-                    'contents' => $params['enable_auto_correction'] ? 'true' : 'false',
+            try {
+                $multipartContents = [
+                    [
+                        'name' => 'file',
+                        'contents' => $fileHandle,
+                        'filename' => basename($params['file']),
+                    ],
                 ];
-            } elseif (isset($params['enableAutoCorrection'])) {
-                $multipartContents[] = [
-                    'name' => 'enable_auto_correction',
-                    'contents' => $params['enableAutoCorrection'] ? 'true' : 'false',
-                ];
+
+                // Add optional parameters as separate parts
+                if (isset($params['enable_ai'])) {
+                    $multipartContents[] = [
+                        'name' => 'enable_ai',
+                        'contents' => $params['enable_ai'] ? 'true' : 'false',
+                    ];
+                } elseif (isset($params['enableAi'])) {
+                    $multipartContents[] = [
+                        'name' => 'enable_ai',
+                        'contents' => $params['enableAi'] ? 'true' : 'false',
+                    ];
+                }
+
+                if (isset($params['enable_auto_correction'])) {
+                    $multipartContents[] = [
+                        'name' => 'enable_auto_correction',
+                        'contents' => $params['enable_auto_correction'] ? 'true' : 'false',
+                    ];
+                } elseif (isset($params['enableAutoCorrection'])) {
+                    $multipartContents[] = [
+                        'name' => 'enable_auto_correction',
+                        'contents' => $params['enableAutoCorrection'] ? 'true' : 'false',
+                    ];
+                }
+
+                // Create MultipartStream that OpenAPI client expects
+                $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
+
+                $result = $this->apiInstance->batchAnalyzeEmails($multipartStream, $contentType);
+            } finally {
+                // Always close the file handle to prevent resource leaks
+                fclose($fileHandle);
             }
-
-            // Create MultipartStream that OpenAPI client expects
-            $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
-
-            $result = $this->apiInstance->batchAnalyzeEmails($multipartStream, $contentType);
         } elseif ($contentType === 'text/plain') {
             // For plain text with one email per line
             if (!isset($params['text'])) {
