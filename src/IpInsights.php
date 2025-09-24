@@ -185,30 +185,46 @@ class IpInsights
             $batchAnalyzeIpsRequest = new BatchAnalyzeIpsRequest($params);
             $result = $this->apiInstance->batchAnalyzeIps($batchAnalyzeIpsRequest, $contentType);
         } elseif ($contentType === 'multipart/form-data') {
-            // For file uploads
             if (!isset($params['file']) || !file_exists($params['file'])) {
                 throw new \InvalidArgumentException('File parameter is required and must be a valid file path');
             }
 
-            // Create a multipart request with the file
-            $fileContent = file_get_contents($params['file']);
-            if ($fileContent === false) {
-                throw new \InvalidArgumentException('Unable to read file content');
+            // Open file handle and check for errors
+            $fileHandle = fopen($params['file'], 'r');
+            if ($fileHandle === false) {
+                throw new \InvalidArgumentException('Unable to open file for reading: '.$params['file']);
             }
 
-            // Create a new request with the file
-            $multipartParams = [
-                'file' => $fileContent,
-            ];
+            try {
+                // Create multipart contents array in the format expected by Guzzle MultipartStream
+                $multipartContents = [
+                    [
+                        'name' => 'file',
+                        'contents' => $fileHandle,
+                        'filename' => basename($params['file']),
+                    ],
+                ];
 
-            // Add optional parameters
-            if (isset($params['enable_ai'])) {
-                $multipartParams['enable_ai'] = $params['enable_ai'];
-            } elseif (isset($params['enableAi'])) {
-                $multipartParams['enable_ai'] = $params['enableAi'];
+                // Add optional parameters as separate parts
+                if (isset($params['enable_ai'])) {
+                    $multipartContents[] = [
+                        'name' => 'enable_ai',
+                        'contents' => $params['enable_ai'] ? 'true' : 'false',
+                    ];
+                } elseif (isset($params['enableAi'])) {
+                    $multipartContents[] = [
+                        'name' => 'enable_ai',
+                        'contents' => $params['enableAi'] ? 'true' : 'false',
+                    ];
+                }
+
+                $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
+
+                $result = $this->apiInstance->batchAnalyzeIps($multipartStream, $contentType);
+            } finally {
+                // Always close the file handle to prevent resource leaks
+                fclose($fileHandle);
             }
-
-            $result = $this->apiInstance->batchAnalyzeIps($multipartParams, $contentType);
         } elseif ($contentType === 'text/plain') {
             // For plain text with one IP per line
             if (!isset($params['text'])) {

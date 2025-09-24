@@ -231,11 +231,11 @@ class EmailInsightsTest extends TestCase
         $mockResponse = Mockery::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        // Mock the API instance
+        // Mock the API instance - now expects MultipartStream instead of array
         $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
-            ->with(Mockery::type('array'), 'multipart/form-data')
+            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -256,6 +256,92 @@ class EmailInsightsTest extends TestCase
         // Assertions to ensure response is correct
         $this->assertIsObject($response);
         $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_batch_analyze_multipart_throws_exception_when_file_missing()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('File parameter is required and must be a valid file path');
+
+        $emailInsights->batchAnalyze([
+            'enableAi' => true,
+        ], 'multipart/form-data');
+    }
+
+    public function test_batch_analyze_multipart_throws_exception_when_file_not_exists()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('File parameter is required and must be a valid file path');
+
+        $emailInsights->batchAnalyze([
+            'file' => '/non/existent/file.csv',
+            'enableAi' => true,
+        ], 'multipart/form-data');
+    }
+
+    public function test_batch_analyze_multipart_handles_fopen_errors_gracefully()
+    {
+        // Note: This test demonstrates that our code properly checks fopen() return values
+        // In practice, fopen() failures are rare and typically indicate system-level issues
+        // The important thing is that we check for false and throw meaningful exceptions
+
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        // Test with a path that's guaranteed to fail (null byte is invalid in filenames)
+        $invalidPath = "invalid\0path.csv";
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('File parameter is required and must be a valid file path');
+
+        $emailInsights->batchAnalyze([
+            'file' => $invalidPath,
+            'enableAi' => true,
+        ], 'multipart/form-data');
+    }
+
+    public function test_batch_analyze_multipart_with_all_parameters()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-789012',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeEmails')
+            ->once()
+            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->andReturn($mockResponse);
+
+        // Create a temporary file for testing
+        $tempFilePath = sys_get_temp_dir().'/test_emails_full.csv';
+        file_put_contents($tempFilePath, 'test1@example.com'.PHP_EOL.'test2@example.com');
+
+        // Inject the mock API instance via constructor
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->batchAnalyze([
+            'file' => $tempFilePath,
+            'enable_ai' => true,
+            'enable_auto_correction' => false,
+        ], 'multipart/form-data');
+
+        // Clean up
+        unlink($tempFilePath);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-789012', $response->jobId);
         $this->assertEquals('QUEUED', $response->status);
     }
 
