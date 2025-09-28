@@ -218,6 +218,14 @@ class IpInsights
                     ];
                 }
 
+                // Add name parameter if provided
+                if (isset($params['name'])) {
+                    $multipartContents[] = [
+                        'name' => 'name',
+                        'contents' => (string) $params['name'],
+                    ];
+                }
+
                 $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
 
                 $result = $this->apiInstance->batchAnalyzeIps($multipartStream, $contentType);
@@ -313,6 +321,11 @@ class IpInsights
 
         if (isset($params['enable_ai'])) {
             $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+        }
+
+        // Add name parameter if provided
+        if (isset($params['name'])) {
+            $normalized['name'] = (string) $params['name'];
         }
 
         return $normalized;

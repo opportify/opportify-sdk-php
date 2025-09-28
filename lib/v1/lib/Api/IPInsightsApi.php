@@ -137,7 +137,7 @@ class IPInsightsApi
      *
      * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  analyze_ip_request (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\AnalyzeIp404Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeIp500Response
+     * @return \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\NOTFOUND|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\INTERNALERROR
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
@@ -156,7 +156,7 @@ class IPInsightsApi
      *
      * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
-     * @return array of \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\AnalyzeIp404Response|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\AnalyzeIp500Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\NOTFOUND|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\INTERNALERROR, HTTP status code, HTTP response headers (array of strings)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
@@ -243,11 +243,11 @@ class IPInsightsApi
                         $response->getHeaders(),
                     ];
                 case 404:
-                    if ('\OpenAPI\Client\Model\AnalyzeIp404Response' === '\SplFileObject') {
+                    if ('\OpenAPI\Client\Model\NOTFOUND' === '\SplFileObject') {
                         $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
-                        if ('\OpenAPI\Client\Model\AnalyzeIp404Response' !== 'string') {
+                        if ('\OpenAPI\Client\Model\NOTFOUND' !== 'string') {
                             try {
                                 $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
                             } catch (\JsonException $exception) {
@@ -265,7 +265,7 @@ class IPInsightsApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeIp404Response', []),
+                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\NOTFOUND', []),
                         $response->getStatusCode(),
                         $response->getHeaders(),
                     ];
@@ -297,11 +297,11 @@ class IPInsightsApi
                         $response->getHeaders(),
                     ];
                 case 500:
-                    if ('\OpenAPI\Client\Model\AnalyzeIp500Response' === '\SplFileObject') {
+                    if ('\OpenAPI\Client\Model\INTERNALERROR' === '\SplFileObject') {
                         $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
-                        if ('\OpenAPI\Client\Model\AnalyzeIp500Response' !== 'string') {
+                        if ('\OpenAPI\Client\Model\INTERNALERROR' !== 'string') {
                             try {
                                 $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
                             } catch (\JsonException $exception) {
@@ -319,7 +319,7 @@ class IPInsightsApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\AnalyzeIp500Response', []),
+                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\INTERNALERROR', []),
                         $response->getStatusCode(),
                         $response->getHeaders(),
                     ];
@@ -387,7 +387,7 @@ class IPInsightsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\AnalyzeIp404Response',
+                        '\OpenAPI\Client\Model\NOTFOUND',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -403,7 +403,7 @@ class IPInsightsApi
                 case 500:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\AnalyzeIp500Response',
+                        '\OpenAPI\Client\Model\INTERNALERROR',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -585,7 +585,7 @@ class IPInsightsApi
      *
      * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  batch_analyze_ips_request (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\BatchAnalyzeEmails202Response|\OpenAPI\Client\Model\BatchAnalyzeIps400Response|\OpenAPI\Client\Model\BatchAnalyzeEmails413Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
+     * @return \OpenAPI\Client\Model\BatchAnalyzeIps202Response|\OpenAPI\Client\Model\BatchAnalyzeIps400Response|\OpenAPI\Client\Model\BatchAnalyzeEmails413Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
@@ -604,7 +604,7 @@ class IPInsightsApi
      *
      * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
-     * @return array of \OpenAPI\Client\Model\BatchAnalyzeEmails202Response|\OpenAPI\Client\Model\BatchAnalyzeIps400Response|\OpenAPI\Client\Model\BatchAnalyzeEmails413Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAPI\Client\Model\BatchAnalyzeIps202Response|\OpenAPI\Client\Model\BatchAnalyzeIps400Response|\OpenAPI\Client\Model\BatchAnalyzeEmails413Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
@@ -637,11 +637,11 @@ class IPInsightsApi
 
             switch ($statusCode) {
                 case 202:
-                    if ('\OpenAPI\Client\Model\BatchAnalyzeEmails202Response' === '\SplFileObject') {
+                    if ('\OpenAPI\Client\Model\BatchAnalyzeIps202Response' === '\SplFileObject') {
                         $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
-                        if ('\OpenAPI\Client\Model\BatchAnalyzeEmails202Response' !== 'string') {
+                        if ('\OpenAPI\Client\Model\BatchAnalyzeIps202Response' !== 'string') {
                             try {
                                 $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
                             } catch (\JsonException $exception) {
@@ -659,7 +659,7 @@ class IPInsightsApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\BatchAnalyzeEmails202Response', []),
+                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\BatchAnalyzeIps202Response', []),
                         $response->getStatusCode(),
                         $response->getHeaders(),
                     ];
@@ -786,7 +786,7 @@ class IPInsightsApi
                 );
             }
 
-            $returnType = '\OpenAPI\Client\Model\BatchAnalyzeEmails202Response';
+            $returnType = '\OpenAPI\Client\Model\BatchAnalyzeIps202Response';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); // stream goes to serializer
             } else {
@@ -819,7 +819,7 @@ class IPInsightsApi
                 case 202:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\BatchAnalyzeEmails202Response',
+                        '\OpenAPI\Client\Model\BatchAnalyzeIps202Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -895,7 +895,7 @@ class IPInsightsApi
      */
     public function batchAnalyzeIpsAsyncWithHttpInfo($batch_analyze_ips_request, string $contentType = self::contentTypes['batchAnalyzeIps'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\BatchAnalyzeEmails202Response';
+        $returnType = '\OpenAPI\Client\Model\BatchAnalyzeIps202Response';
         $request = $this->batchAnalyzeIpsRequest($batch_analyze_ips_request, $contentType);
 
         return $this->client
@@ -1033,7 +1033,7 @@ class IPInsightsApi
      *
      * @param  string  $job_id  The unique identifier of the batch job to retrieve status for. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\GetEmailBatchStatus200Response|\OpenAPI\Client\Model\GetEmailBatchStatus404Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
+     * @return \OpenAPI\Client\Model\GetIpBatchStatus200Response|\OpenAPI\Client\Model\GetEmailBatchStatus404Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
@@ -1052,7 +1052,7 @@ class IPInsightsApi
      *
      * @param  string  $job_id  The unique identifier of the batch job to retrieve status for. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
-     * @return array of \OpenAPI\Client\Model\GetEmailBatchStatus200Response|\OpenAPI\Client\Model\GetEmailBatchStatus404Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAPI\Client\Model\GetIpBatchStatus200Response|\OpenAPI\Client\Model\GetEmailBatchStatus404Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
      *
      * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
@@ -1085,11 +1085,11 @@ class IPInsightsApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\GetEmailBatchStatus200Response' === '\SplFileObject') {
+                    if ('\OpenAPI\Client\Model\GetIpBatchStatus200Response' === '\SplFileObject') {
                         $content = $response->getBody(); // stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
-                        if ('\OpenAPI\Client\Model\GetEmailBatchStatus200Response' !== 'string') {
+                        if ('\OpenAPI\Client\Model\GetIpBatchStatus200Response' !== 'string') {
                             try {
                                 $content = json_decode($content, false, 512, JSON_THROW_ON_ERROR);
                             } catch (\JsonException $exception) {
@@ -1107,7 +1107,7 @@ class IPInsightsApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\GetEmailBatchStatus200Response', []),
+                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\GetIpBatchStatus200Response', []),
                         $response->getStatusCode(),
                         $response->getHeaders(),
                     ];
@@ -1207,7 +1207,7 @@ class IPInsightsApi
                 );
             }
 
-            $returnType = '\OpenAPI\Client\Model\GetEmailBatchStatus200Response';
+            $returnType = '\OpenAPI\Client\Model\GetIpBatchStatus200Response';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); // stream goes to serializer
             } else {
@@ -1240,7 +1240,7 @@ class IPInsightsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEmailBatchStatus200Response',
+                        '\OpenAPI\Client\Model\GetIpBatchStatus200Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1308,7 +1308,7 @@ class IPInsightsApi
      */
     public function getIpBatchStatusAsyncWithHttpInfo($job_id, string $contentType = self::contentTypes['getIpBatchStatus'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEmailBatchStatus200Response';
+        $returnType = '\OpenAPI\Client\Model\GetIpBatchStatus200Response';
         $request = $this->getIpBatchStatusRequest($job_id, $contentType);
 
         return $this->client

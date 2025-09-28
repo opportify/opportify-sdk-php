@@ -1,12 +1,14 @@
 <?php
+
 /**
  * BatchAnalyzeEmails413Response
  *
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -28,63 +30,70 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * BatchAnalyzeEmails413Response Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \JsonSerializable
+class BatchAnalyzeEmails413Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
+     * The original name of the model.
+     *
+     * @var string
+     */
     protected static $openAPIModelName = 'batchAnalyzeEmails_413_response';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
-        'error' => '\OpenAPI\Client\Model\BatchAnalyzeEmails413ResponseError'
+        'error_message' => 'string',
+        'error_code' => 'string',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
-        'error' => null
+        'error_message' => null,
+        'error_code' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
-        'error' => false
+        'error_message' => false,
+        'error_code' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -109,8 +118,6 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -120,7 +127,7 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -130,7 +137,7 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -139,9 +146,6 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -150,9 +154,6 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -166,7 +167,8 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
      * @var string[]
      */
     protected static $attributeMap = [
-        'error' => 'error'
+        'error_message' => 'errorMessage',
+        'error_code' => 'errorCode',
     ];
 
     /**
@@ -175,7 +177,8 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
      * @var string[]
      */
     protected static $setters = [
-        'error' => 'setError'
+        'error_message' => 'setErrorMessage',
+        'error_code' => 'setErrorCode',
     ];
 
     /**
@@ -184,7 +187,8 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
      * @var string[]
      */
     protected static $getters = [
-        'error' => 'getError'
+        'error_message' => 'getErrorMessage',
+        'error_code' => 'getErrorCode',
     ];
 
     /**
@@ -228,7 +232,6 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -239,23 +242,22 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
     /**
      * Constructor
      *
-     * @param mixed[]|null $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]|null  $data  Associated array of property values
+     *                              initializing the model
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('error', $data ?? [], null);
+        $this->setIfExists('error_message', $data ?? [], null);
+        $this->setIfExists('error_code', $data ?? [], null);
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -288,39 +290,62 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
-     * Gets error
+     * Gets error_message
      *
-     * @return \OpenAPI\Client\Model\BatchAnalyzeEmails413ResponseError|null
+     * @return string|null
      */
-    public function getError()
+    public function getErrorMessage()
     {
-        return $this->container['error'];
+        return $this->container['error_message'];
     }
 
     /**
-     * Sets error
+     * Sets error_message
      *
-     * @param \OpenAPI\Client\Model\BatchAnalyzeEmails413ResponseError|null $error error
-     *
+     * @param  string|null  $error_message  error_message
      * @return self
      */
-    public function setError($error)
+    public function setErrorMessage($error_message)
     {
-        if (is_null($error)) {
-            throw new \InvalidArgumentException('non-nullable error cannot be null');
+        if (is_null($error_message)) {
+            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
         }
-        $this->container['error'] = $error;
+        $this->container['error_message'] = $error_message;
 
         return $this;
     }
+
+    /**
+     * Gets error_code
+     *
+     * @return string|null
+     */
+    public function getErrorCode()
+    {
+        return $this->container['error_code'];
+    }
+
+    /**
+     * Sets error_code
+     *
+     * @param  string|null  $error_code  error_code
+     * @return self
+     */
+    public function setErrorCode($error_code)
+    {
+        if (is_null($error_code)) {
+            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
+        }
+        $this->container['error_code'] = $error_code;
+
+        return $this;
+    }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -330,8 +355,7 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -343,10 +367,8 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -360,9 +382,7 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -371,15 +391,16 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -405,5 +426,3 @@ class BatchAnalyzeEmails413Response implements ModelInterface, ArrayAccess, \Jso
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

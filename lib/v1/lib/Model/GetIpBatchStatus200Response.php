@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechContact
+ * GetIpBatchStatus200Response
  *
  * PHP version 7.4
  *
@@ -34,11 +34,9 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * TechContact Class Doc Comment
+ * GetIpBatchStatus200Response Class Doc Comment
  *
  * @category Class
- *
- * @description Tech contact details.
  *
  * @author   OpenAPI Generator team
  *
@@ -46,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
+class GetIpBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -55,7 +53,7 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      *
      * @var string
      */
-    protected static $openAPIModelName = 'TechContact';
+    protected static $openAPIModelName = 'getIpBatchStatus_200_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -63,13 +61,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      * @var string[]
      */
     protected static $openAPITypes = [
-        'contact_id' => 'string',
-        'contact_type' => 'string',
+        'job_id' => 'string',
         'name' => 'string',
-        'address' => 'string[]',
-        'phone' => 'string[]',
-        'fax' => 'string[]',
-        'email' => 'string[]',
+        'status' => 'string',
+        'status_description' => 'string',
+        'progress' => 'int',
+        'download_urls' => '\OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls',
     ];
 
     /**
@@ -82,13 +79,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'contact_id' => null,
-        'contact_type' => null,
+        'job_id' => null,
         'name' => null,
-        'address' => null,
-        'phone' => null,
-        'fax' => null,
-        'email' => null,
+        'status' => null,
+        'status_description' => null,
+        'progress' => null,
+        'download_urls' => null,
     ];
 
     /**
@@ -97,13 +93,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'contact_id' => false,
-        'contact_type' => false,
+        'job_id' => false,
         'name' => false,
-        'address' => false,
-        'phone' => false,
-        'fax' => false,
-        'email' => false,
+        'status' => false,
+        'status_description' => false,
+        'progress' => false,
+        'download_urls' => false,
     ];
 
     /**
@@ -184,13 +179,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      * @var string[]
      */
     protected static $attributeMap = [
-        'contact_id' => 'contactId',
-        'contact_type' => 'contactType',
+        'job_id' => 'jobId',
         'name' => 'name',
-        'address' => 'address',
-        'phone' => 'phone',
-        'fax' => 'fax',
-        'email' => 'email',
+        'status' => 'status',
+        'status_description' => 'statusDescription',
+        'progress' => 'progress',
+        'download_urls' => 'downloadUrls',
     ];
 
     /**
@@ -199,13 +193,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      * @var string[]
      */
     protected static $setters = [
-        'contact_id' => 'setContactId',
-        'contact_type' => 'setContactType',
+        'job_id' => 'setJobId',
         'name' => 'setName',
-        'address' => 'setAddress',
-        'phone' => 'setPhone',
-        'fax' => 'setFax',
-        'email' => 'setEmail',
+        'status' => 'setStatus',
+        'status_description' => 'setStatusDescription',
+        'progress' => 'setProgress',
+        'download_urls' => 'setDownloadUrls',
     ];
 
     /**
@@ -214,13 +207,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      * @var string[]
      */
     protected static $getters = [
-        'contact_id' => 'getContactId',
-        'contact_type' => 'getContactType',
+        'job_id' => 'getJobId',
         'name' => 'getName',
-        'address' => 'getAddress',
-        'phone' => 'getPhone',
-        'fax' => 'getFax',
-        'email' => 'getEmail',
+        'status' => 'getStatus',
+        'status_description' => 'getStatusDescription',
+        'progress' => 'getProgress',
+        'download_urls' => 'getDownloadUrls',
     ];
 
     /**
@@ -264,6 +256,29 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
+    public const STATUS_QUEUED = 'QUEUED';
+
+    public const STATUS_PROCESSING = 'PROCESSING';
+
+    public const STATUS_COMPLETED = 'COMPLETED';
+
+    public const STATUS_ERROR = 'ERROR';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_QUEUED,
+            self::STATUS_PROCESSING,
+            self::STATUS_COMPLETED,
+            self::STATUS_ERROR,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -279,13 +294,12 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('contact_id', $data ?? [], null);
-        $this->setIfExists('contact_type', $data ?? [], null);
+        $this->setIfExists('job_id', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('address', $data ?? [], null);
-        $this->setIfExists('phone', $data ?? [], null);
-        $this->setIfExists('fax', $data ?? [], null);
-        $this->setIfExists('email', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
+        $this->setIfExists('status_description', $data ?? [], null);
+        $this->setIfExists('progress', $data ?? [], null);
+        $this->setIfExists('download_urls', $data ?? [], null);
     }
 
     /**
@@ -313,6 +327,15 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
     {
         $invalidProperties = [];
 
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -328,53 +351,27 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
     }
 
     /**
-     * Gets contact_id
+     * Gets job_id
      *
      * @return string|null
      */
-    public function getContactId()
+    public function getJobId()
     {
-        return $this->container['contact_id'];
+        return $this->container['job_id'];
     }
 
     /**
-     * Sets contact_id
+     * Sets job_id
      *
-     * @param  string|null  $contact_id  Unique identifier for the tech contact.
+     * @param  string|null  $job_id  Unique identifier for the batch job.
      * @return self
      */
-    public function setContactId($contact_id)
+    public function setJobId($job_id)
     {
-        if (is_null($contact_id)) {
-            throw new \InvalidArgumentException('non-nullable contact_id cannot be null');
+        if (is_null($job_id)) {
+            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
         }
-        $this->container['contact_id'] = $contact_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets contact_type
-     *
-     * @return string|null
-     */
-    public function getContactType()
-    {
-        return $this->container['contact_type'];
-    }
-
-    /**
-     * Sets contact_type
-     *
-     * @param  string|null  $contact_type  Type of contact (e.g., \"tech\").
-     * @return self
-     */
-    public function setContactType($contact_type)
-    {
-        if (is_null($contact_type)) {
-            throw new \InvalidArgumentException('non-nullable contact_type cannot be null');
-        }
-        $this->container['contact_type'] = $contact_type;
+        $this->container['job_id'] = $job_id;
 
         return $this;
     }
@@ -392,7 +389,7 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets name
      *
-     * @param  string|null  $name  Name of the tech contact.
+     * @param  string|null  $name  Name of the batch job, if provided.
      * @return self
      */
     public function setName($name)
@@ -406,105 +403,115 @@ class TechContact implements \JsonSerializable, ArrayAccess, ModelInterface
     }
 
     /**
-     * Gets address
+     * Gets status
      *
-     * @return string[]|null
+     * @return string|null
      */
-    public function getAddress()
+    public function getStatus()
     {
-        return $this->container['address'];
+        return $this->container['status'];
     }
 
     /**
-     * Sets address
+     * Sets status
      *
-     * @param  string[]|null  $address  Tech contact address details.
+     * @param  string|null  $status  Current status of the batch job.
      * @return self
      */
-    public function setAddress($address)
+    public function setStatus($status)
     {
-        if (is_null($address)) {
-            throw new \InvalidArgumentException('non-nullable address cannot be null');
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
         }
-        $this->container['address'] = $address;
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
 
         return $this;
     }
 
     /**
-     * Gets phone
+     * Gets status_description
      *
-     * @return string[]|null
+     * @return string|null
      */
-    public function getPhone()
+    public function getStatusDescription()
     {
-        return $this->container['phone'];
+        return $this->container['status_description'];
     }
 
     /**
-     * Sets phone
+     * Sets status_description
      *
-     * @param  string[]|null  $phone  Contact phone numbers for tech issues.
+     * @param  string|null  $status_description  Description of the status, particularly useful when status is ERROR.
      * @return self
      */
-    public function setPhone($phone)
+    public function setStatusDescription($status_description)
     {
-        if (is_null($phone)) {
-            throw new \InvalidArgumentException('non-nullable phone cannot be null');
+        if (is_null($status_description)) {
+            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
         }
-        $this->container['phone'] = $phone;
+        $this->container['status_description'] = $status_description;
 
         return $this;
     }
 
     /**
-     * Gets fax
+     * Gets progress
      *
-     * @return string[]|null
+     * @return int|null
      */
-    public function getFax()
+    public function getProgress()
     {
-        return $this->container['fax'];
+        return $this->container['progress'];
     }
 
     /**
-     * Sets fax
+     * Sets progress
      *
-     * @param  string[]|null  $fax  Contact fax numbers for tech issues.
+     * @param  int|null  $progress  Percentage of completion for the batch job (0-100).
      * @return self
      */
-    public function setFax($fax)
+    public function setProgress($progress)
     {
-        if (is_null($fax)) {
-            throw new \InvalidArgumentException('non-nullable fax cannot be null');
+        if (is_null($progress)) {
+            throw new \InvalidArgumentException('non-nullable progress cannot be null');
         }
-        $this->container['fax'] = $fax;
+        $this->container['progress'] = $progress;
 
         return $this;
     }
 
     /**
-     * Gets email
+     * Gets download_urls
      *
-     * @return string[]|null
+     * @return \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null
      */
-    public function getEmail()
+    public function getDownloadUrls()
     {
-        return $this->container['email'];
+        return $this->container['download_urls'];
     }
 
     /**
-     * Sets email
+     * Sets download_urls
      *
-     * @param  string[]|null  $email  Contact email addresses for tech issues.
+     * @param  \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null  $download_urls  download_urls
      * @return self
      */
-    public function setEmail($email)
+    public function setDownloadUrls($download_urls)
     {
-        if (is_null($email)) {
-            throw new \InvalidArgumentException('non-nullable email cannot be null');
+        if (is_null($download_urls)) {
+            throw new \InvalidArgumentException('non-nullable download_urls cannot be null');
         }
-        $this->container['email'] = $email;
+        $this->container['download_urls'] = $download_urls;
 
         return $this;
     }

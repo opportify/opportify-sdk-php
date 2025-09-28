@@ -458,6 +458,135 @@ class IpInsightsTest extends TestCase
         $this->assertEquals(100, $response->progress);
     }
 
+    public function test_batch_analyze_with_name_parameter_json()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'name' => 'Network Security Scan',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(IPInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $ipInsights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $ipInsights->batchAnalyze([
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'name' => 'Network Security Scan',
+            'enableAi' => true,
+        ]);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('Network Security Scan', $response->name);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_batch_analyze_with_name_parameter_multipart()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'name' => 'IP List Analysis',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance - expects MultipartStream with name parameter
+        $mockApiInstance = Mockery::mock(IPInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->andReturn($mockResponse);
+
+        // Create a temporary file for testing
+        $tempFilePath = sys_get_temp_dir().'/test_ips_with_name.csv';
+        file_put_contents($tempFilePath, '192.168.1.1'.PHP_EOL.'10.0.0.1');
+
+        try {
+            // Inject the mock API instance via constructor
+            $ipInsights = new IpInsights('fake_api_key', $mockApiInstance);
+
+            $response = $ipInsights->batchAnalyze([
+                'file' => $tempFilePath,
+                'name' => 'IP List Analysis',
+                'enableAi' => true,
+            ], 'multipart/form-data');
+
+            // Assertions to ensure response is correct
+            $this->assertIsObject($response);
+            $this->assertEquals('job-123456', $response->jobId);
+            $this->assertEquals('IP List Analysis', $response->name);
+            $this->assertEquals('QUEUED', $response->status);
+        } finally {
+            // Clean up the temporary file
+            if (file_exists($tempFilePath)) {
+                unlink($tempFilePath);
+            }
+        }
+    }
+
+    public function test_normalize_batch_request_with_name()
+    {
+        $ipInsights = new IpInsights('fake_api_key');
+
+        $input = [
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'name' => 'Security Audit',
+            'enableAi' => true,
+        ];
+
+        $expectedOutput = [
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'name' => 'Security Audit',
+            'enable_ai' => true,
+        ];
+
+        $reflection = new \ReflectionClass($ipInsights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($ipInsights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+    }
+
+    public function test_normalize_batch_request_without_name()
+    {
+        $ipInsights = new IpInsights('fake_api_key');
+
+        $input = [
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'enableAi' => true,
+        ];
+
+        $expectedOutput = [
+            'ips' => ['192.168.1.1', '10.0.0.1'],
+            'enable_ai' => true,
+        ];
+
+        $reflection = new \ReflectionClass($ipInsights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($ipInsights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+        $this->assertArrayNotHasKey('name', $normalized);
+    }
+
     public function urlScenariosProvider(): array
     {
         return [

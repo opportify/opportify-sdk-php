@@ -78,6 +78,7 @@ $params = [
         'one@example.com',
         'two@example.org'
     ],
+    'name' => 'Customer Email Validation', // Optional: descriptive name for the job
     'enableAi' => true,
     'enableAutoCorrection' => true
 ];
@@ -103,6 +104,7 @@ Supply a `.csv` (one email per row; header optional) via `batchAnalyzeFile()`. A
 
 ```php
 $batch = $emailInsights->batchAnalyzeFile(__DIR__.'/emails.csv', [
+    'name' => 'Monthly Email Cleanup', // Optional: descriptive name for the job
     'enableAi' => true,
     'enableAutoCorrection' => true
 ]);
@@ -121,6 +123,7 @@ $params = [
         '1.1.1.1',
         '8.8.8.8'
     ],
+    'name' => 'Network Security Scan', // Optional: descriptive name for the job
     'enableAi' => true
 ];
 
@@ -140,6 +143,7 @@ $status = $ipInsights->getBatchStatus($batch->jobId);
 
 ```php
 $batch = $ipInsights->batchAnalyzeFile(__DIR__.'/ips.csv', [
+    'name' => 'Firewall IP Assessment', // Optional: descriptive name for the job
     'enableAi' => true
 ]);
 $status = $ipInsights->getBatchStatus($batch->jobId);
@@ -149,6 +153,7 @@ $status = $ipInsights->getBatchStatus($batch->jobId);
 - `batchAnalyzeFile()` auto-selects content type: `.csv` -> `multipart/form-data`; otherwise `text/plain`.
 - For `text/plain`, pass newline-delimited values via the `text` key.
 - For `multipart/form-data`, pass a readable file path via the `file` key (handled internally by `batchAnalyzeFile()`).
+- The `name` parameter is optional for all batch operations and helps with job identification and tracking.
 - `enableAutoCorrection` applies only to Email Insights.
 - Always wrap calls in a try-catch (see Error Handling) to capture API errors.
 - Polling cadence depends on payload size; a short delay (1–3s) between status checks is recommended.
