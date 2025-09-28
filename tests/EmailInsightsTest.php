@@ -445,6 +445,141 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals(100, $response->progress);
     }
 
+    public function test_batch_analyze_with_name_parameter_json()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'name' => 'My Email Batch Job',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeEmails')
+            ->once()
+            ->andReturn($mockResponse);
+
+        // Inject the mock API instance via constructor
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->batchAnalyze([
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'name' => 'My Email Batch Job',
+            'enableAi' => true,
+            'enableAutoCorrection' => false,
+        ]);
+
+        // Assertions to ensure response is correct
+        $this->assertIsObject($response);
+        $this->assertEquals('job-123456', $response->jobId);
+        $this->assertEquals('My Email Batch Job', $response->name);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_batch_analyze_with_name_parameter_multipart()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-123456',
+            'name' => 'CSV Import Job',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance - expects MultipartStream with name parameter
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeEmails')
+            ->once()
+            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->andReturn($mockResponse);
+
+        // Create a temporary file for testing
+        $tempFilePath = sys_get_temp_dir().'/test_emails_with_name.csv';
+        file_put_contents($tempFilePath, 'test1@example.com'.PHP_EOL.'test2@example.com');
+
+        try {
+            // Inject the mock API instance via constructor
+            $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+            $response = $emailInsights->batchAnalyze([
+                'file' => $tempFilePath,
+                'name' => 'CSV Import Job',
+                'enableAi' => true,
+                'enableAutoCorrection' => false,
+            ], 'multipart/form-data');
+
+            // Assertions to ensure response is correct
+            $this->assertIsObject($response);
+            $this->assertEquals('job-123456', $response->jobId);
+            $this->assertEquals('CSV Import Job', $response->name);
+            $this->assertEquals('QUEUED', $response->status);
+        } finally {
+            // Clean up the temporary file
+            if (file_exists($tempFilePath)) {
+                unlink($tempFilePath);
+            }
+        }
+    }
+
+    public function test_normalize_batch_request_with_name()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $input = [
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'name' => 'Test Batch Job',
+            'enableAi' => true,
+            'enableAutoCorrection' => false,
+        ];
+
+        $expectedOutput = [
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'name' => 'Test Batch Job',
+            'enable_ai' => true,
+            'enable_auto_correction' => false,
+        ];
+
+        $reflection = new \ReflectionClass($emailInsights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($emailInsights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+    }
+
+    public function test_normalize_batch_request_without_name()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $input = [
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'enableAi' => true,
+            'enableAutoCorrection' => false,
+        ];
+
+        $expectedOutput = [
+            'emails' => ['test1@example.com', 'test2@example.com'],
+            'enable_ai' => true,
+            'enable_auto_correction' => false,
+        ];
+
+        $reflection = new \ReflectionClass($emailInsights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($emailInsights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+        $this->assertArrayNotHasKey('name', $normalized);
+    }
+
     public function urlScenariosProvider(): array
     {
         return [

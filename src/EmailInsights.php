@@ -230,6 +230,14 @@ class EmailInsights
                     ];
                 }
 
+                // Add name parameter if provided
+                if (isset($params['name'])) {
+                    $multipartContents[] = [
+                        'name' => 'name',
+                        'contents' => (string) $params['name'],
+                    ];
+                }
+
                 // Create MultipartStream that OpenAPI client expects
                 $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
 
@@ -341,6 +349,11 @@ class EmailInsights
 
         if (isset($params['enable_auto_correction'])) {
             $normalized['enable_auto_correction'] = filter_var($params['enable_auto_correction'], FILTER_VALIDATE_BOOLEAN);
+        }
+
+        // Add name parameter if provided
+        if (isset($params['name'])) {
+            $normalized['name'] = (string) $params['name'];
         }
 
         return $normalized;
