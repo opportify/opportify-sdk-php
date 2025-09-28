@@ -62,6 +62,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     protected static $openAPITypes = [
         'job_id' => 'string',
+        'name' => 'string',
         'status' => 'string',
         'status_description' => 'string',
     ];
@@ -77,6 +78,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     protected static $openAPIFormats = [
         'job_id' => null,
+        'name' => null,
         'status' => null,
         'status_description' => null,
     ];
@@ -88,6 +90,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     protected static array $openAPINullables = [
         'job_id' => false,
+        'name' => false,
         'status' => false,
         'status_description' => false,
     ];
@@ -171,6 +174,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     protected static $attributeMap = [
         'job_id' => 'jobId',
+        'name' => 'name',
         'status' => 'status',
         'status_description' => 'statusDescription',
     ];
@@ -182,6 +186,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     protected static $setters = [
         'job_id' => 'setJobId',
+        'name' => 'setName',
         'status' => 'setStatus',
         'status_description' => 'setStatusDescription',
     ];
@@ -193,6 +198,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
      */
     protected static $getters = [
         'job_id' => 'getJobId',
+        'name' => 'getName',
         'status' => 'getStatus',
         'status_description' => 'getStatusDescription',
     ];
@@ -277,6 +283,7 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
     public function __construct(?array $data = null)
     {
         $this->setIfExists('job_id', $data ?? [], null);
+        $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
         $this->setIfExists('status_description', $data ?? [], null);
     }
@@ -351,6 +358,32 @@ class BatchAnalyzeEmails202Response implements \JsonSerializable, ArrayAccess, M
             throw new \InvalidArgumentException('non-nullable job_id cannot be null');
         }
         $this->container['job_id'] = $job_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     *
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     *
+     * @param  string|null  $name  Name of the batch job, if provided.
+     * @return self
+     */
+    public function setName($name)
+    {
+        if (is_null($name)) {
+            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        }
+        $this->container['name'] = $name;
 
         return $this;
     }

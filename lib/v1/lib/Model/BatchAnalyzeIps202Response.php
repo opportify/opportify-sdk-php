@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchAnalyzeEmailsRequest
+ * BatchAnalyzeIps202Response
  *
  * PHP version 7.4
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * BatchAnalyzeEmailsRequest Class Doc Comment
+ * BatchAnalyzeIps202Response Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, ModelInterface
+class BatchAnalyzeIps202Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      *
      * @var string
      */
-    protected static $openAPIModelName = 'batchAnalyzeEmails_request';
+    protected static $openAPIModelName = 'batchAnalyzeIps_202_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,10 +61,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      * @var string[]
      */
     protected static $openAPITypes = [
-        'emails' => 'string[]',
+        'job_id' => 'string',
         'name' => 'string',
-        'enable_ai' => 'bool',
-        'enable_auto_correction' => 'bool',
+        'status' => 'string',
+        'status_description' => 'string',
     ];
 
     /**
@@ -77,10 +77,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'emails' => null,
+        'job_id' => null,
         'name' => null,
-        'enable_ai' => null,
-        'enable_auto_correction' => null,
+        'status' => null,
+        'status_description' => null,
     ];
 
     /**
@@ -89,10 +89,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'emails' => false,
+        'job_id' => false,
         'name' => false,
-        'enable_ai' => false,
-        'enable_auto_correction' => false,
+        'status' => false,
+        'status_description' => false,
     ];
 
     /**
@@ -173,10 +173,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      * @var string[]
      */
     protected static $attributeMap = [
-        'emails' => 'emails',
+        'job_id' => 'jobId',
         'name' => 'name',
-        'enable_ai' => 'enableAI',
-        'enable_auto_correction' => 'enableAutoCorrection',
+        'status' => 'status',
+        'status_description' => 'statusDescription',
     ];
 
     /**
@@ -185,10 +185,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      * @var string[]
      */
     protected static $setters = [
-        'emails' => 'setEmails',
+        'job_id' => 'setJobId',
         'name' => 'setName',
-        'enable_ai' => 'setEnableAi',
-        'enable_auto_correction' => 'setEnableAutoCorrection',
+        'status' => 'setStatus',
+        'status_description' => 'setStatusDescription',
     ];
 
     /**
@@ -197,10 +197,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      * @var string[]
      */
     protected static $getters = [
-        'emails' => 'getEmails',
+        'job_id' => 'getJobId',
         'name' => 'getName',
-        'enable_ai' => 'getEnableAi',
-        'enable_auto_correction' => 'getEnableAutoCorrection',
+        'status' => 'getStatus',
+        'status_description' => 'getStatusDescription',
     ];
 
     /**
@@ -244,6 +244,29 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
         return self::$openAPIModelName;
     }
 
+    public const STATUS_QUEUED = 'QUEUED';
+
+    public const STATUS_PROCESSING = 'PROCESSING';
+
+    public const STATUS_COMPLETED = 'COMPLETED';
+
+    public const STATUS_ERROR = 'ERROR';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_QUEUED,
+            self::STATUS_PROCESSING,
+            self::STATUS_COMPLETED,
+            self::STATUS_ERROR,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -259,10 +282,10 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('emails', $data ?? [], null);
+        $this->setIfExists('job_id', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('enable_ai', $data ?? [], null);
-        $this->setIfExists('enable_auto_correction', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
+        $this->setIfExists('status_description', $data ?? [], null);
     }
 
     /**
@@ -290,8 +313,13 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
     {
         $invalidProperties = [];
 
-        if ($this->container['emails'] === null) {
-            $invalidProperties[] = "'emails' can't be null";
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
         }
 
         return $invalidProperties;
@@ -309,27 +337,27 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
     }
 
     /**
-     * Gets emails
+     * Gets job_id
      *
-     * @return string[]
+     * @return string|null
      */
-    public function getEmails()
+    public function getJobId()
     {
-        return $this->container['emails'];
+        return $this->container['job_id'];
     }
 
     /**
-     * Sets emails
+     * Sets job_id
      *
-     * @param  string[]  $emails  Array of email addresses to analyze.
+     * @param  string|null  $job_id  Unique identifier for the batch job.
      * @return self
      */
-    public function setEmails($emails)
+    public function setJobId($job_id)
     {
-        if (is_null($emails)) {
-            throw new \InvalidArgumentException('non-nullable emails cannot be null');
+        if (is_null($job_id)) {
+            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
         }
-        $this->container['emails'] = $emails;
+        $this->container['job_id'] = $job_id;
 
         return $this;
     }
@@ -347,7 +375,7 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
     /**
      * Sets name
      *
-     * @param  string|null  $name  Optional name for the batch job.
+     * @param  string|null  $name  Name of the batch job, if provided.
      * @return self
      */
     public function setName($name)
@@ -361,53 +389,63 @@ class BatchAnalyzeEmailsRequest implements \JsonSerializable, ArrayAccess, Model
     }
 
     /**
-     * Gets enable_ai
+     * Gets status
      *
-     * @return bool|null
+     * @return string|null
      */
-    public function getEnableAi()
+    public function getStatus()
     {
-        return $this->container['enable_ai'];
+        return $this->container['status'];
     }
 
     /**
-     * Sets enable_ai
+     * Sets status
      *
-     * @param  bool|null  $enable_ai  Enable AI-based analysis for insights.
+     * @param  string|null  $status  Current status of the batch job.
      * @return self
      */
-    public function setEnableAi($enable_ai)
+    public function setStatus($status)
     {
-        if (is_null($enable_ai)) {
-            throw new \InvalidArgumentException('non-nullable enable_ai cannot be null');
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
         }
-        $this->container['enable_ai'] = $enable_ai;
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
 
         return $this;
     }
 
     /**
-     * Gets enable_auto_correction
+     * Gets status_description
      *
-     * @return bool|null
+     * @return string|null
      */
-    public function getEnableAutoCorrection()
+    public function getStatusDescription()
     {
-        return $this->container['enable_auto_correction'];
+        return $this->container['status_description'];
     }
 
     /**
-     * Sets enable_auto_correction
+     * Sets status_description
      *
-     * @param  bool|null  $enable_auto_correction  Suggest possible corrections for misspelled emails.
+     * @param  string|null  $status_description  Description of the status, particularly useful when status is ERROR.
      * @return self
      */
-    public function setEnableAutoCorrection($enable_auto_correction)
+    public function setStatusDescription($status_description)
     {
-        if (is_null($enable_auto_correction)) {
-            throw new \InvalidArgumentException('non-nullable enable_auto_correction cannot be null');
+        if (is_null($status_description)) {
+            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
         }
-        $this->container['enable_auto_correction'] = $enable_auto_correction;
+        $this->container['status_description'] = $status_description;
 
         return $this;
     }

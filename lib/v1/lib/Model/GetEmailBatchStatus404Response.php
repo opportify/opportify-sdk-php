@@ -61,7 +61,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $openAPITypes = [
-        'error' => '\OpenAPI\Client\Model\GetEmailBatchStatus404ResponseError',
+        'error_message' => 'string',
+        'error_code' => 'string',
     ];
 
     /**
@@ -74,7 +75,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'error' => null,
+        'error_message' => null,
+        'error_code' => null,
     ];
 
     /**
@@ -83,7 +85,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'error' => false,
+        'error_message' => false,
+        'error_code' => false,
     ];
 
     /**
@@ -164,7 +167,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $attributeMap = [
-        'error' => 'error',
+        'error_message' => 'errorMessage',
+        'error_code' => 'errorCode',
     ];
 
     /**
@@ -173,7 +177,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $setters = [
-        'error' => 'setError',
+        'error_message' => 'setErrorMessage',
+        'error_code' => 'setErrorCode',
     ];
 
     /**
@@ -182,7 +187,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $getters = [
-        'error' => 'getError',
+        'error_message' => 'getErrorMessage',
+        'error_code' => 'getErrorCode',
     ];
 
     /**
@@ -241,7 +247,8 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('error', $data ?? [], null);
+        $this->setIfExists('error_message', $data ?? [], null);
+        $this->setIfExists('error_code', $data ?? [], null);
     }
 
     /**
@@ -284,27 +291,53 @@ class GetEmailBatchStatus404Response implements \JsonSerializable, ArrayAccess, 
     }
 
     /**
-     * Gets error
+     * Gets error_message
      *
-     * @return \OpenAPI\Client\Model\GetEmailBatchStatus404ResponseError|null
+     * @return string|null
      */
-    public function getError()
+    public function getErrorMessage()
     {
-        return $this->container['error'];
+        return $this->container['error_message'];
     }
 
     /**
-     * Sets error
+     * Sets error_message
      *
-     * @param  \OpenAPI\Client\Model\GetEmailBatchStatus404ResponseError|null  $error  error
+     * @param  string|null  $error_message  error_message
      * @return self
      */
-    public function setError($error)
+    public function setErrorMessage($error_message)
     {
-        if (is_null($error)) {
-            throw new \InvalidArgumentException('non-nullable error cannot be null');
+        if (is_null($error_message)) {
+            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
         }
-        $this->container['error'] = $error;
+        $this->container['error_message'] = $error_message;
+
+        return $this;
+    }
+
+    /**
+     * Gets error_code
+     *
+     * @return string|null
+     */
+    public function getErrorCode()
+    {
+        return $this->container['error_code'];
+    }
+
+    /**
+     * Sets error_code
+     *
+     * @param  string|null  $error_code  error_code
+     * @return self
+     */
+    public function setErrorCode($error_code)
+    {
+        if (is_null($error_code)) {
+            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
+        }
+        $this->container['error_code'] = $error_code;
 
         return $this;
     }
