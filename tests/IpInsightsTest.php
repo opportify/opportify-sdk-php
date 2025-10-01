@@ -426,6 +426,35 @@ class IpInsightsTest extends TestCase
         $this->assertEquals('QUEUED', $response->status);
     }
 
+    public function test_batch_analyze_file_helper_method_with_txt_file()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-654321',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->andReturn($mockResponse);
+
+        $tempFilePath = sys_get_temp_dir().'/test_ips.txt';
+        file_put_contents($tempFilePath, "192.168.1.1\n10.0.0.1");
+
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+        $response = $insights->batchAnalyzeFile($tempFilePath, ['enableAi' => true]);
+
+        unlink($tempFilePath);
+
+        $this->assertIsObject($response);
+        $this->assertEquals('job-654321', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
     public function test_get_batch_status_success()
     {
         $mockResponseData = [
