@@ -257,20 +257,7 @@ class IpInsights
      */
     public function batchAnalyzeFile(string $filePath, array $options = []): object
     {
-        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-        $contentType = $extension === 'csv' ? 'multipart/form-data' : 'text/plain';
-
-        if ($contentType === 'multipart/form-data') {
-            return $this->batchAnalyze(['file' => $filePath] + $options, $contentType);
-        } else {
-            // For text files, read the content and pass it directly
-            $content = file_get_contents($filePath);
-            if ($content === false) {
-                throw new \InvalidArgumentException('Unable to read file content');
-            }
-
-            return $this->batchAnalyze(['text' => $content] + $options, $contentType);
-        }
+        return $this->batchAnalyze(['file' => $filePath] + $options, 'multipart/form-data');
     }
 
     /**
