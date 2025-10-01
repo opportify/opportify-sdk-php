@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GetEmailBatchStatus200Response
+ * BatchAnalyzeEmails401Response
  *
  * PHP version 8.1
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * GetEmailBatchStatus200Response Class Doc Comment
+ * BatchAnalyzeEmails401Response Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class BatchAnalyzeEmails401Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      *
      * @var string
      */
-    protected static $openAPIModelName = 'getEmailBatchStatus_200_response';
+    protected static $openAPIModelName = 'batchAnalyzeEmails_401_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,12 +61,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $openAPITypes = [
-        'job_id' => 'string',
-        'name' => 'string',
-        'status' => 'string',
-        'status_description' => 'string',
-        'progress' => 'int',
-        'download_urls' => '\OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls',
+        'error_message' => 'string',
+        'error_code' => 'string',
     ];
 
     /**
@@ -79,12 +75,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'job_id' => null,
-        'name' => null,
-        'status' => null,
-        'status_description' => null,
-        'progress' => null,
-        'download_urls' => null,
+        'error_message' => null,
+        'error_code' => null,
     ];
 
     /**
@@ -93,12 +85,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'job_id' => false,
-        'name' => false,
-        'status' => false,
-        'status_description' => false,
-        'progress' => false,
-        'download_urls' => false,
+        'error_message' => false,
+        'error_code' => false,
     ];
 
     /**
@@ -179,12 +167,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $attributeMap = [
-        'job_id' => 'jobId',
-        'name' => 'name',
-        'status' => 'status',
-        'status_description' => 'statusDescription',
-        'progress' => 'progress',
-        'download_urls' => 'downloadUrls',
+        'error_message' => 'errorMessage',
+        'error_code' => 'errorCode',
     ];
 
     /**
@@ -193,12 +177,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $setters = [
-        'job_id' => 'setJobId',
-        'name' => 'setName',
-        'status' => 'setStatus',
-        'status_description' => 'setStatusDescription',
-        'progress' => 'setProgress',
-        'download_urls' => 'setDownloadUrls',
+        'error_message' => 'setErrorMessage',
+        'error_code' => 'setErrorCode',
     ];
 
     /**
@@ -207,12 +187,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @var string[]
      */
     protected static $getters = [
-        'job_id' => 'getJobId',
-        'name' => 'getName',
-        'status' => 'getStatus',
-        'status_description' => 'getStatusDescription',
-        'progress' => 'getProgress',
-        'download_urls' => 'getDownloadUrls',
+        'error_message' => 'getErrorMessage',
+        'error_code' => 'getErrorCode',
     ];
 
     /**
@@ -256,29 +232,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         return self::$openAPIModelName;
     }
 
-    public const STATUS_QUEUED = 'QUEUED';
-
-    public const STATUS_PROCESSING = 'PROCESSING';
-
-    public const STATUS_COMPLETED = 'COMPLETED';
-
-    public const STATUS_ERROR = 'ERROR';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_QUEUED,
-            self::STATUS_PROCESSING,
-            self::STATUS_COMPLETED,
-            self::STATUS_ERROR,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -294,12 +247,8 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('job_id', $data ?? [], null);
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('status', $data ?? [], null);
-        $this->setIfExists('status_description', $data ?? [], null);
-        $this->setIfExists('progress', $data ?? [], null);
-        $this->setIfExists('download_urls', $data ?? [], null);
+        $this->setIfExists('error_message', $data ?? [], null);
+        $this->setIfExists('error_code', $data ?? [], null);
     }
 
     /**
@@ -327,15 +276,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -351,167 +291,53 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     }
 
     /**
-     * Gets job_id
+     * Gets error_message
      *
      * @return string|null
      */
-    public function getJobId()
+    public function getErrorMessage()
     {
-        return $this->container['job_id'];
+        return $this->container['error_message'];
     }
 
     /**
-     * Sets job_id
+     * Sets error_message
      *
-     * @param  string|null  $job_id  Unique identifier for the batch job.
+     * @param  string|null  $error_message  error_message
      * @return self
      */
-    public function setJobId($job_id)
+    public function setErrorMessage($error_message)
     {
-        if (is_null($job_id)) {
-            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
+        if (is_null($error_message)) {
+            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
         }
-        $this->container['job_id'] = $job_id;
+        $this->container['error_message'] = $error_message;
 
         return $this;
     }
 
     /**
-     * Gets name
+     * Gets error_code
      *
      * @return string|null
      */
-    public function getName()
+    public function getErrorCode()
     {
-        return $this->container['name'];
+        return $this->container['error_code'];
     }
 
     /**
-     * Sets name
+     * Sets error_code
      *
-     * @param  string|null  $name  Name of the batch job, if provided.
+     * @param  string|null  $error_code  error_code
      * @return self
      */
-    public function setName($name)
+    public function setErrorCode($error_code)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($error_code)) {
+            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
         }
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets status
-     *
-     * @return string|null
-     */
-    public function getStatus()
-    {
-        return $this->container['status'];
-    }
-
-    /**
-     * Sets status
-     *
-     * @param  string|null  $status  Current status of the batch job.
-     * @return self
-     */
-    public function setStatus($status)
-    {
-        if (is_null($status)) {
-            throw new \InvalidArgumentException('non-nullable status cannot be null');
-        }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['status'] = $status;
-
-        return $this;
-    }
-
-    /**
-     * Gets status_description
-     *
-     * @return string|null
-     */
-    public function getStatusDescription()
-    {
-        return $this->container['status_description'];
-    }
-
-    /**
-     * Sets status_description
-     *
-     * @param  string|null  $status_description  Description of the status, particularly useful when status is ERROR.
-     * @return self
-     */
-    public function setStatusDescription($status_description)
-    {
-        if (is_null($status_description)) {
-            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
-        }
-        $this->container['status_description'] = $status_description;
-
-        return $this;
-    }
-
-    /**
-     * Gets progress
-     *
-     * @return int|null
-     */
-    public function getProgress()
-    {
-        return $this->container['progress'];
-    }
-
-    /**
-     * Sets progress
-     *
-     * @param  int|null  $progress  Percentage of completion for the batch job (0-100).
-     * @return self
-     */
-    public function setProgress($progress)
-    {
-        if (is_null($progress)) {
-            throw new \InvalidArgumentException('non-nullable progress cannot be null');
-        }
-        $this->container['progress'] = $progress;
-
-        return $this;
-    }
-
-    /**
-     * Gets download_urls
-     *
-     * @return \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null
-     */
-    public function getDownloadUrls()
-    {
-        return $this->container['download_urls'];
-    }
-
-    /**
-     * Sets download_urls
-     *
-     * @param  \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null  $download_urls  download_urls
-     * @return self
-     */
-    public function setDownloadUrls($download_urls)
-    {
-        if (is_null($download_urls)) {
-            throw new \InvalidArgumentException('non-nullable download_urls cannot be null');
-        }
-        $this->container['download_urls'] = $download_urls;
+        $this->container['error_code'] = $error_code;
 
         return $this;
     }

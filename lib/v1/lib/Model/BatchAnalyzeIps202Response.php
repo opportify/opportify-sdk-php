@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GetEmailBatchStatus200Response
+ * BatchAnalyzeIps202Response
  *
  * PHP version 8.1
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * GetEmailBatchStatus200Response Class Doc Comment
+ * BatchAnalyzeIps202Response Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class BatchAnalyzeIps202Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      *
      * @var string
      */
-    protected static $openAPIModelName = 'getEmailBatchStatus_200_response';
+    protected static $openAPIModelName = 'batchAnalyzeIps_202_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -65,8 +65,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         'name' => 'string',
         'status' => 'string',
         'status_description' => 'string',
-        'progress' => 'int',
-        'download_urls' => '\OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls',
     ];
 
     /**
@@ -83,8 +81,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         'name' => null,
         'status' => null,
         'status_description' => null,
-        'progress' => null,
-        'download_urls' => null,
     ];
 
     /**
@@ -97,8 +93,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         'name' => false,
         'status' => false,
         'status_description' => false,
-        'progress' => false,
-        'download_urls' => false,
     ];
 
     /**
@@ -183,8 +177,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         'name' => 'name',
         'status' => 'status',
         'status_description' => 'statusDescription',
-        'progress' => 'progress',
-        'download_urls' => 'downloadUrls',
     ];
 
     /**
@@ -197,8 +189,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         'name' => 'setName',
         'status' => 'setStatus',
         'status_description' => 'setStatusDescription',
-        'progress' => 'setProgress',
-        'download_urls' => 'setDownloadUrls',
     ];
 
     /**
@@ -211,8 +201,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         'name' => 'getName',
         'status' => 'getStatus',
         'status_description' => 'getStatusDescription',
-        'progress' => 'getProgress',
-        'download_urls' => 'getDownloadUrls',
     ];
 
     /**
@@ -298,8 +286,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
         $this->setIfExists('status_description', $data ?? [], null);
-        $this->setIfExists('progress', $data ?? [], null);
-        $this->setIfExists('download_urls', $data ?? [], null);
     }
 
     /**
@@ -460,58 +446,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
             throw new \InvalidArgumentException('non-nullable status_description cannot be null');
         }
         $this->container['status_description'] = $status_description;
-
-        return $this;
-    }
-
-    /**
-     * Gets progress
-     *
-     * @return int|null
-     */
-    public function getProgress()
-    {
-        return $this->container['progress'];
-    }
-
-    /**
-     * Sets progress
-     *
-     * @param  int|null  $progress  Percentage of completion for the batch job (0-100).
-     * @return self
-     */
-    public function setProgress($progress)
-    {
-        if (is_null($progress)) {
-            throw new \InvalidArgumentException('non-nullable progress cannot be null');
-        }
-        $this->container['progress'] = $progress;
-
-        return $this;
-    }
-
-    /**
-     * Gets download_urls
-     *
-     * @return \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null
-     */
-    public function getDownloadUrls()
-    {
-        return $this->container['download_urls'];
-    }
-
-    /**
-     * Sets download_urls
-     *
-     * @param  \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null  $download_urls  download_urls
-     * @return self
-     */
-    public function setDownloadUrls($download_urls)
-    {
-        if (is_null($download_urls)) {
-            throw new \InvalidArgumentException('non-nullable download_urls cannot be null');
-        }
-        $this->container['download_urls'] = $download_urls;
 
         return $this;
     }

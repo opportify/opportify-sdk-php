@@ -1,12 +1,14 @@
 <?php
+
 /**
  * AnalyzeEmail403ResponseError
  *
  * PHP version 7.4
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
  */
 
@@ -28,66 +30,70 @@
 
 namespace OpenAPI\Client\Model;
 
-use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use ArrayAccess;
+use OpenAPI\Client\ObjectSerializer;
 
 /**
  * AnalyzeEmail403ResponseError Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ *
  * @author   OpenAPI Generator team
+ *
  * @link     https://openapi-generator.tech
+ *
  * @implements \ArrayAccess<string, mixed>
  */
-class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \JsonSerializable
+class AnalyzeEmail403ResponseError implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
     /**
-      * The original name of the model.
-      *
-      * @var string
-      */
+     * The original name of the model.
+     *
+     * @var string
+     */
     protected static $openAPIModelName = 'analyzeEmail_403_response_error';
 
     /**
-      * Array of property to type mappings. Used for (de)serialization
-      *
-      * @var string[]
-      */
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @var string[]
+     */
     protected static $openAPITypes = [
         'message' => 'string',
-        'code' => 'string'
+        'code' => 'string',
     ];
 
     /**
-      * Array of property to format mappings. Used for (de)serialization
-      *
-      * @var string[]
-      * @phpstan-var array<string, string|null>
-      * @psalm-var array<string, string|null>
-      */
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @var string[]
+     *
+     * @phpstan-var array<string, string|null>
+     *
+     * @psalm-var array<string, string|null>
+     */
     protected static $openAPIFormats = [
         'message' => null,
-        'code' => null
+        'code' => null,
     ];
 
     /**
-      * Array of nullable properties. Used for (de)serialization
-      *
-      * @var boolean[]
-      */
+     * Array of nullable properties. Used for (de)serialization
+     *
+     * @var bool[]
+     */
     protected static array $openAPINullables = [
         'message' => false,
-        'code' => false
+        'code' => false,
     ];
 
     /**
-      * If a nullable field gets set to null, insert it here
-      *
-      * @var boolean[]
-      */
+     * If a nullable field gets set to null, insert it here
+     *
+     * @var bool[]
+     */
     protected array $openAPINullablesSetToNull = [];
 
     /**
@@ -112,8 +118,6 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
 
     /**
      * Array of nullable properties
-     *
-     * @return array
      */
     protected static function openAPINullables(): array
     {
@@ -123,7 +127,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Array of nullable field names deliberately set to null
      *
-     * @return boolean[]
+     * @return bool[]
      */
     private function getOpenAPINullablesSetToNull(): array
     {
@@ -133,7 +137,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Setter - Array of nullable field names deliberately set to null
      *
-     * @param boolean[] $openAPINullablesSetToNull
+     * @param  bool[]  $openAPINullablesSetToNull
      */
     private function setOpenAPINullablesSetToNull(array $openAPINullablesSetToNull): void
     {
@@ -142,9 +146,6 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
 
     /**
      * Checks if a property is nullable
-     *
-     * @param string $property
-     * @return bool
      */
     public static function isNullable(string $property): bool
     {
@@ -153,9 +154,6 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
 
     /**
      * Checks if a nullable property is set to null.
-     *
-     * @param string $property
-     * @return bool
      */
     public function isNullableSetToNull(string $property): bool
     {
@@ -170,7 +168,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
      */
     protected static $attributeMap = [
         'message' => 'message',
-        'code' => 'code'
+        'code' => 'code',
     ];
 
     /**
@@ -180,7 +178,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
      */
     protected static $setters = [
         'message' => 'setMessage',
-        'code' => 'setCode'
+        'code' => 'setCode',
     ];
 
     /**
@@ -190,7 +188,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
      */
     protected static $getters = [
         'message' => 'getMessage',
-        'code' => 'getCode'
+        'code' => 'getCode',
     ];
 
     /**
@@ -234,7 +232,6 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
         return self::$openAPIModelName;
     }
 
-
     /**
      * Associative array for storing property values
      *
@@ -245,8 +242,8 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Constructor
      *
-     * @param mixed[]|null $data Associated array of property values
-     *                      initializing the model
+     * @param  mixed[]|null  $data  Associated array of property values
+     *                              initializing the model
      */
     public function __construct(?array $data = null)
     {
@@ -255,14 +252,12 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     }
 
     /**
-    * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
-    * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
-    * $this->openAPINullablesSetToNull array
-    *
-    * @param string $variableName
-    * @param array  $fields
-    * @param mixed  $defaultValue
-    */
+     * Sets $this->container[$variableName] to the given data or to the given default Value; if $variableName
+     * is nullable and its value is set to null in the $fields array, then mark it as "set to null" in the
+     * $this->openAPINullablesSetToNull array
+     *
+     * @param  mixed  $defaultValue
+     */
     private function setIfExists(string $variableName, array $fields, $defaultValue): void
     {
         if (self::isNullable($variableName) && array_key_exists($variableName, $fields) && is_null($fields[$variableName])) {
@@ -295,7 +290,6 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
         return count($this->listInvalidProperties()) === 0;
     }
 
-
     /**
      * Gets message
      *
@@ -309,8 +303,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets message
      *
-     * @param string|null $message message
-     *
+     * @param  string|null  $message  message
      * @return self
      */
     public function setMessage($message)
@@ -336,8 +329,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets code
      *
-     * @param string|null $code code
-     *
+     * @param  string|null  $code  code
      * @return self
      */
     public function setCode($code)
@@ -349,12 +341,11 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
 
         return $this;
     }
+
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
-     *
-     * @return boolean
+     * @param  int  $offset  Offset
      */
     public function offsetExists($offset): bool
     {
@@ -364,8 +355,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
-     *
+     * @param  int  $offset  Offset
      * @return mixed|null
      */
     #[\ReturnTypeWillChange]
@@ -377,10 +367,8 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets value based on offset.
      *
-     * @param int|null $offset Offset
-     * @param mixed    $value  Value to be set
-     *
-     * @return void
+     * @param  int|null  $offset  Offset
+     * @param  mixed  $value  Value to be set
      */
     public function offsetSet($offset, $value): void
     {
@@ -394,9 +382,7 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
-     *
-     * @return void
+     * @param  int  $offset  Offset
      */
     public function offsetUnset($offset): void
     {
@@ -405,15 +391,16 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     *
      * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
+     *               of any type other than a resource.
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
-       return ObjectSerializer::sanitizeForSerialization($this);
+        return ObjectSerializer::sanitizeForSerialization($this);
     }
 
     /**
@@ -439,5 +426,3 @@ class AnalyzeEmail403ResponseError implements ModelInterface, ArrayAccess, \Json
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

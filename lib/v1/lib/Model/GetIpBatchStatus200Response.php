@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GetEmailBatchStatus200Response
+ * GetIpBatchStatus200Response
  *
  * PHP version 8.1
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * GetEmailBatchStatus200Response Class Doc Comment
+ * GetIpBatchStatus200Response Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class GetIpBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      *
      * @var string
      */
-    protected static $openAPIModelName = 'getEmailBatchStatus_200_response';
+    protected static $openAPIModelName = 'getIpBatchStatus_200_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
