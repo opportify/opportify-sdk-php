@@ -413,6 +413,41 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals('QUEUED', $response->status);
     }
 
+    public function test_batch_analyze_file_helper_method_with_txt_file()
+    {
+        $mockResponseData = [
+            'jobId' => 'job-654321',
+            'status' => 'QUEUED',
+            'statusDescription' => '',
+        ];
+
+        // Create a mock for the API response that implements jsonSerialize()
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        // Mock the API instance should still receive batchAnalyzeEmails call once
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeEmails')
+            ->once()
+            ->andReturn($mockResponse);
+
+        // Create a temporary .txt file for testing
+        $tempFilePath = sys_get_temp_dir().'/test_emails.txt';
+        file_put_contents($tempFilePath, "test1@example.com\ntest2@example.com");
+
+        // Inject the mock API instance via constructor
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->batchAnalyzeFile($tempFilePath, ['enableAi' => true]);
+
+        // Clean up
+        unlink($tempFilePath);
+
+        $this->assertIsObject($response);
+        $this->assertEquals('job-654321', $response->jobId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
     public function test_get_batch_status_success()
     {
         $mockResponseData = [
