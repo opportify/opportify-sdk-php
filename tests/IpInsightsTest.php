@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use OpenAPI\Client\Api\IpInsightsApi;
+use OpenAPI\Client\Model\ExportRequest;
 use Opportify\Sdk\IpInsights;
 use PHPUnit\Framework\TestCase;
 
@@ -485,6 +486,135 @@ class IpInsightsTest extends TestCase
         $this->assertEquals('job-123456', $response->jobId);
         $this->assertEquals('COMPLETED', $response->status);
         $this->assertEquals(100, $response->progress);
+    }
+
+    public function test_create_batch_export_with_payload()
+    {
+        $mockResponseData = [
+            'exportId' => 'ip-export-001',
+            'status' => 'QUEUED',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('createIpBatchExport')
+            ->once()
+            ->with('job-ip-1', Mockery::on(function ($request) {
+                \PHPUnit\Framework\Assert::assertInstanceOf(ExportRequest::class, $request);
+                \PHPUnit\Framework\Assert::assertEquals('csv', $request->getExportType());
+                \PHPUnit\Framework\Assert::assertEquals(['result.ipAddress', 'result.riskReport.score'], $request->getColumns());
+                \PHPUnit\Framework\Assert::assertEquals(['result.riskReport.level' => 'low'], $request->getFilters());
+
+                return true;
+            }))
+            ->andReturn($mockResponse);
+
+        $ipInsights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $ipInsights->createBatchExport('job-ip-1', [
+            'exportType' => 'CSV',
+            'columns' => ['result.ipAddress', 'result.riskReport.score'],
+            'filters' => ['result.riskReport.level' => 'low'],
+        ]);
+
+        $this->assertEquals('ip-export-001', $response->exportId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_create_batch_export_without_payload()
+    {
+        $mockResponseData = [
+            'exportId' => 'ip-export-002',
+            'status' => 'PROCESSING',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('createIpBatchExport')
+            ->once()
+            ->with('job-ip-2', null)
+            ->andReturn($mockResponse);
+
+        $ipInsights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $ipInsights->createBatchExport('job-ip-2');
+
+        $this->assertEquals('ip-export-002', $response->exportId);
+        $this->assertEquals('PROCESSING', $response->status);
+    }
+
+    public function test_create_batch_export_validates_job_id()
+    {
+        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Job ID cannot be empty when creating an export.');
+
+        $ipInsights->createBatchExport('');
+    }
+
+    public function test_create_batch_export_validates_filters_type()
+    {
+        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Filters must be provided as an array.');
+
+        $ipInsights->createBatchExport('job-ip-3', [
+            'filters' => 'invalid',
+        ]);
+    }
+
+    public function test_create_batch_export_validates_columns_type()
+    {
+        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Columns must be provided as an array.');
+
+        $ipInsights->createBatchExport('job-ip-4', [
+            'columns' => 'result.ipAddress',
+        ]);
+    }
+
+    public function test_get_batch_export_status_success()
+    {
+        $mockResponseData = [
+            'exportId' => 'ip-export-003',
+            'status' => 'COMPLETED',
+            'downloadUrl' => 'https://example.com/ip-export.json',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('getIpBatchExportStatus')
+            ->once()
+            ->with('job-ip-3', 'ip-export-003')
+            ->andReturn($mockResponse);
+
+        $ipInsights = new IpInsights('fake_api_key', $mockApiInstance);
+
+        $response = $ipInsights->getBatchExportStatus('job-ip-3', 'ip-export-003');
+
+        $this->assertEquals('ip-export-003', $response->exportId);
+        $this->assertEquals('COMPLETED', $response->status);
+        $this->assertEquals('https://example.com/ip-export.json', $response->downloadUrl);
+    }
+
+    public function test_get_batch_export_status_validates_identifiers()
+    {
+        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Job ID and export ID are required to fetch export status.');
+
+        $ipInsights->getBatchExportStatus('   ', 'ip-export-004');
     }
 
     public function test_batch_analyze_with_name_parameter_json()

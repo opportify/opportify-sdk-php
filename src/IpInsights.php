@@ -7,6 +7,7 @@ use OpenAPI\Client\Api\IPInsightsApi as IpInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
 use OpenAPI\Client\Model\BatchAnalyzeIpsRequest;
+use OpenAPI\Client\Model\ExportRequest;
 
 /**
  * Class IpInsights
@@ -206,15 +207,11 @@ class IpInsights
                 ];
 
                 // Add optional parameters as separate parts
-                if (isset($params['enable_ai'])) {
+                $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
+                if ($enableAi !== null) {
                     $multipartContents[] = [
                         'name' => 'enable_ai',
-                        'contents' => $params['enable_ai'] ? 'true' : 'false',
-                    ];
-                } elseif (isset($params['enableAi'])) {
-                    $multipartContents[] = [
-                        'name' => 'enable_ai',
-                        'contents' => $params['enableAi'] ? 'true' : 'false',
+                        'contents' => $enableAi ? 'true' : 'false',
                     ];
                 }
 
@@ -276,19 +273,60 @@ class IpInsights
     }
 
     /**
+     * Request a custom export for a completed IP batch job.
+     *
+     * @throws \Exception
+     */
+    public function createBatchExport(string $jobId, array $payload = []): object
+    {
+        $this->refreshApiInstance();
+
+        $jobId = trim($jobId);
+        if ($jobId === '') {
+            throw new \InvalidArgumentException('Job ID cannot be empty when creating an export.');
+        }
+
+        $normalizedPayload = $this->normalizeExportRequest($payload);
+        $exportRequest = empty($normalizedPayload) ? null : new ExportRequest($normalizedPayload);
+
+        $result = $this->apiInstance->createIpBatchExport($jobId, $exportRequest);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
+     * Retrieve the status of a previously requested IP batch export.
+     *
+     * @throws \Exception
+     */
+    public function getBatchExportStatus(string $jobId, string $exportId): object
+    {
+        $this->refreshApiInstance();
+
+        $jobId = trim($jobId);
+        $exportId = trim($exportId);
+
+        if ($jobId === '' || $exportId === '') {
+            throw new \InvalidArgumentException('Job ID and export ID are required to fetch export status.');
+        }
+
+        $result = $this->apiInstance->getIpBatchExportStatus($jobId, $exportId);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
      * Normalizes the request parameters.
      */
     private function normalizeRequest(array $params): array
     {
-        $normalized = [];
-        $normalized['ip'] = (string) $params['ip'];
-
-        if (isset($params['enableAi'])) {
-            $params['enable_ai'] = $params['enableAi'];
-            unset($params['enableAi']);
+        if (!array_key_exists('ip', $params)) {
+            throw new \InvalidArgumentException('The ip parameter is required for analysis.');
         }
 
-        $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+        $normalized = [];
+        $normalized['ip'] = (string) $params['ip'];
+        $normalized['enable_ai'] = $this->resolveBoolean($params, ['enable_ai', 'enableAi'], true);
 
         return $normalized;
     }
@@ -299,15 +337,16 @@ class IpInsights
     private function normalizeBatchRequest(array $params): array
     {
         $normalized = [];
-        $normalized['ips'] = $params['ips'] ?? [];
-
-        if (isset($params['enableAi'])) {
-            $params['enable_ai'] = $params['enableAi'];
-            unset($params['enableAi']);
+        $ips = $params['ips'] ?? [];
+        if (!is_array($ips)) {
+            throw new \InvalidArgumentException('The ips parameter must be provided as an array.');
         }
 
-        if (isset($params['enable_ai'])) {
-            $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
+        $normalized['ips'] = array_map(static fn ($ip) => (string) $ip, $ips);
+
+        $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
+        if ($enableAi !== null) {
+            $normalized['enable_ai'] = $enableAi;
         }
 
         // Add name parameter if provided
@@ -316,5 +355,76 @@ class IpInsights
         }
 
         return $normalized;
+    }
+
+    /**
+     * Normalize export payload for batch exports.
+     */
+    private function normalizeExportRequest(array $params): array
+    {
+        $normalized = [];
+
+        if ($this->hasAnyKey($params, ['export_type', 'exportType'])) {
+            $value = $params['export_type'] ?? $params['exportType'];
+            $normalized['export_type'] = strtolower((string) $value);
+        }
+
+        if (array_key_exists('filters', $params) && $params['filters'] !== null) {
+            if (!is_array($params['filters'])) {
+                throw new \InvalidArgumentException('Filters must be provided as an array.');
+            }
+
+            $normalized['filters'] = $params['filters'];
+        }
+
+        if (array_key_exists('columns', $params) && $params['columns'] !== null) {
+            if (!is_array($params['columns'])) {
+                throw new \InvalidArgumentException('Columns must be provided as an array.');
+            }
+
+            $normalized['columns'] = array_map(static fn ($column) => (string) $column, $params['columns']);
+        }
+
+        return $normalized;
+    }
+
+    private function hasAnyKey(array $params, array $keys): bool
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $params)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function resolveBoolean(array $params, array $keys, ?bool $default = null): ?bool
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $params)) {
+                return $this->toBoolean($params[$key], $key);
+            }
+        }
+
+        return $default;
+    }
+
+    private function toBoolean(mixed $value, string $parameterName): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        if ($value === 1 || $value === 0 || $value === '1' || $value === '0') {
+            return (bool) $value;
+        }
+
+        $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        if ($filtered === null) {
+            throw new \InvalidArgumentException(sprintf('Invalid boolean value provided for %s', $parameterName));
+        }
+
+        return $filtered;
     }
 }

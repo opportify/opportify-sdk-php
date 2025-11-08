@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use OpenAPI\Client\Api\EmailInsightsApi;
+use OpenAPI\Client\Model\ExportRequest;
 use Opportify\Sdk\EmailInsights;
 use PHPUnit\Framework\TestCase;
 
@@ -74,6 +75,33 @@ class EmailInsightsTest extends TestCase
             'email' => 'test@example.com',
             'enable_ai' => true,
             'enable_auto_correction' => false,
+            'enable_domain_enrichment' => true,
+        ];
+
+        $reflection = new \ReflectionClass($emailInsights);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($emailInsights, [$input]);
+
+        $this->assertEquals($expectedOutput, $normalized);
+    }
+
+    public function test_normalize_request_with_domain_enrichment_toggle()
+    {
+        $emailInsights = new EmailInsights('fake_api_key');
+
+        $input = [
+            'email' => 'test@example.com',
+            'enableAi' => false,
+            'enableAutoCorrection' => true,
+            'enableDomainEnrichment' => 'false',
+        ];
+
+        $expectedOutput = [
+            'email' => 'test@example.com',
+            'enable_ai' => false,
+            'enable_auto_correction' => true,
+            'enable_domain_enrichment' => false,
         ];
 
         $reflection = new \ReflectionClass($emailInsights);
@@ -93,7 +121,7 @@ class EmailInsightsTest extends TestCase
             'isFormatValid' => true,
             'emailCorrection' => '',
             'isReachable' => true,
-            'isDeliverable' => 'yes',
+            'isDeliverable' => 'true',
             'isMailboxFull' => false,
             'isCatchAll' => false,
             'emailDNS' => [
@@ -443,6 +471,135 @@ class EmailInsightsTest extends TestCase
         $this->assertEquals('job-123456', $response->jobId);
         $this->assertEquals('COMPLETED', $response->status);
         $this->assertEquals(100, $response->progress);
+    }
+
+    public function test_create_batch_export_with_payload()
+    {
+        $mockResponseData = [
+            'exportId' => 'export-123',
+            'status' => 'QUEUED',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('createEmailBatchExport')
+            ->once()
+            ->with('job-123', Mockery::on(function ($request) {
+                \PHPUnit\Framework\Assert::assertInstanceOf(ExportRequest::class, $request);
+                \PHPUnit\Framework\Assert::assertEquals('json', $request->getExportType());
+                \PHPUnit\Framework\Assert::assertEquals(['emailAddress', 'riskReport.score'], $request->getColumns());
+                \PHPUnit\Framework\Assert::assertEquals(['isDeliverable' => 'true'], $request->getFilters());
+
+                return true;
+            }))
+            ->andReturn($mockResponse);
+
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->createBatchExport('job-123', [
+            'exportType' => 'JSON',
+            'columns' => ['emailAddress', 'riskReport.score'],
+            'filters' => ['isDeliverable' => 'true'],
+        ]);
+
+        $this->assertEquals('export-123', $response->exportId);
+        $this->assertEquals('QUEUED', $response->status);
+    }
+
+    public function test_create_batch_export_without_payload()
+    {
+        $mockResponseData = [
+            'exportId' => 'export-456',
+            'status' => 'PROCESSING',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('createEmailBatchExport')
+            ->once()
+            ->with('job-456', null)
+            ->andReturn($mockResponse);
+
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->createBatchExport('job-456');
+
+        $this->assertEquals('export-456', $response->exportId);
+        $this->assertEquals('PROCESSING', $response->status);
+    }
+
+    public function test_create_batch_export_validates_job_id()
+    {
+        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Job ID cannot be empty when creating an export.');
+
+        $emailInsights->createBatchExport('   ');
+    }
+
+    public function test_create_batch_export_validates_columns_type()
+    {
+        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Columns must be provided as an array.');
+
+        $emailInsights->createBatchExport('job-101', [
+            'columns' => 'emailAddress',
+        ]);
+    }
+
+    public function test_create_batch_export_validates_filters_type()
+    {
+        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Filters must be provided as an array.');
+
+        $emailInsights->createBatchExport('job-101', [
+            'filters' => 'isDeliverable=true',
+        ]);
+    }
+
+    public function test_get_batch_export_status_success()
+    {
+        $mockResponseData = [
+            'exportId' => 'export-789',
+            'status' => 'COMPLETED',
+            'downloadUrl' => 'https://example.com/download.csv',
+        ];
+
+        $mockResponse = Mockery::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance->shouldReceive('getEmailBatchExportStatus')
+            ->once()
+            ->with('job-789', 'export-789')
+            ->andReturn($mockResponse);
+
+        $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+
+        $response = $emailInsights->getBatchExportStatus('job-789', 'export-789');
+
+        $this->assertEquals('export-789', $response->exportId);
+        $this->assertEquals('COMPLETED', $response->status);
+        $this->assertEquals('https://example.com/download.csv', $response->downloadUrl);
+    }
+
+    public function test_get_batch_export_status_validates_identifiers()
+    {
+        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Job ID and export ID are required to fetch export status.');
+
+        $emailInsights->getBatchExportStatus('job-001', '   ');
     }
 
     public function test_batch_analyze_with_name_parameter_json()

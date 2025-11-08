@@ -7,6 +7,7 @@ use OpenAPI\Client\Api\EmailInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeEmailRequest;
 use OpenAPI\Client\Model\BatchAnalyzeEmailsRequest;
+use OpenAPI\Client\Model\ExportRequest;
 
 class EmailInsights
 {
@@ -206,27 +207,19 @@ class EmailInsights
                 ];
 
                 // Add optional parameters as separate parts
-                if (isset($params['enable_ai'])) {
+                $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
+                if ($enableAi !== null) {
                     $multipartContents[] = [
                         'name' => 'enable_ai',
-                        'contents' => $params['enable_ai'] ? 'true' : 'false',
-                    ];
-                } elseif (isset($params['enableAi'])) {
-                    $multipartContents[] = [
-                        'name' => 'enable_ai',
-                        'contents' => $params['enableAi'] ? 'true' : 'false',
+                        'contents' => $enableAi ? 'true' : 'false',
                     ];
                 }
 
-                if (isset($params['enable_auto_correction'])) {
+                $enableAutoCorrection = $this->resolveBoolean($params, ['enable_auto_correction', 'enableAutoCorrection']);
+                if ($enableAutoCorrection !== null) {
                     $multipartContents[] = [
                         'name' => 'enable_auto_correction',
-                        'contents' => $params['enable_auto_correction'] ? 'true' : 'false',
-                    ];
-                } elseif (isset($params['enableAutoCorrection'])) {
-                    $multipartContents[] = [
-                        'name' => 'enable_auto_correction',
-                        'contents' => $params['enableAutoCorrection'] ? 'true' : 'false',
+                        'contents' => $enableAutoCorrection ? 'true' : 'false',
                     ];
                 }
 
@@ -289,25 +282,62 @@ class EmailInsights
     }
 
     /**
+     * Request a custom export for a completed email batch job.
+     *
+     * @throws \Exception
+     */
+    public function createBatchExport(string $jobId, array $payload = []): object
+    {
+        $this->refreshApiInstance();
+
+        $jobId = trim($jobId);
+        if ($jobId === '') {
+            throw new \InvalidArgumentException('Job ID cannot be empty when creating an export.');
+        }
+
+        $normalizedPayload = $this->normalizeExportRequest($payload);
+        $exportRequest = empty($normalizedPayload) ? null : new ExportRequest($normalizedPayload);
+
+        $result = $this->apiInstance->createEmailBatchExport($jobId, $exportRequest);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
+     * Retrieve the status of a previously requested email batch export.
+     *
+     * @throws \Exception
+     */
+    public function getBatchExportStatus(string $jobId, string $exportId): object
+    {
+        $this->refreshApiInstance();
+
+        $jobId = trim($jobId);
+        $exportId = trim($exportId);
+
+        if ($jobId === '' || $exportId === '') {
+            throw new \InvalidArgumentException('Job ID and export ID are required to fetch export status.');
+        }
+
+        $result = $this->apiInstance->getEmailBatchExportStatus($jobId, $exportId);
+
+        return $result->jsonSerialize();
+    }
+
+    /**
      * Normalize the request parameters.
      */
     private function normalizeRequest(array $params): array
     {
+        if (!array_key_exists('email', $params)) {
+            throw new \InvalidArgumentException('The email parameter is required for analysis.');
+        }
+
         $normalized = [];
         $normalized['email'] = (string) $params['email'];
-
-        if (isset($params['enableAi'])) {
-            $params['enable_ai'] = $params['enableAi'];
-            unset($params['enableAi']);
-        }
-
-        if (isset($params['enableAutoCorrection'])) {
-            $params['enable_auto_correction'] = filter_var($params['enableAutoCorrection'], FILTER_VALIDATE_BOOLEAN);
-            unset($params['enableAutoCorrection']);
-        }
-
-        $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
-        $normalized['enable_auto_correction'] = filter_var($params['enable_auto_correction'], FILTER_VALIDATE_BOOLEAN);
+        $normalized['enable_ai'] = $this->resolveBoolean($params, ['enable_ai', 'enableAi'], true);
+        $normalized['enable_auto_correction'] = $this->resolveBoolean($params, ['enable_auto_correction', 'enableAutoCorrection'], true);
+        $normalized['enable_domain_enrichment'] = $this->resolveBoolean($params, ['enable_domain_enrichment', 'enableDomainEnrichment'], true);
 
         return $normalized;
     }
@@ -318,24 +348,21 @@ class EmailInsights
     private function normalizeBatchRequest(array $params): array
     {
         $normalized = [];
-        $normalized['emails'] = $params['emails'] ?? [];
-
-        if (isset($params['enableAi'])) {
-            $params['enable_ai'] = $params['enableAi'];
-            unset($params['enableAi']);
+        $emails = $params['emails'] ?? [];
+        if (!is_array($emails)) {
+            throw new \InvalidArgumentException('The emails parameter must be provided as an array.');
         }
 
-        if (isset($params['enableAutoCorrection'])) {
-            $params['enable_auto_correction'] = filter_var($params['enableAutoCorrection'], FILTER_VALIDATE_BOOLEAN);
-            unset($params['enableAutoCorrection']);
+        $normalized['emails'] = array_map(static fn ($email) => (string) $email, $emails);
+
+        $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
+        if ($enableAi !== null) {
+            $normalized['enable_ai'] = $enableAi;
         }
 
-        if (isset($params['enable_ai'])) {
-            $normalized['enable_ai'] = filter_var($params['enable_ai'], FILTER_VALIDATE_BOOLEAN);
-        }
-
-        if (isset($params['enable_auto_correction'])) {
-            $normalized['enable_auto_correction'] = filter_var($params['enable_auto_correction'], FILTER_VALIDATE_BOOLEAN);
+        $enableAutoCorrection = $this->resolveBoolean($params, ['enable_auto_correction', 'enableAutoCorrection']);
+        if ($enableAutoCorrection !== null) {
+            $normalized['enable_auto_correction'] = $enableAutoCorrection;
         }
 
         // Add name parameter if provided
@@ -344,5 +371,76 @@ class EmailInsights
         }
 
         return $normalized;
+    }
+
+    /**
+     * Normalize export payload for batch exports.
+     */
+    private function normalizeExportRequest(array $params): array
+    {
+        $normalized = [];
+
+        if ($this->hasAnyKey($params, ['export_type', 'exportType'])) {
+            $value = $params['export_type'] ?? $params['exportType'];
+            $normalized['export_type'] = strtolower((string) $value);
+        }
+
+        if (array_key_exists('filters', $params) && $params['filters'] !== null) {
+            if (!is_array($params['filters'])) {
+                throw new \InvalidArgumentException('Filters must be provided as an array.');
+            }
+
+            $normalized['filters'] = $params['filters'];
+        }
+
+        if (array_key_exists('columns', $params) && $params['columns'] !== null) {
+            if (!is_array($params['columns'])) {
+                throw new \InvalidArgumentException('Columns must be provided as an array.');
+            }
+
+            $normalized['columns'] = array_map(static fn ($column) => (string) $column, $params['columns']);
+        }
+
+        return $normalized;
+    }
+
+    private function hasAnyKey(array $params, array $keys): bool
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $params)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function resolveBoolean(array $params, array $keys, ?bool $default = null): ?bool
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $params)) {
+                return $this->toBoolean($params[$key], $key);
+            }
+        }
+
+        return $default;
+    }
+
+    private function toBoolean(mixed $value, string $parameterName): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        if ($value === 1 || $value === 0 || $value === '1' || $value === '0') {
+            return (bool) $value;
+        }
+
+        $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        if ($filtered === null) {
+            throw new \InvalidArgumentException(sprintf('Invalid boolean value provided for %s', $parameterName));
+        }
+
+        return $filtered;
     }
 }
