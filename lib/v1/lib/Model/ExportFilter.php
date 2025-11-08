@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MALFORMEDREQUEST3
+ * ExportFilter
  *
  * PHP version 8.1
  *
@@ -34,9 +34,11 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * MALFORMEDREQUEST3 Class Doc Comment
+ * ExportFilter Class Doc Comment
  *
  * @category Class
+ *
+ * @description Describes a filter applied to an export.
  *
  * @author   OpenAPI Generator team
  *
@@ -44,7 +46,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterface
+class ExportFilter implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +55,7 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      *
      * @var string
      */
-    protected static $openAPIModelName = 'MALFORMED_REQUEST_3';
+    protected static $openAPIModelName = 'ExportFilter';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,8 +63,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $openAPITypes = [
-        'error_message' => 'string',
-        'error_code' => 'string',
+        'field' => 'string',
+        'kind' => 'string',
+        'values' => 'string[]',
+        'min' => 'float',
+        'max' => 'float',
     ];
 
     /**
@@ -75,8 +80,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'error_message' => null,
-        'error_code' => null,
+        'field' => null,
+        'kind' => null,
+        'values' => null,
+        'min' => null,
+        'max' => null,
     ];
 
     /**
@@ -85,8 +93,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'error_message' => false,
-        'error_code' => false,
+        'field' => false,
+        'kind' => false,
+        'values' => false,
+        'min' => false,
+        'max' => false,
     ];
 
     /**
@@ -167,8 +178,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $attributeMap = [
-        'error_message' => 'errorMessage',
-        'error_code' => 'errorCode',
+        'field' => 'field',
+        'kind' => 'kind',
+        'values' => 'values',
+        'min' => 'min',
+        'max' => 'max',
     ];
 
     /**
@@ -177,8 +191,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $setters = [
-        'error_message' => 'setErrorMessage',
-        'error_code' => 'setErrorCode',
+        'field' => 'setField',
+        'kind' => 'setKind',
+        'values' => 'setValues',
+        'min' => 'setMin',
+        'max' => 'setMax',
     ];
 
     /**
@@ -187,8 +204,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $getters = [
-        'error_message' => 'getErrorMessage',
-        'error_code' => 'getErrorCode',
+        'field' => 'getField',
+        'kind' => 'getKind',
+        'values' => 'getValues',
+        'min' => 'getMin',
+        'max' => 'getMax',
     ];
 
     /**
@@ -232,6 +252,26 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
         return self::$openAPIModelName;
     }
 
+    public const KIND_STRING = 'string';
+
+    public const KIND_NUMBER_RANGE = 'number-range';
+
+    public const KIND_NUMBER = 'number';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getKindAllowableValues()
+    {
+        return [
+            self::KIND_STRING,
+            self::KIND_NUMBER_RANGE,
+            self::KIND_NUMBER,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -247,8 +287,11 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('error_message', $data ?? [], null);
-        $this->setIfExists('error_code', $data ?? [], null);
+        $this->setIfExists('field', $data ?? [], null);
+        $this->setIfExists('kind', $data ?? [], null);
+        $this->setIfExists('values', $data ?? [], null);
+        $this->setIfExists('min', $data ?? [], null);
+        $this->setIfExists('max', $data ?? [], null);
     }
 
     /**
@@ -276,6 +319,21 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     {
         $invalidProperties = [];
 
+        if ($this->container['field'] === null) {
+            $invalidProperties[] = "'field' can't be null";
+        }
+        if ($this->container['kind'] === null) {
+            $invalidProperties[] = "'kind' can't be null";
+        }
+        $allowedValues = $this->getKindAllowableValues();
+        if (!is_null($this->container['kind']) && !in_array($this->container['kind'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'kind', must be one of '%s'",
+                $this->container['kind'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -291,53 +349,141 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     }
 
     /**
-     * Gets error_message
+     * Gets field
      *
-     * @return string|null
+     * @return string
      */
-    public function getErrorMessage()
+    public function getField()
     {
-        return $this->container['error_message'];
+        return $this->container['field'];
     }
 
     /**
-     * Sets error_message
+     * Sets field
      *
-     * @param  string|null  $error_message  error_message
+     * @param  string  $field  The field path that was filtered (supports dot notation for nested fields).
      * @return self
      */
-    public function setErrorMessage($error_message)
+    public function setField($field)
     {
-        if (is_null($error_message)) {
-            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
+        if (is_null($field)) {
+            throw new \InvalidArgumentException('non-nullable field cannot be null');
         }
-        $this->container['error_message'] = $error_message;
+        $this->container['field'] = $field;
 
         return $this;
     }
 
     /**
-     * Gets error_code
+     * Gets kind
      *
-     * @return string|null
+     * @return string
      */
-    public function getErrorCode()
+    public function getKind()
     {
-        return $this->container['error_code'];
+        return $this->container['kind'];
     }
 
     /**
-     * Sets error_code
+     * Sets kind
      *
-     * @param  string|null  $error_code  error_code
+     * @param  string  $kind  The type of filter applied.
      * @return self
      */
-    public function setErrorCode($error_code)
+    public function setKind($kind)
     {
-        if (is_null($error_code)) {
-            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
+        if (is_null($kind)) {
+            throw new \InvalidArgumentException('non-nullable kind cannot be null');
         }
-        $this->container['error_code'] = $error_code;
+        $allowedValues = $this->getKindAllowableValues();
+        if (!in_array($kind, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'kind', must be one of '%s'",
+                    $kind,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['kind'] = $kind;
+
+        return $this;
+    }
+
+    /**
+     * Gets values
+     *
+     * @return string[]|null
+     */
+    public function getValues()
+    {
+        return $this->container['values'];
+    }
+
+    /**
+     * Sets values
+     *
+     * @param  string[]|null  $values  Array of values for string filters.
+     * @return self
+     */
+    public function setValues($values)
+    {
+        if (is_null($values)) {
+            throw new \InvalidArgumentException('non-nullable values cannot be null');
+        }
+        $this->container['values'] = $values;
+
+        return $this;
+    }
+
+    /**
+     * Gets min
+     *
+     * @return float|null
+     */
+    public function getMin()
+    {
+        return $this->container['min'];
+    }
+
+    /**
+     * Sets min
+     *
+     * @param  float|null  $min  Minimum value for numeric range filters.
+     * @return self
+     */
+    public function setMin($min)
+    {
+        if (is_null($min)) {
+            throw new \InvalidArgumentException('non-nullable min cannot be null');
+        }
+        $this->container['min'] = $min;
+
+        return $this;
+    }
+
+    /**
+     * Gets max
+     *
+     * @return float|null
+     */
+    public function getMax()
+    {
+        return $this->container['max'];
+    }
+
+    /**
+     * Sets max
+     *
+     * @param  float|null  $max  Maximum value for numeric range filters.
+     * @return self
+     */
+    public function setMax($max)
+    {
+        if (is_null($max)) {
+            throw new \InvalidArgumentException('non-nullable max cannot be null');
+        }
+        $this->container['max'] = $max;
 
         return $this;
     }

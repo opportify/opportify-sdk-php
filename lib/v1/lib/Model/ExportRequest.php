@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MALFORMEDREQUEST3
+ * ExportRequest
  *
  * PHP version 8.1
  *
@@ -34,9 +34,11 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * MALFORMEDREQUEST3 Class Doc Comment
+ * ExportRequest Class Doc Comment
  *
  * @category Class
+ *
+ * @description Request body for creating a batch export.
  *
  * @author   OpenAPI Generator team
  *
@@ -44,7 +46,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterface
+class ExportRequest implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +55,7 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      *
      * @var string
      */
-    protected static $openAPIModelName = 'MALFORMED_REQUEST_3';
+    protected static $openAPIModelName = 'ExportRequest';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,8 +63,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $openAPITypes = [
-        'error_message' => 'string',
-        'error_code' => 'string',
+        'export_type' => 'string',
+        'filters' => 'array<string,mixed>',
+        'columns' => 'string[]',
     ];
 
     /**
@@ -75,8 +78,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'error_message' => null,
-        'error_code' => null,
+        'export_type' => null,
+        'filters' => null,
+        'columns' => null,
     ];
 
     /**
@@ -85,8 +89,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'error_message' => false,
-        'error_code' => false,
+        'export_type' => false,
+        'filters' => false,
+        'columns' => false,
     ];
 
     /**
@@ -167,8 +172,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $attributeMap = [
-        'error_message' => 'errorMessage',
-        'error_code' => 'errorCode',
+        'export_type' => 'exportType',
+        'filters' => 'filters',
+        'columns' => 'columns',
     ];
 
     /**
@@ -177,8 +183,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $setters = [
-        'error_message' => 'setErrorMessage',
-        'error_code' => 'setErrorCode',
+        'export_type' => 'setExportType',
+        'filters' => 'setFilters',
+        'columns' => 'setColumns',
     ];
 
     /**
@@ -187,8 +194,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $getters = [
-        'error_message' => 'getErrorMessage',
-        'error_code' => 'getErrorCode',
+        'export_type' => 'getExportType',
+        'filters' => 'getFilters',
+        'columns' => 'getColumns',
     ];
 
     /**
@@ -232,6 +240,23 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
         return self::$openAPIModelName;
     }
 
+    public const EXPORT_TYPE_CSV = 'csv';
+
+    public const EXPORT_TYPE_JSON = 'json';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getExportTypeAllowableValues()
+    {
+        return [
+            self::EXPORT_TYPE_CSV,
+            self::EXPORT_TYPE_JSON,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -247,8 +272,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('error_message', $data ?? [], null);
-        $this->setIfExists('error_code', $data ?? [], null);
+        $this->setIfExists('export_type', $data ?? [], null);
+        $this->setIfExists('filters', $data ?? [], null);
+        $this->setIfExists('columns', $data ?? [], null);
     }
 
     /**
@@ -276,6 +302,19 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     {
         $invalidProperties = [];
 
+        $allowedValues = $this->getExportTypeAllowableValues();
+        if (!is_null($this->container['export_type']) && !in_array($this->container['export_type'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'export_type', must be one of '%s'",
+                $this->container['export_type'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['columns']) && (count($this->container['columns']) > 100)) {
+            $invalidProperties[] = "invalid value for 'columns', number of items must be less than or equal to 100.";
+        }
+
         return $invalidProperties;
     }
 
@@ -291,53 +330,93 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     }
 
     /**
-     * Gets error_message
+     * Gets export_type
      *
      * @return string|null
      */
-    public function getErrorMessage()
+    public function getExportType()
     {
-        return $this->container['error_message'];
+        return $this->container['export_type'];
     }
 
     /**
-     * Sets error_message
+     * Sets export_type
      *
-     * @param  string|null  $error_message  error_message
+     * @param  string|null  $export_type  Output format for the export. If omitted, the server will use `csv` as the default format.
      * @return self
      */
-    public function setErrorMessage($error_message)
+    public function setExportType($export_type)
     {
-        if (is_null($error_message)) {
-            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
+        if (is_null($export_type)) {
+            throw new \InvalidArgumentException('non-nullable export_type cannot be null');
         }
-        $this->container['error_message'] = $error_message;
+        $allowedValues = $this->getExportTypeAllowableValues();
+        if (!in_array($export_type, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'export_type', must be one of '%s'",
+                    $export_type,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['export_type'] = $export_type;
 
         return $this;
     }
 
     /**
-     * Gets error_code
+     * Gets filters
      *
-     * @return string|null
+     * @return array<string,mixed>|null
      */
-    public function getErrorCode()
+    public function getFilters()
     {
-        return $this->container['error_code'];
+        return $this->container['filters'];
     }
 
     /**
-     * Sets error_code
+     * Sets filters
      *
-     * @param  string|null  $error_code  error_code
+     * @param  array<string,mixed>|null  $filters  Field-level filters to apply to the export. Supports string filters (exact match, comma-separated, or arrays), numeric filters (exact values, arrays, or range objects with min/max), and nested field access using dot notation.  - Maximum 25 filters - Maximum 50 values per filter
      * @return self
      */
-    public function setErrorCode($error_code)
+    public function setFilters($filters)
     {
-        if (is_null($error_code)) {
-            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
+        if (is_null($filters)) {
+            throw new \InvalidArgumentException('non-nullable filters cannot be null');
         }
-        $this->container['error_code'] = $error_code;
+        $this->container['filters'] = $filters;
+
+        return $this;
+    }
+
+    /**
+     * Gets columns
+     *
+     * @return string[]|null
+     */
+    public function getColumns()
+    {
+        return $this->container['columns'];
+    }
+
+    /**
+     * Sets columns
+     *
+     * @param  string[]|null  $columns  Array of field paths to include in the export. If omitted, all fields are included. Maximum 100 columns.
+     * @return self
+     */
+    public function setColumns($columns)
+    {
+        if (is_null($columns)) {
+            throw new \InvalidArgumentException('non-nullable columns cannot be null');
+        }
+
+        if ((count($columns) > 100)) {
+            throw new \InvalidArgumentException('invalid value for $columns when calling ExportRequest., number of items must be less than or equal to 100.');
+        }
+        $this->container['columns'] = $columns;
 
         return $this;
     }

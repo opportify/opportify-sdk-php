@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MALFORMEDREQUEST3
+ * AddressSignals
  *
  * PHP version 8.1
  *
@@ -34,9 +34,11 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * MALFORMEDREQUEST3 Class Doc Comment
+ * AddressSignals Class Doc Comment
  *
  * @category Class
+ *
+ * @description Local-part parsing insights produced during analysis. The service always returns this payload; when a specific signal is unavailable, the corresponding value falls back to &#x60;false&#x60; or an empty string.  When &#x60;isNoReply&#x60; is &#x60;true&#x60;, the risk engine enforces a minimum &#x60;high&#x60; risk level and appends &#x60;noreply-detected&#x60; to &#x60;riskReport.baseAnalysis&#x60;.
  *
  * @author   OpenAPI Generator team
  *
@@ -44,7 +46,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterface
+class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +55,7 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      *
      * @var string
      */
-    protected static $openAPIModelName = 'MALFORMED_REQUEST_3';
+    protected static $openAPIModelName = 'AddressSignals';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,8 +63,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $openAPITypes = [
-        'error_message' => 'string',
-        'error_code' => 'string',
+        'tag_detected' => 'bool',
+        'tag_value' => 'string',
+        'normalized_address' => 'string',
+        'is_role_address' => 'bool',
+        'role_type' => 'string',
+        'is_no_reply' => 'bool',
+        'no_reply_pattern' => 'string',
     ];
 
     /**
@@ -75,8 +82,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'error_message' => null,
-        'error_code' => null,
+        'tag_detected' => null,
+        'tag_value' => null,
+        'normalized_address' => null,
+        'is_role_address' => null,
+        'role_type' => null,
+        'is_no_reply' => null,
+        'no_reply_pattern' => null,
     ];
 
     /**
@@ -85,8 +97,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'error_message' => false,
-        'error_code' => false,
+        'tag_detected' => false,
+        'tag_value' => false,
+        'normalized_address' => false,
+        'is_role_address' => false,
+        'role_type' => false,
+        'is_no_reply' => false,
+        'no_reply_pattern' => false,
     ];
 
     /**
@@ -167,8 +184,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $attributeMap = [
-        'error_message' => 'errorMessage',
-        'error_code' => 'errorCode',
+        'tag_detected' => 'tagDetected',
+        'tag_value' => 'tagValue',
+        'normalized_address' => 'normalizedAddress',
+        'is_role_address' => 'isRoleAddress',
+        'role_type' => 'roleType',
+        'is_no_reply' => 'isNoReply',
+        'no_reply_pattern' => 'noReplyPattern',
     ];
 
     /**
@@ -177,8 +199,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $setters = [
-        'error_message' => 'setErrorMessage',
-        'error_code' => 'setErrorCode',
+        'tag_detected' => 'setTagDetected',
+        'tag_value' => 'setTagValue',
+        'normalized_address' => 'setNormalizedAddress',
+        'is_role_address' => 'setIsRoleAddress',
+        'role_type' => 'setRoleType',
+        'is_no_reply' => 'setIsNoReply',
+        'no_reply_pattern' => 'setNoReplyPattern',
     ];
 
     /**
@@ -187,8 +214,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $getters = [
-        'error_message' => 'getErrorMessage',
-        'error_code' => 'getErrorCode',
+        'tag_detected' => 'getTagDetected',
+        'tag_value' => 'getTagValue',
+        'normalized_address' => 'getNormalizedAddress',
+        'is_role_address' => 'getIsRoleAddress',
+        'role_type' => 'getRoleType',
+        'is_no_reply' => 'getIsNoReply',
+        'no_reply_pattern' => 'getNoReplyPattern',
     ];
 
     /**
@@ -247,8 +279,13 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('error_message', $data ?? [], null);
-        $this->setIfExists('error_code', $data ?? [], null);
+        $this->setIfExists('tag_detected', $data ?? [], false);
+        $this->setIfExists('tag_value', $data ?? [], '');
+        $this->setIfExists('normalized_address', $data ?? [], '');
+        $this->setIfExists('is_role_address', $data ?? [], false);
+        $this->setIfExists('role_type', $data ?? [], '');
+        $this->setIfExists('is_no_reply', $data ?? [], false);
+        $this->setIfExists('no_reply_pattern', $data ?? [], '');
     }
 
     /**
@@ -276,6 +313,28 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     {
         $invalidProperties = [];
 
+        if ($this->container['tag_detected'] === null) {
+            $invalidProperties[] = "'tag_detected' can't be null";
+        }
+        if ($this->container['tag_value'] === null) {
+            $invalidProperties[] = "'tag_value' can't be null";
+        }
+        if ($this->container['normalized_address'] === null) {
+            $invalidProperties[] = "'normalized_address' can't be null";
+        }
+        if ($this->container['is_role_address'] === null) {
+            $invalidProperties[] = "'is_role_address' can't be null";
+        }
+        if ($this->container['role_type'] === null) {
+            $invalidProperties[] = "'role_type' can't be null";
+        }
+        if ($this->container['is_no_reply'] === null) {
+            $invalidProperties[] = "'is_no_reply' can't be null";
+        }
+        if ($this->container['no_reply_pattern'] === null) {
+            $invalidProperties[] = "'no_reply_pattern' can't be null";
+        }
+
         return $invalidProperties;
     }
 
@@ -291,53 +350,183 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     }
 
     /**
-     * Gets error_message
+     * Gets tag_detected
      *
-     * @return string|null
+     * @return bool
      */
-    public function getErrorMessage()
+    public function getTagDetected()
     {
-        return $this->container['error_message'];
+        return $this->container['tag_detected'];
     }
 
     /**
-     * Sets error_message
+     * Sets tag_detected
      *
-     * @param  string|null  $error_message  error_message
+     * @param  bool  $tag_detected  Indicates whether the local-part contains `+tag` sub-addressing.
      * @return self
      */
-    public function setErrorMessage($error_message)
+    public function setTagDetected($tag_detected)
     {
-        if (is_null($error_message)) {
-            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
+        if (is_null($tag_detected)) {
+            throw new \InvalidArgumentException('non-nullable tag_detected cannot be null');
         }
-        $this->container['error_message'] = $error_message;
+        $this->container['tag_detected'] = $tag_detected;
 
         return $this;
     }
 
     /**
-     * Gets error_code
+     * Gets tag_value
      *
-     * @return string|null
+     * @return string
      */
-    public function getErrorCode()
+    public function getTagValue()
     {
-        return $this->container['error_code'];
+        return $this->container['tag_value'];
     }
 
     /**
-     * Sets error_code
+     * Sets tag_value
      *
-     * @param  string|null  $error_code  error_code
+     * @param  string  $tag_value  Raw tag contents following the plus sign. Empty string when a tag is not present or has no suffix.
      * @return self
      */
-    public function setErrorCode($error_code)
+    public function setTagValue($tag_value)
     {
-        if (is_null($error_code)) {
-            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
+        if (is_null($tag_value)) {
+            throw new \InvalidArgumentException('non-nullable tag_value cannot be null');
         }
-        $this->container['error_code'] = $error_code;
+        $this->container['tag_value'] = $tag_value;
+
+        return $this;
+    }
+
+    /**
+     * Gets normalized_address
+     *
+     * @return string
+     */
+    public function getNormalizedAddress()
+    {
+        return $this->container['normalized_address'];
+    }
+
+    /**
+     * Sets normalized_address
+     *
+     * @param  string  $normalized_address  Email rebuilt without the tag. Always lower-case.
+     * @return self
+     */
+    public function setNormalizedAddress($normalized_address)
+    {
+        if (is_null($normalized_address)) {
+            throw new \InvalidArgumentException('non-nullable normalized_address cannot be null');
+        }
+        $this->container['normalized_address'] = $normalized_address;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_role_address
+     *
+     * @return bool
+     */
+    public function getIsRoleAddress()
+    {
+        return $this->container['is_role_address'];
+    }
+
+    /**
+     * Sets is_role_address
+     *
+     * @param  bool  $is_role_address  True when the local-part maps to a catalogued role inbox (e.g., support, sales, billing).
+     * @return self
+     */
+    public function setIsRoleAddress($is_role_address)
+    {
+        if (is_null($is_role_address)) {
+            throw new \InvalidArgumentException('non-nullable is_role_address cannot be null');
+        }
+        $this->container['is_role_address'] = $is_role_address;
+
+        return $this;
+    }
+
+    /**
+     * Gets role_type
+     *
+     * @return string
+     */
+    public function getRoleType()
+    {
+        return $this->container['role_type'];
+    }
+
+    /**
+     * Sets role_type
+     *
+     * @param  string  $role_type  Role category slug. Empty string when `isRoleAddress` is false.
+     * @return self
+     */
+    public function setRoleType($role_type)
+    {
+        if (is_null($role_type)) {
+            throw new \InvalidArgumentException('non-nullable role_type cannot be null');
+        }
+        $this->container['role_type'] = $role_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_no_reply
+     *
+     * @return bool
+     */
+    public function getIsNoReply()
+    {
+        return $this->container['is_no_reply'];
+    }
+
+    /**
+     * Sets is_no_reply
+     *
+     * @param  bool  $is_no_reply  True when the local-part matches no-reply or do-not-reply patterns (multi-language aware).
+     * @return self
+     */
+    public function setIsNoReply($is_no_reply)
+    {
+        if (is_null($is_no_reply)) {
+            throw new \InvalidArgumentException('non-nullable is_no_reply cannot be null');
+        }
+        $this->container['is_no_reply'] = $is_no_reply;
+
+        return $this;
+    }
+
+    /**
+     * Gets no_reply_pattern
+     *
+     * @return string
+     */
+    public function getNoReplyPattern()
+    {
+        return $this->container['no_reply_pattern'];
+    }
+
+    /**
+     * Sets no_reply_pattern
+     *
+     * @param  string  $no_reply_pattern  Canonical pattern matched when `isNoReply` is true (for example `noreply`, `no-responder`, `mailer-daemon`). Empty string when no pattern applies.
+     * @return self
+     */
+    public function setNoReplyPattern($no_reply_pattern)
+    {
+        if (is_null($no_reply_pattern)) {
+            throw new \InvalidArgumentException('non-nullable no_reply_pattern cannot be null');
+        }
+        $this->container['no_reply_pattern'] = $no_reply_pattern;
 
         return $this;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GetEmailBatchStatus200Response
+ * ExportStatusResponse
  *
  * PHP version 8.1
  *
@@ -34,9 +34,11 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * GetEmailBatchStatus200Response Class Doc Comment
+ * ExportStatusResponse Class Doc Comment
  *
  * @category Class
+ *
+ * @description Response containing the status and details of an export job.
  *
  * @author   OpenAPI Generator team
  *
@@ -44,7 +46,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, ModelInterface
+class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +55,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      *
      * @var string
      */
-    protected static $openAPIModelName = 'getEmailBatchStatus_200_response';
+    protected static $openAPIModelName = 'ExportStatusResponse';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -62,11 +64,18 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     protected static $openAPITypes = [
         'job_id' => 'string',
-        'name' => 'string',
+        'export_id' => 'string',
         'status' => 'string',
-        'status_description' => 'string',
-        'progress' => 'int',
-        'download_urls' => '\OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls',
+        'format' => 'string',
+        'filters' => '\OpenAPI\Client\Model\ExportFilter[]',
+        'columns' => 'string[]',
+        'requested_at' => '\DateTime',
+        'updated_at' => '\DateTime',
+        'download_url' => 'string',
+        'expires_at' => '\DateTime',
+        'result_size_bytes' => 'int',
+        'error_code' => 'string',
+        'error_message' => 'string',
     ];
 
     /**
@@ -79,12 +88,19 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'job_id' => null,
-        'name' => null,
+        'job_id' => 'uuid',
+        'export_id' => 'uuid',
         'status' => null,
-        'status_description' => null,
-        'progress' => null,
-        'download_urls' => null,
+        'format' => null,
+        'filters' => null,
+        'columns' => null,
+        'requested_at' => 'date-time',
+        'updated_at' => 'date-time',
+        'download_url' => 'uri',
+        'expires_at' => 'date-time',
+        'result_size_bytes' => null,
+        'error_code' => null,
+        'error_message' => null,
     ];
 
     /**
@@ -94,11 +110,18 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     protected static array $openAPINullables = [
         'job_id' => false,
-        'name' => false,
+        'export_id' => false,
         'status' => false,
-        'status_description' => false,
-        'progress' => false,
-        'download_urls' => false,
+        'format' => false,
+        'filters' => false,
+        'columns' => false,
+        'requested_at' => false,
+        'updated_at' => false,
+        'download_url' => false,
+        'expires_at' => false,
+        'result_size_bytes' => false,
+        'error_code' => false,
+        'error_message' => false,
     ];
 
     /**
@@ -180,11 +203,18 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     protected static $attributeMap = [
         'job_id' => 'jobId',
-        'name' => 'name',
+        'export_id' => 'exportId',
         'status' => 'status',
-        'status_description' => 'statusDescription',
-        'progress' => 'progress',
-        'download_urls' => 'downloadUrls',
+        'format' => 'format',
+        'filters' => 'filters',
+        'columns' => 'columns',
+        'requested_at' => 'requestedAt',
+        'updated_at' => 'updatedAt',
+        'download_url' => 'downloadUrl',
+        'expires_at' => 'expiresAt',
+        'result_size_bytes' => 'resultSizeBytes',
+        'error_code' => 'errorCode',
+        'error_message' => 'errorMessage',
     ];
 
     /**
@@ -194,11 +224,18 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     protected static $setters = [
         'job_id' => 'setJobId',
-        'name' => 'setName',
+        'export_id' => 'setExportId',
         'status' => 'setStatus',
-        'status_description' => 'setStatusDescription',
-        'progress' => 'setProgress',
-        'download_urls' => 'setDownloadUrls',
+        'format' => 'setFormat',
+        'filters' => 'setFilters',
+        'columns' => 'setColumns',
+        'requested_at' => 'setRequestedAt',
+        'updated_at' => 'setUpdatedAt',
+        'download_url' => 'setDownloadUrl',
+        'expires_at' => 'setExpiresAt',
+        'result_size_bytes' => 'setResultSizeBytes',
+        'error_code' => 'setErrorCode',
+        'error_message' => 'setErrorMessage',
     ];
 
     /**
@@ -208,11 +245,18 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
      */
     protected static $getters = [
         'job_id' => 'getJobId',
-        'name' => 'getName',
+        'export_id' => 'getExportId',
         'status' => 'getStatus',
-        'status_description' => 'getStatusDescription',
-        'progress' => 'getProgress',
-        'download_urls' => 'getDownloadUrls',
+        'format' => 'getFormat',
+        'filters' => 'getFilters',
+        'columns' => 'getColumns',
+        'requested_at' => 'getRequestedAt',
+        'updated_at' => 'getUpdatedAt',
+        'download_url' => 'getDownloadUrl',
+        'expires_at' => 'getExpiresAt',
+        'result_size_bytes' => 'getResultSizeBytes',
+        'error_code' => 'getErrorCode',
+        'error_message' => 'getErrorMessage',
     ];
 
     /**
@@ -262,7 +306,11 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
 
     public const STATUS_COMPLETED = 'COMPLETED';
 
-    public const STATUS_ERROR = 'ERROR';
+    public const STATUS_FAILED = 'FAILED';
+
+    public const FORMAT_CSV = 'csv';
+
+    public const FORMAT_JSON = 'json';
 
     /**
      * Gets allowable values of the enum
@@ -275,7 +323,20 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
             self::STATUS_QUEUED,
             self::STATUS_PROCESSING,
             self::STATUS_COMPLETED,
-            self::STATUS_ERROR,
+            self::STATUS_FAILED,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getFormatAllowableValues()
+    {
+        return [
+            self::FORMAT_CSV,
+            self::FORMAT_JSON,
         ];
     }
 
@@ -295,11 +356,18 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     public function __construct(?array $data = null)
     {
         $this->setIfExists('job_id', $data ?? [], null);
-        $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('export_id', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
-        $this->setIfExists('status_description', $data ?? [], null);
-        $this->setIfExists('progress', $data ?? [], null);
-        $this->setIfExists('download_urls', $data ?? [], null);
+        $this->setIfExists('format', $data ?? [], null);
+        $this->setIfExists('filters', $data ?? [], null);
+        $this->setIfExists('columns', $data ?? [], null);
+        $this->setIfExists('requested_at', $data ?? [], null);
+        $this->setIfExists('updated_at', $data ?? [], null);
+        $this->setIfExists('download_url', $data ?? [], null);
+        $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('result_size_bytes', $data ?? [], null);
+        $this->setIfExists('error_code', $data ?? [], null);
+        $this->setIfExists('error_message', $data ?? [], null);
     }
 
     /**
@@ -327,6 +395,15 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     {
         $invalidProperties = [];
 
+        if ($this->container['job_id'] === null) {
+            $invalidProperties[] = "'job_id' can't be null";
+        }
+        if ($this->container['export_id'] === null) {
+            $invalidProperties[] = "'export_id' can't be null";
+        }
+        if ($this->container['status'] === null) {
+            $invalidProperties[] = "'status' can't be null";
+        }
         $allowedValues = $this->getStatusAllowableValues();
         if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -334,6 +411,25 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
                 $this->container['status'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        if ($this->container['format'] === null) {
+            $invalidProperties[] = "'format' can't be null";
+        }
+        $allowedValues = $this->getFormatAllowableValues();
+        if (!is_null($this->container['format']) && !in_array($this->container['format'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'format', must be one of '%s'",
+                $this->container['format'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if ($this->container['requested_at'] === null) {
+            $invalidProperties[] = "'requested_at' can't be null";
+        }
+        if ($this->container['updated_at'] === null) {
+            $invalidProperties[] = "'updated_at' can't be null";
         }
 
         return $invalidProperties;
@@ -353,7 +449,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     /**
      * Gets job_id
      *
-     * @return string|null
+     * @return string
      */
     public function getJobId()
     {
@@ -363,7 +459,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     /**
      * Sets job_id
      *
-     * @param  string|null  $job_id  Unique identifier for the batch job.
+     * @param  string  $job_id  The batch job identifier.
      * @return self
      */
     public function setJobId($job_id)
@@ -377,27 +473,27 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     }
 
     /**
-     * Gets name
+     * Gets export_id
      *
-     * @return string|null
+     * @return string
      */
-    public function getName()
+    public function getExportId()
     {
-        return $this->container['name'];
+        return $this->container['export_id'];
     }
 
     /**
-     * Sets name
+     * Sets export_id
      *
-     * @param  string|null  $name  Name of the batch job, if provided.
+     * @param  string  $export_id  The unique identifier for the export job.
      * @return self
      */
-    public function setName($name)
+    public function setExportId($export_id)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($export_id)) {
+            throw new \InvalidArgumentException('non-nullable export_id cannot be null');
         }
-        $this->container['name'] = $name;
+        $this->container['export_id'] = $export_id;
 
         return $this;
     }
@@ -405,7 +501,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     /**
      * Gets status
      *
-     * @return string|null
+     * @return string
      */
     public function getStatus()
     {
@@ -415,7 +511,7 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     /**
      * Sets status
      *
-     * @param  string|null  $status  Current status of the batch job.
+     * @param  string  $status  Current status of the export job.
      * @return self
      */
     public function setStatus($status)
@@ -439,79 +535,271 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     }
 
     /**
-     * Gets status_description
+     * Gets format
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->container['format'];
+    }
+
+    /**
+     * Sets format
+     *
+     * @param  string  $format  The output format of the export.
+     * @return self
+     */
+    public function setFormat($format)
+    {
+        if (is_null($format)) {
+            throw new \InvalidArgumentException('non-nullable format cannot be null');
+        }
+        $allowedValues = $this->getFormatAllowableValues();
+        if (!in_array($format, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'format', must be one of '%s'",
+                    $format,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['format'] = $format;
+
+        return $this;
+    }
+
+    /**
+     * Gets filters
+     *
+     * @return \OpenAPI\Client\Model\ExportFilter[]|null
+     */
+    public function getFilters()
+    {
+        return $this->container['filters'];
+    }
+
+    /**
+     * Sets filters
+     *
+     * @param  \OpenAPI\Client\Model\ExportFilter[]|null  $filters  List of filters applied to the export.
+     * @return self
+     */
+    public function setFilters($filters)
+    {
+        if (is_null($filters)) {
+            throw new \InvalidArgumentException('non-nullable filters cannot be null');
+        }
+        $this->container['filters'] = $filters;
+
+        return $this;
+    }
+
+    /**
+     * Gets columns
+     *
+     * @return string[]|null
+     */
+    public function getColumns()
+    {
+        return $this->container['columns'];
+    }
+
+    /**
+     * Sets columns
+     *
+     * @param  string[]|null  $columns  List of columns included in the export.
+     * @return self
+     */
+    public function setColumns($columns)
+    {
+        if (is_null($columns)) {
+            throw new \InvalidArgumentException('non-nullable columns cannot be null');
+        }
+        $this->container['columns'] = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Gets requested_at
+     *
+     * @return \DateTime
+     */
+    public function getRequestedAt()
+    {
+        return $this->container['requested_at'];
+    }
+
+    /**
+     * Sets requested_at
+     *
+     * @param  \DateTime  $requested_at  Timestamp when the export was requested (ISO 8601 format).
+     * @return self
+     */
+    public function setRequestedAt($requested_at)
+    {
+        if (is_null($requested_at)) {
+            throw new \InvalidArgumentException('non-nullable requested_at cannot be null');
+        }
+        $this->container['requested_at'] = $requested_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets updated_at
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->container['updated_at'];
+    }
+
+    /**
+     * Sets updated_at
+     *
+     * @param  \DateTime  $updated_at  Timestamp when the export status was last updated (ISO 8601 format).
+     * @return self
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        if (is_null($updated_at)) {
+            throw new \InvalidArgumentException('non-nullable updated_at cannot be null');
+        }
+        $this->container['updated_at'] = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets download_url
      *
      * @return string|null
      */
-    public function getStatusDescription()
+    public function getDownloadUrl()
     {
-        return $this->container['status_description'];
+        return $this->container['download_url'];
     }
 
     /**
-     * Sets status_description
+     * Sets download_url
      *
-     * @param  string|null  $status_description  Description of the status, particularly useful when status is ERROR.
+     * @param  string|null  $download_url  Pre-signed URL to download the export file. Only present when status is `COMPLETED`.
      * @return self
      */
-    public function setStatusDescription($status_description)
+    public function setDownloadUrl($download_url)
     {
-        if (is_null($status_description)) {
-            throw new \InvalidArgumentException('non-nullable status_description cannot be null');
+        if (is_null($download_url)) {
+            throw new \InvalidArgumentException('non-nullable download_url cannot be null');
         }
-        $this->container['status_description'] = $status_description;
+        $this->container['download_url'] = $download_url;
 
         return $this;
     }
 
     /**
-     * Gets progress
+     * Gets expires_at
+     *
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->container['expires_at'];
+    }
+
+    /**
+     * Sets expires_at
+     *
+     * @param  \DateTime|null  $expires_at  Expiration timestamp for the download URL (ISO 8601 format). Only present when status is `COMPLETED`.
+     * @return self
+     */
+    public function setExpiresAt($expires_at)
+    {
+        if (is_null($expires_at)) {
+            throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets result_size_bytes
      *
      * @return int|null
      */
-    public function getProgress()
+    public function getResultSizeBytes()
     {
-        return $this->container['progress'];
+        return $this->container['result_size_bytes'];
     }
 
     /**
-     * Sets progress
+     * Sets result_size_bytes
      *
-     * @param  int|null  $progress  Percentage of completion for the batch job (0-100).
+     * @param  int|null  $result_size_bytes  Size of the export file in bytes. Only present when status is `COMPLETED`.
      * @return self
      */
-    public function setProgress($progress)
+    public function setResultSizeBytes($result_size_bytes)
     {
-        if (is_null($progress)) {
-            throw new \InvalidArgumentException('non-nullable progress cannot be null');
+        if (is_null($result_size_bytes)) {
+            throw new \InvalidArgumentException('non-nullable result_size_bytes cannot be null');
         }
-        $this->container['progress'] = $progress;
+        $this->container['result_size_bytes'] = $result_size_bytes;
 
         return $this;
     }
 
     /**
-     * Gets download_urls
+     * Gets error_code
      *
-     * @return \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null
+     * @return string|null
      */
-    public function getDownloadUrls()
+    public function getErrorCode()
     {
-        return $this->container['download_urls'];
+        return $this->container['error_code'];
     }
 
     /**
-     * Sets download_urls
+     * Sets error_code
      *
-     * @param  \OpenAPI\Client\Model\GetEmailBatchStatus200ResponseDownloadUrls|null  $download_urls  download_urls
+     * @param  string|null  $error_code  Error code if the export failed. Only present when status is `FAILED`.
      * @return self
      */
-    public function setDownloadUrls($download_urls)
+    public function setErrorCode($error_code)
     {
-        if (is_null($download_urls)) {
-            throw new \InvalidArgumentException('non-nullable download_urls cannot be null');
+        if (is_null($error_code)) {
+            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
         }
-        $this->container['download_urls'] = $download_urls;
+        $this->container['error_code'] = $error_code;
+
+        return $this;
+    }
+
+    /**
+     * Gets error_message
+     *
+     * @return string|null
+     */
+    public function getErrorMessage()
+    {
+        return $this->container['error_message'];
+    }
+
+    /**
+     * Sets error_message
+     *
+     * @param  string|null  $error_message  Error message if the export failed. Only present when status is `FAILED`.
+     * @return self
+     */
+    public function setErrorMessage($error_message)
+    {
+        if (is_null($error_message)) {
+            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
+        }
+        $this->container['error_message'] = $error_message;
 
         return $this;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MALFORMEDREQUEST3
+ * CreateEmailBatchExport403Response
  *
  * PHP version 8.1
  *
@@ -34,7 +34,7 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * MALFORMEDREQUEST3 Class Doc Comment
+ * CreateEmailBatchExport403Response Class Doc Comment
  *
  * @category Class
  *
@@ -44,7 +44,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterface
+class CreateEmailBatchExport403Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +53,7 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      *
      * @var string
      */
-    protected static $openAPIModelName = 'MALFORMED_REQUEST_3';
+    protected static $openAPIModelName = 'createEmailBatchExport_403_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MALFORMEDREQUEST3
+ * ExportCreatedResponse
  *
  * PHP version 8.1
  *
@@ -34,9 +34,11 @@ use ArrayAccess;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
- * MALFORMEDREQUEST3 Class Doc Comment
+ * ExportCreatedResponse Class Doc Comment
  *
  * @category Class
+ *
+ * @description Response when an export request is accepted.
  *
  * @author   OpenAPI Generator team
  *
@@ -44,7 +46,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @implements \ArrayAccess<string, mixed>
  */
-class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterface
+class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInterface
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +55,7 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      *
      * @var string
      */
-    protected static $openAPIModelName = 'MALFORMED_REQUEST_3';
+    protected static $openAPIModelName = 'ExportCreatedResponse';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -61,8 +63,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $openAPITypes = [
-        'error_message' => 'string',
-        'error_code' => 'string',
+        'job_id' => 'string',
+        'export_id' => 'string',
+        'status' => 'string',
     ];
 
     /**
@@ -75,8 +78,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'error_message' => null,
-        'error_code' => null,
+        'job_id' => 'uuid',
+        'export_id' => 'uuid',
+        'status' => null,
     ];
 
     /**
@@ -85,8 +89,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'error_message' => false,
-        'error_code' => false,
+        'job_id' => false,
+        'export_id' => false,
+        'status' => false,
     ];
 
     /**
@@ -167,8 +172,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $attributeMap = [
-        'error_message' => 'errorMessage',
-        'error_code' => 'errorCode',
+        'job_id' => 'jobId',
+        'export_id' => 'exportId',
+        'status' => 'status',
     ];
 
     /**
@@ -177,8 +183,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $setters = [
-        'error_message' => 'setErrorMessage',
-        'error_code' => 'setErrorCode',
+        'job_id' => 'setJobId',
+        'export_id' => 'setExportId',
+        'status' => 'setStatus',
     ];
 
     /**
@@ -187,8 +194,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      * @var string[]
      */
     protected static $getters = [
-        'error_message' => 'getErrorMessage',
-        'error_code' => 'getErrorCode',
+        'job_id' => 'getJobId',
+        'export_id' => 'getExportId',
+        'status' => 'getStatus',
     ];
 
     /**
@@ -232,6 +240,20 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
         return self::$openAPIModelName;
     }
 
+    public const STATUS_QUEUED = 'QUEUED';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_QUEUED,
+        ];
+    }
+
     /**
      * Associative array for storing property values
      *
@@ -247,8 +269,9 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('error_message', $data ?? [], null);
-        $this->setIfExists('error_code', $data ?? [], null);
+        $this->setIfExists('job_id', $data ?? [], null);
+        $this->setIfExists('export_id', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
     }
 
     /**
@@ -276,6 +299,24 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     {
         $invalidProperties = [];
 
+        if ($this->container['job_id'] === null) {
+            $invalidProperties[] = "'job_id' can't be null";
+        }
+        if ($this->container['export_id'] === null) {
+            $invalidProperties[] = "'export_id' can't be null";
+        }
+        if ($this->container['status'] === null) {
+            $invalidProperties[] = "'status' can't be null";
+        }
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -291,53 +332,89 @@ class MALFORMEDREQUEST3 implements \JsonSerializable, ArrayAccess, ModelInterfac
     }
 
     /**
-     * Gets error_message
+     * Gets job_id
      *
-     * @return string|null
+     * @return string
      */
-    public function getErrorMessage()
+    public function getJobId()
     {
-        return $this->container['error_message'];
+        return $this->container['job_id'];
     }
 
     /**
-     * Sets error_message
+     * Sets job_id
      *
-     * @param  string|null  $error_message  error_message
+     * @param  string  $job_id  The batch job identifier.
      * @return self
      */
-    public function setErrorMessage($error_message)
+    public function setJobId($job_id)
     {
-        if (is_null($error_message)) {
-            throw new \InvalidArgumentException('non-nullable error_message cannot be null');
+        if (is_null($job_id)) {
+            throw new \InvalidArgumentException('non-nullable job_id cannot be null');
         }
-        $this->container['error_message'] = $error_message;
+        $this->container['job_id'] = $job_id;
 
         return $this;
     }
 
     /**
-     * Gets error_code
+     * Gets export_id
      *
-     * @return string|null
+     * @return string
      */
-    public function getErrorCode()
+    public function getExportId()
     {
-        return $this->container['error_code'];
+        return $this->container['export_id'];
     }
 
     /**
-     * Sets error_code
+     * Sets export_id
      *
-     * @param  string|null  $error_code  error_code
+     * @param  string  $export_id  The unique identifier for the export job.
      * @return self
      */
-    public function setErrorCode($error_code)
+    public function setExportId($export_id)
     {
-        if (is_null($error_code)) {
-            throw new \InvalidArgumentException('non-nullable error_code cannot be null');
+        if (is_null($export_id)) {
+            throw new \InvalidArgumentException('non-nullable export_id cannot be null');
         }
-        $this->container['error_code'] = $error_code;
+        $this->container['export_id'] = $export_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->container['status'];
+    }
+
+    /**
+     * Sets status
+     *
+     * @param  string  $status  Initial status of the export job.
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
+        }
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
 
         return $this;
     }
