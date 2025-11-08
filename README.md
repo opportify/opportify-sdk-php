@@ -5,6 +5,27 @@
 
 # Opportify-SDK-PHP
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Requirements](#requirements)
+- [Getting Started](#getting-started)
+    - [Calling Email Insights](#calling-email-insights)
+    - [Calling IP Insights](#calling-ip-insights)
+- [Batch Analysis (Email & IP)](#batch-analysis-email--ip)
+    - [Batch Email Analysis (JSON)](#1-batch-email-analysis-json)
+    - [Batch Email Analysis (Plain Text)](#2-batch-email-analysis-plain-text)
+    - [Batch Email Analysis (File Upload)](#3-batch-email-analysis-file-upload)
+    - [Batch IP Analysis (JSON)](#4-batch-ip-analysis-json)
+    - [Batch IP Analysis (Plain Text)](#5-batch-ip-analysis-plain-text)
+    - [Batch IP Analysis (File Upload)](#6-batch-ip-analysis-file-upload)
+- [Batch Export Jobs](#batch-export-jobs)
+    - [Email Batch Exports](#email-batch-exports)
+    - [IP Batch Exports](#ip-batch-exports)
+- [Enabling Debug Mode](#enabling-debug-mode)
+- [Handling Error](#handling-error)
+- [About this package](#about-this-package)
+
 ## Overview
 
 The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.
@@ -40,7 +61,8 @@ $emailInsights = new EmailInsights("YOUR-API-KEY-HERE");
 $params = [
     "email" => "test@gmial.com", // *gmial* - just an example to be auto-corrected
     "enableAi" => true,
-    "enableAutoCorrection" => true
+    "enableAutoCorrection" => true,
+    "enableDomainEnrichment" => true // Optional: include domain enrichment block
 ];
 
 $result = $emailInsights->analyze($params);
@@ -157,6 +179,62 @@ $status = $ipInsights->getBatchStatus($batch->jobId);
 - `enableAutoCorrection` applies only to Email Insights.
 - Always wrap calls in a try-catch (see Error Handling) to capture API errors.
 - Polling cadence depends on payload size; a short delay (1–3s) between status checks is recommended.
+
+## Batch Export Jobs
+
+Use batch exports to materialize filtered results from completed jobs. Exports run asynchronously and expose polling helpers similar to batch status checks.
+
+### Email Batch Exports
+
+```php
+$emailInsights = new EmailInsights('<YOUR-KEY-HERE>');
+
+// Trigger a new export for a completed batch job
+$export = $emailInsights->createBatchExport('job-uuid-here', [
+    'exportType' => 'csv',
+    'columns' => [
+        'emailAddress',
+        'emailProvider',
+        'riskReport.score',
+        'isDeliverable'
+    ],
+    'filters' => [
+        'isDeliverable' => 'true',
+        'riskReport.score' => ['min' => 400]
+    ]
+]);
+
+// Poll until the export is ready
+$status = $emailInsights->getBatchExportStatus('job-uuid-here', $export->exportId);
+
+if ($status->status === 'COMPLETED') {
+    // Access $status->downloadUrls->csv or ->json for a pre-signed link
+}
+```
+
+### IP Batch Exports
+
+```php
+$ipInsights = new IpInsights('<YOUR-KEY-HERE>');
+
+$export = $ipInsights->createBatchExport('job-uuid-here', [
+    'exportType' => 'json',
+    'columns' => [
+        'result.ipAddress',
+        'result.connectionType',
+        'result.riskReport.score'
+    ],
+    'filters' => [
+        'result.riskReport.level' => ['low', 'medium']
+    ]
+]);
+
+$status = $ipInsights->getBatchExportStatus('job-uuid-here', $export->exportId);
+
+if ($status->status === 'FAILED') {
+    // Review $status->errorCode and $status->errorMessage for remediation guidance
+}
+```
 
 
 ### Enabling Debug Mode
