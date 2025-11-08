@@ -208,7 +208,7 @@ $export = $emailInsights->createBatchExport('job-uuid-here', [
 $status = $emailInsights->getBatchExportStatus('job-uuid-here', $export->exportId);
 
 if ($status->status === 'COMPLETED') {
-    // Access $status->downloadUrls->csv or ->json for a pre-signed link
+    // Use $status->downloadUrl for the pre-signed file link
 }
 ```
 
@@ -231,7 +231,9 @@ $export = $ipInsights->createBatchExport('job-uuid-here', [
 
 $status = $ipInsights->getBatchExportStatus('job-uuid-here', $export->exportId);
 
-if ($status->status === 'FAILED') {
+if ($status->status === 'COMPLETED') {
+    // Use $status->downloadUrl to retrieve the generated export
+} elseif ($status->status === 'FAILED') {
     // Review $status->errorCode and $status->errorMessage for remediation guidance
 }
 ```
