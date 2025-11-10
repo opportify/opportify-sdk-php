@@ -78,8 +78,8 @@ class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInte
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'job_id' => 'uuid',
-        'export_id' => 'uuid',
+        'job_id' => null,
+        'export_id' => null,
         'status' => null,
     ];
 
@@ -240,20 +240,6 @@ class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInte
         return self::$openAPIModelName;
     }
 
-    public const STATUS_QUEUED = 'QUEUED';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_QUEUED,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -308,14 +294,6 @@ class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInte
         if ($this->container['status'] === null) {
             $invalidProperties[] = "'status' can't be null";
         }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
 
         return $invalidProperties;
     }
@@ -344,7 +322,7 @@ class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInte
     /**
      * Sets job_id
      *
-     * @param  string  $job_id  The batch job identifier.
+     * @param  string  $job_id  The batch job identifier. Format: uuid. Example: \"84d22c8b-2cb6-4606-bfb1-361244a097e4\".
      * @return self
      */
     public function setJobId($job_id)
@@ -370,7 +348,7 @@ class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInte
     /**
      * Sets export_id
      *
-     * @param  string  $export_id  The unique identifier for the export job.
+     * @param  string  $export_id  The unique identifier for the export job. Format: uuid. Example: \"6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\".
      * @return self
      */
     public function setExportId($export_id)
@@ -396,23 +374,13 @@ class ExportCreatedResponse implements \JsonSerializable, ArrayAccess, ModelInte
     /**
      * Sets status
      *
-     * @param  string  $status  Initial status of the export job.
+     * @param  string  $status  Initial status of the export job. Allowed value: `QUEUED`. Example: `QUEUED`.
      * @return self
      */
     public function setStatus($status)
     {
         if (is_null($status)) {
             throw new \InvalidArgumentException('non-nullable status cannot be null');
-        }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['status'] = $status;
 

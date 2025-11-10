@@ -65,9 +65,9 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     protected static $openAPITypes = [
         'name' => 'string',
         'enrichment_available' => 'bool',
-        'creation_date' => '\DateTime',
-        'expiration_date' => '\DateTime',
-        'updated_date' => '\DateTime',
+        'creation_date' => 'string',
+        'expiration_date' => 'string',
+        'updated_date' => 'string',
         'age_years' => 'int',
         'registrar' => 'string',
         'is_block_listed' => 'bool',
@@ -91,9 +91,9 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     protected static $openAPIFormats = [
         'name' => null,
         'enrichment_available' => null,
-        'creation_date' => 'date-time',
-        'expiration_date' => 'date-time',
-        'updated_date' => 'date-time',
+        'creation_date' => null,
+        'expiration_date' => null,
+        'updated_date' => null,
         'age_years' => null,
         'registrar' => null,
         'is_block_listed' => null,
@@ -306,55 +306,6 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
-    public const MTA_STS_STATUS_PRESENT = 'present';
-
-    public const MTA_STS_STATUS_INVALID = 'invalid';
-
-    public const MTA_STS_STATUS_ABSENT = 'absent';
-
-    public const MTA_STS_STATUS_UNKNOWN = 'unknown';
-
-    public const BIMI_STATUS_PRESENT = 'present';
-
-    public const BIMI_STATUS_PRESENT_NO_VMC = 'present-no-vmc';
-
-    public const BIMI_STATUS_INVALID = 'invalid';
-
-    public const BIMI_STATUS_ABSENT = 'absent';
-
-    public const BIMI_STATUS_UNKNOWN = 'unknown';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getMtaStsStatusAllowableValues()
-    {
-        return [
-            self::MTA_STS_STATUS_PRESENT,
-            self::MTA_STS_STATUS_INVALID,
-            self::MTA_STS_STATUS_ABSENT,
-            self::MTA_STS_STATUS_UNKNOWN,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getBimiStatusAllowableValues()
-    {
-        return [
-            self::BIMI_STATUS_PRESENT,
-            self::BIMI_STATUS_PRESENT_NO_VMC,
-            self::BIMI_STATUS_INVALID,
-            self::BIMI_STATUS_ABSENT,
-            self::BIMI_STATUS_UNKNOWN,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -370,20 +321,20 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('name', $data ?? [], '');
-        $this->setIfExists('enrichment_available', $data ?? [], false);
+        $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('enrichment_available', $data ?? [], null);
         $this->setIfExists('creation_date', $data ?? [], null);
         $this->setIfExists('expiration_date', $data ?? [], null);
         $this->setIfExists('updated_date', $data ?? [], null);
-        $this->setIfExists('age_years', $data ?? [], 0);
-        $this->setIfExists('registrar', $data ?? [], '');
-        $this->setIfExists('is_block_listed', $data ?? [], false);
-        $this->setIfExists('mta_sts_status', $data ?? [], 'unknown');
-        $this->setIfExists('bimi_status', $data ?? [], 'unknown');
-        $this->setIfExists('has_vmc', $data ?? [], false);
-        $this->setIfExists('a_record_valid', $data ?? [], false);
-        $this->setIfExists('a_record_reverse_host', $data ?? [], '');
-        $this->setIfExists('ssl_valid', $data ?? [], false);
+        $this->setIfExists('age_years', $data ?? [], null);
+        $this->setIfExists('registrar', $data ?? [], null);
+        $this->setIfExists('is_block_listed', $data ?? [], null);
+        $this->setIfExists('mta_sts_status', $data ?? [], null);
+        $this->setIfExists('bimi_status', $data ?? [], null);
+        $this->setIfExists('has_vmc', $data ?? [], null);
+        $this->setIfExists('a_record_valid', $data ?? [], null);
+        $this->setIfExists('a_record_reverse_host', $data ?? [], null);
+        $this->setIfExists('ssl_valid', $data ?? [], null);
     }
 
     /**
@@ -438,27 +389,9 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
         if ($this->container['mta_sts_status'] === null) {
             $invalidProperties[] = "'mta_sts_status' can't be null";
         }
-        $allowedValues = $this->getMtaStsStatusAllowableValues();
-        if (!is_null($this->container['mta_sts_status']) && !in_array($this->container['mta_sts_status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'mta_sts_status', must be one of '%s'",
-                $this->container['mta_sts_status'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['bimi_status'] === null) {
             $invalidProperties[] = "'bimi_status' can't be null";
         }
-        $allowedValues = $this->getBimiStatusAllowableValues();
-        if (!is_null($this->container['bimi_status']) && !in_array($this->container['bimi_status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'bimi_status', must be one of '%s'",
-                $this->container['bimi_status'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['has_vmc'] === null) {
             $invalidProperties[] = "'has_vmc' can't be null";
         }
@@ -499,7 +432,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets name
      *
-     * @param  string  $name  Fully qualified domain name associated with the email.
+     * @param  string  $name  Fully qualified domain name associated with the email. Default: empty string. Example: \"company.com\".
      * @return self
      */
     public function setName($name)
@@ -525,7 +458,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets enrichment_available
      *
-     * @param  bool  $enrichment_available  Indicates whether enrichment data was available at analysis time.  When this is `false`, all enrichment fields (except `name`) represent safe defaults and must not be used for decision-making. Only the `name` field (the queried domain) and the default values of boolean and enum fields are meaningful; all other fields should be treated as informational only and ignored for any logic or risk assessment.
+     * @param  bool  $enrichment_available  Indicates whether enrichment data was available at analysis time.  When this is `false`, all enrichment fields (except `name`) represent safe defaults and must not be used for decision-making. Only the `name` field (the queried domain) and the default values of boolean and enum fields are meaningful; all other fields should be treated as informational only and ignored for any logic or risk assessment. Default: false. Example: true.
      * @return self
      */
     public function setEnrichmentAvailable($enrichment_available)
@@ -541,7 +474,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets creation_date
      *
-     * @return \DateTime
+     * @return string
      */
     public function getCreationDate()
     {
@@ -551,7 +484,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets creation_date
      *
-     * @param  \DateTime  $creation_date  Domain creation timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable.
+     * @param  string  $creation_date  Domain creation timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable. Format: date-time. Example: \"2014-05-12T00:00:00Z\".
      * @return self
      */
     public function setCreationDate($creation_date)
@@ -567,7 +500,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets expiration_date
      *
-     * @return \DateTime
+     * @return string
      */
     public function getExpirationDate()
     {
@@ -577,7 +510,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets expiration_date
      *
-     * @param  \DateTime  $expiration_date  Domain expiration timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable.
+     * @param  string  $expiration_date  Domain expiration timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable. Format: date-time. Example: \"2026-05-11T23:59:59Z\".
      * @return self
      */
     public function setExpirationDate($expiration_date)
@@ -593,7 +526,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets updated_date
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedDate()
     {
@@ -603,7 +536,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets updated_date
      *
-     * @param  \DateTime  $updated_date  Last WHOIS update timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable.
+     * @param  string  $updated_date  Last WHOIS update timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable. Format: date-time. Example: \"2024-11-01T08:30:00Z\".
      * @return self
      */
     public function setUpdatedDate($updated_date)
@@ -629,7 +562,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets age_years
      *
-     * @param  int  $age_years  Domain age in whole years based on stored enrichment data. Returns 0 for domains younger than one year.
+     * @param  int  $age_years  Domain age in whole years based on stored enrichment data. Returns 0 for domains younger than one year. Default: 0. Example: 11.
      * @return self
      */
     public function setAgeYears($age_years)
@@ -655,7 +588,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets registrar
      *
-     * @param  string  $registrar  Registrar recorded for the domain.
+     * @param  string  $registrar  Registrar recorded for the domain. Default: empty string. Example: \"Namecheap, Inc.\".
      * @return self
      */
     public function setRegistrar($registrar)
@@ -681,7 +614,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets is_block_listed
      *
-     * @param  bool  $is_block_listed  Indicates whether the domain appears in monitored blocklists.
+     * @param  bool  $is_block_listed  Indicates whether the domain appears in monitored blocklists. Default: false. Example: false.
      * @return self
      */
     public function setIsBlockListed($is_block_listed)
@@ -707,23 +640,13 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets mta_sts_status
      *
-     * @param  string  $mta_sts_status  Status of the domain's MTA-STS configuration.
+     * @param  string  $mta_sts_status  Status of the domain's MTA-STS configuration. Allowed values: `present`, `invalid`, `absent`, `unknown`. Default: `unknown`. Example: `present`.
      * @return self
      */
     public function setMtaStsStatus($mta_sts_status)
     {
         if (is_null($mta_sts_status)) {
             throw new \InvalidArgumentException('non-nullable mta_sts_status cannot be null');
-        }
-        $allowedValues = $this->getMtaStsStatusAllowableValues();
-        if (!in_array($mta_sts_status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'mta_sts_status', must be one of '%s'",
-                    $mta_sts_status,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['mta_sts_status'] = $mta_sts_status;
 
@@ -743,23 +666,13 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets bimi_status
      *
-     * @param  string  $bimi_status  BIMI (Brand Indicators for Message Identification) status.
+     * @param  string  $bimi_status  BIMI (Brand Indicators for Message Identification) status. Allowed values: `present`, `present-no-vmc`, `invalid`, `absent`, `unknown`. Default: `unknown`. Example: `present-no-vmc`.
      * @return self
      */
     public function setBimiStatus($bimi_status)
     {
         if (is_null($bimi_status)) {
             throw new \InvalidArgumentException('non-nullable bimi_status cannot be null');
-        }
-        $allowedValues = $this->getBimiStatusAllowableValues();
-        if (!in_array($bimi_status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'bimi_status', must be one of '%s'",
-                    $bimi_status,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['bimi_status'] = $bimi_status;
 
@@ -779,7 +692,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets has_vmc
      *
-     * @param  bool  $has_vmc  Indicates whether a Verified Mark Certificate is associated with the domain.
+     * @param  bool  $has_vmc  Indicates whether a Verified Mark Certificate is associated with the domain. Default: false. Example: false.
      * @return self
      */
     public function setHasVmc($has_vmc)
@@ -805,7 +718,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets a_record_valid
      *
-     * @param  bool  $a_record_valid  Indicates whether the domain has valid A records.
+     * @param  bool  $a_record_valid  Indicates whether the domain has valid A records. Default: false. Example: true.
      * @return self
      */
     public function setARecordValid($a_record_valid)
@@ -831,7 +744,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets a_record_reverse_host
      *
-     * @param  string  $a_record_reverse_host  Reverse hostname observed for the A record when available. Empty string when no reverse mapping is returned.
+     * @param  string  $a_record_reverse_host  Reverse hostname observed for the A record when available. Empty string when no reverse mapping is returned. Default: empty string. Example: \"reverse.company.com\".
      * @return self
      */
     public function setARecordReverseHost($a_record_reverse_host)
@@ -857,7 +770,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets ssl_valid
      *
-     * @param  bool  $ssl_valid  Indicates whether the domain serves a valid SSL certificate on common endpoints.
+     * @param  bool  $ssl_valid  Indicates whether the domain serves a valid SSL certificate on common endpoints. Default: false. Example: true.
      * @return self
      */
     public function setSslValid($ssl_valid)
