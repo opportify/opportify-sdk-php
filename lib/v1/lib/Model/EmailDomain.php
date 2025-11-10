@@ -113,9 +113,9 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     protected static array $openAPINullables = [
         'name' => false,
         'enrichment_available' => false,
-        'creation_date' => false,
-        'expiration_date' => false,
-        'updated_date' => false,
+        'creation_date' => true,
+        'expiration_date' => true,
+        'updated_date' => true,
         'age_years' => false,
         'registrar' => false,
         'is_block_listed' => false,
@@ -417,15 +417,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
         if ($this->container['enrichment_available'] === null) {
             $invalidProperties[] = "'enrichment_available' can't be null";
         }
-        if ($this->container['creation_date'] === null) {
-            $invalidProperties[] = "'creation_date' can't be null";
-        }
-        if ($this->container['expiration_date'] === null) {
-            $invalidProperties[] = "'expiration_date' can't be null";
-        }
-        if ($this->container['updated_date'] === null) {
-            $invalidProperties[] = "'updated_date' can't be null";
-        }
+        // Date fields may be omitted when enrichment is unavailable.
         if ($this->container['age_years'] === null) {
             $invalidProperties[] = "'age_years' can't be null";
         }
@@ -541,7 +533,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets creation_date
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getCreationDate()
     {
@@ -551,14 +543,32 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets creation_date
      *
-     * @param  \DateTime  $creation_date  Domain creation timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable.
+     * @param  \DateTime|string|null  $creation_date  Domain creation timestamp (ISO 8601). Returns null when enrichment data is unavailable.
      * @return self
      */
     public function setCreationDate($creation_date)
     {
-        if (is_null($creation_date)) {
-            throw new \InvalidArgumentException('non-nullable creation_date cannot be null');
+        if (is_null($creation_date) || $creation_date === '') {
+            if (!in_array('creation_date', $this->openAPINullablesSetToNull, true)) {
+                $this->openAPINullablesSetToNull[] = 'creation_date';
+            }
+            $this->container['creation_date'] = null;
+
+            return $this;
         }
+
+        $this->openAPINullablesSetToNull = array_diff($this->openAPINullablesSetToNull, ['creation_date']);
+
+        if (is_string($creation_date)) {
+            try {
+                $creation_date = new \DateTime($creation_date);
+            } catch (\Exception $exception) {
+                throw new \InvalidArgumentException('Invalid creation_date value: '.$exception->getMessage());
+            }
+        } elseif (!($creation_date instanceof \DateTime)) {
+            throw new \InvalidArgumentException('Invalid type for creation_date; expected \DateTime, string, or null.');
+        }
+
         $this->container['creation_date'] = $creation_date;
 
         return $this;
@@ -567,7 +577,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets expiration_date
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getExpirationDate()
     {
@@ -577,14 +587,32 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets expiration_date
      *
-     * @param  \DateTime  $expiration_date  Domain expiration timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable.
+     * @param  \DateTime|string|null  $expiration_date  Domain expiration timestamp (ISO 8601). Returns null when enrichment data is unavailable.
      * @return self
      */
     public function setExpirationDate($expiration_date)
     {
-        if (is_null($expiration_date)) {
-            throw new \InvalidArgumentException('non-nullable expiration_date cannot be null');
+        if (is_null($expiration_date) || $expiration_date === '') {
+            if (!in_array('expiration_date', $this->openAPINullablesSetToNull, true)) {
+                $this->openAPINullablesSetToNull[] = 'expiration_date';
+            }
+            $this->container['expiration_date'] = null;
+
+            return $this;
         }
+
+        $this->openAPINullablesSetToNull = array_diff($this->openAPINullablesSetToNull, ['expiration_date']);
+
+        if (is_string($expiration_date)) {
+            try {
+                $expiration_date = new \DateTime($expiration_date);
+            } catch (\Exception $exception) {
+                throw new \InvalidArgumentException('Invalid expiration_date value: '.$exception->getMessage());
+            }
+        } elseif (!($expiration_date instanceof \DateTime)) {
+            throw new \InvalidArgumentException('Invalid type for expiration_date; expected \DateTime, string, or null.');
+        }
+
         $this->container['expiration_date'] = $expiration_date;
 
         return $this;
@@ -593,7 +621,7 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets updated_date
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getUpdatedDate()
     {
@@ -603,14 +631,32 @@ class EmailDomain implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets updated_date
      *
-     * @param  \DateTime  $updated_date  Last WHOIS update timestamp (ISO 8601). Returns an empty string when enrichment data is unavailable.
+     * @param  \DateTime|string|null  $updated_date  Last WHOIS update timestamp (ISO 8601). Returns null when enrichment data is unavailable.
      * @return self
      */
     public function setUpdatedDate($updated_date)
     {
-        if (is_null($updated_date)) {
-            throw new \InvalidArgumentException('non-nullable updated_date cannot be null');
+        if (is_null($updated_date) || $updated_date === '') {
+            if (!in_array('updated_date', $this->openAPINullablesSetToNull, true)) {
+                $this->openAPINullablesSetToNull[] = 'updated_date';
+            }
+            $this->container['updated_date'] = null;
+
+            return $this;
         }
+
+        $this->openAPINullablesSetToNull = array_diff($this->openAPINullablesSetToNull, ['updated_date']);
+
+        if (is_string($updated_date)) {
+            try {
+                $updated_date = new \DateTime($updated_date);
+            } catch (\Exception $exception) {
+                throw new \InvalidArgumentException('Invalid updated_date value: '.$exception->getMessage());
+            }
+        } elseif (!($updated_date instanceof \DateTime)) {
+            throw new \InvalidArgumentException('Invalid type for updated_date; expected \DateTime, string, or null.');
+        }
+
         $this->container['updated_date'] = $updated_date;
 
         return $this;

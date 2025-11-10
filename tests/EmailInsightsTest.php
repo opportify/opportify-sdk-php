@@ -820,4 +820,279 @@ class EmailInsightsTest extends TestCase
         $property->setAccessible(true);
         $this->assertEquals($expected, $property->getValue($emailInsights));
     }
+
+    public function test_analyze_various_scenarios()
+    {
+        $scenarios = [
+            // Scenario 1
+            [
+                'emailAddress' => 'test5@example.com',
+                'emailProvider' => 'unknown',
+                'emailType' => 'private',
+                'isDeliverable' => 'no',
+                'isMailboxFull' => false,
+                'isCatchAll' => false,
+                'isFormatValid' => true,
+                'emailCorrection' => '',
+                'isReachable' => false,
+                'riskReport' => [
+                    'score' => 1000,
+                    'level' => 'highest',
+                    'baseAnalysis' => [
+                        'instant-bounce',
+                        'no-mx-or-invalid',
+                        'provider-unknown',
+                    ],
+                ],
+                'addressSignals' => [
+                    'tagDetected' => false,
+                    'tagValue' => '',
+                    'normalizedAddress' => 'test5@example.com',
+                    'isRoleAddress' => false,
+                    'roleType' => '',
+                    'isNoReply' => false,
+                    'noReplyPattern' => '',
+                ],
+                'emailDNS' => [
+                    'mx' => [],
+                    'spfValid' => false,
+                    'dkimConfigured' => false,
+                    'dmarcValid' => false,
+                    'mxRelay' => false,
+                    'mxRelayCategory' => '',
+                ],
+                'domain' => [
+                    'name' => 'example.com',
+                    'enrichmentAvailable' => false,
+                    'creationDate' => null,
+                    'expirationDate' => null,
+                    'updatedDate' => null,
+                    'ageYears' => 0,
+                    'registrar' => '',
+                    'isBlockListed' => false,
+                    'mtaStsStatus' => 'unknown',
+                    'bimiStatus' => 'unknown',
+                    'hasVMC' => false,
+                    'aRecordValid' => false,
+                    'aRecordReverseHost' => '',
+                    'sslValid' => false,
+                ],
+            ],
+            // Scenario 2
+            [
+                'emailAddress' => 'example@gmail.com',
+                'emailProvider' => 'Google',
+                'emailType' => 'free',
+                'isDeliverable' => 'yes',
+                'isMailboxFull' => false,
+                'isCatchAll' => false,
+                'isFormatValid' => true,
+                'emailCorrection' => '',
+                'isReachable' => true,
+                'riskReport' => [
+                    'score' => 410,
+                    'level' => 'medium',
+                    'baseAnalysis' => [
+                        'free-provider',
+                        'missing-auth-dkim',
+                    ],
+                ],
+                'addressSignals' => [
+                    'isNoReply' => false,
+                    'tagValue' => '',
+                    'normalizedAddress' => 'example@gmail.com',
+                    'noReplyPattern' => '',
+                    'roleType' => '',
+                    'isRoleAddress' => false,
+                    'tagDetected' => false,
+                ],
+                'emailDNS' => [
+                    'mx' => [
+                        '5 gmail-smtp-in.l.google.com',
+                        '10 alt1.gmail-smtp-in.l.google.com',
+                        '20 alt2.gmail-smtp-in.l.google.com',
+                        '30 alt3.gmail-smtp-in.l.google.com',
+                        '40 alt4.gmail-smtp-in.l.google.com',
+                    ],
+                    'spfValid' => true,
+                    'dkimConfigured' => false,
+                    'dmarcValid' => true,
+                    'mxRelay' => false,
+                    'mxRelayCategory' => '',
+                ],
+                'domain' => [
+                    'registrar' => 'MarkMonitor Inc.',
+                    'isBlockListed' => false,
+                    'mtaStsStatus' => 'present',
+                    'aRecordReverseHost' => 'ord37s32-in-f5.1e100.net',
+                    'updatedDate' => '2025-07-11T10:10:56.000Z',
+                    'creationDate' => '1995-08-13T04:00:00.000Z',
+                    'enrichmentAvailable' => true,
+                    'aRecordValid' => true,
+                    'ageYears' => 30,
+                    'hasVMC' => false,
+                    'name' => 'gmail.com',
+                    'sslValid' => true,
+                    'bimiStatus' => 'absent',
+                    'expirationDate' => '2026-08-12T04:00:00.000Z',
+                ],
+            ],
+            // Scenario 3
+            [
+                'emailAddress' => 'example@icloud.com',
+                'emailProvider' => 'iCloud',
+                'emailType' => 'free',
+                'isDeliverable' => 'yes',
+                'isMailboxFull' => false,
+                'isCatchAll' => false,
+                'isFormatValid' => true,
+                'emailCorrection' => '',
+                'isReachable' => true,
+                'riskReport' => [
+                    'score' => 410,
+                    'level' => 'medium',
+                    'baseAnalysis' => [
+                        'free-provider',
+                        'missing-auth-dkim',
+                    ],
+                ],
+                'addressSignals' => [
+                    'tagDetected' => false,
+                    'tagValue' => '',
+                    'normalizedAddress' => 'example@icloud.com',
+                    'isRoleAddress' => false,
+                    'roleType' => '',
+                    'isNoReply' => false,
+                    'noReplyPattern' => '',
+                ],
+                'emailDNS' => [
+                    'mx' => [
+                        '10 mx02.mail.icloud.com',
+                        '10 mx01.mail.icloud.com',
+                    ],
+                    'spfValid' => true,
+                    'dkimConfigured' => false,
+                    'dmarcValid' => true,
+                    'mxRelay' => false,
+                    'mxRelayCategory' => '',
+                ],
+                'domain' => [
+                    'name' => 'icloud.com',
+                    'enrichmentAvailable' => true,
+                    'creationDate' => '1999-01-15T05:00:00.000Z',
+                    'expirationDate' => '2026-01-15T05:00:00.000Z',
+                    'updatedDate' => '2024-12-16T23:10:43.000Z',
+                    'ageYears' => 26,
+                    'registrar' => 'Nom-iq Ltd. dba COM LAUDE',
+                    'isBlockListed' => false,
+                    'mtaStsStatus' => 'absent',
+                    'bimiStatus' => 'present-no-vmc',
+                    'hasVMC' => false,
+                    'aRecordValid' => true,
+                    'aRecordReverseHost' => 'apple.fr',
+                    'sslValid' => true,
+                ],
+            ],
+            // Scenario 4
+            [
+                'emailAddress' => 'tatak1792@filipx.com',
+                'emailProvider' => 'Temp-mail',
+                'emailType' => 'disposable',
+                'isDeliverable' => 'unknown',
+                'isMailboxFull' => false,
+                'isCatchAll' => true,
+                'isFormatValid' => true,
+                'emailCorrection' => '',
+                'isReachable' => true,
+                'riskReport' => [
+                    'score' => 1000,
+                    'level' => 'highest',
+                    'baseAnalysis' => [
+                        'blocklisted-domain',
+                        'disposable-domain',
+                        'spoofing-risk',
+                    ],
+                ],
+                'addressSignals' => [
+                    'tagDetected' => false,
+                    'tagValue' => '',
+                    'normalizedAddress' => 'tatak1792@filipx.com',
+                    'isRoleAddress' => false,
+                    'roleType' => '',
+                    'isNoReply' => false,
+                    'noReplyPattern' => '',
+                ],
+                'emailDNS' => [
+                    'mx' => [
+                        '10 mail.wabblywabble.com',
+                        '10 mail.wallywatts.com',
+                    ],
+                    'spfValid' => true,
+                    'dkimConfigured' => false,
+                    'dmarcValid' => false,
+                    'mxRelay' => false,
+                    'mxRelayCategory' => '',
+                ],
+                'domain' => [
+                    'name' => 'filipx.com',
+                    'enrichmentAvailable' => true,
+                    'creationDate' => '2015-08-23T18:02:54.000Z',
+                    'expirationDate' => '2026-08-23T18:02:54.000Z',
+                    'updatedDate' => '2025-09-23T15:34:43.000Z',
+                    'ageYears' => 10,
+                    'registrar' => 'NameSilo, LLC',
+                    'isBlockListed' => true,
+                    'mtaStsStatus' => 'absent',
+                    'bimiStatus' => 'absent',
+                    'hasVMC' => false,
+                    'aRecordValid' => false,
+                    'aRecordReverseHost' => '',
+                    'sslValid' => false,
+                ],
+            ],
+        ];
+
+        foreach ($scenarios as $i => $mockResponseData) {
+            $mockResponse = Mockery::mock();
+            $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
+
+            $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+            $mockApiInstance->shouldReceive('analyzeEmail')
+                ->once()
+                ->andReturn($mockResponse);
+
+            $emailInsights = new EmailInsights('fake_api_key', $mockApiInstance);
+            $response = $emailInsights->analyze([
+                'email' => $mockResponseData['emailAddress'],
+                'enableAi' => true,
+                'enableAutoCorrection' => false,
+            ]);
+
+            $this->assertIsObject($response, 'Scenario '.($i + 1).': Response should be object');
+            $this->assertEquals($mockResponseData['emailAddress'], $response->emailAddress, 'Scenario '.($i + 1).': Email address matches');
+            $this->assertEquals($mockResponseData['isDeliverable'], $response->isDeliverable, 'Scenario '.($i + 1).': isDeliverable matches');
+            $this->assertEquals($mockResponseData['emailType'], $response->emailType, 'Scenario '.($i + 1).': emailType matches');
+            $this->assertEquals($mockResponseData['isFormatValid'], $response->isFormatValid, 'Scenario '.($i + 1).': isFormatValid matches');
+            $this->assertEquals($mockResponseData['isMailboxFull'], $response->isMailboxFull, 'Scenario '.($i + 1).': isMailboxFull matches');
+            $this->assertEquals($mockResponseData['isCatchAll'], $response->isCatchAll, 'Scenario '.($i + 1).': isCatchAll matches');
+            $this->assertEquals($mockResponseData['isReachable'], $response->isReachable, 'Scenario '.($i + 1).': isReachable matches');
+            $this->assertEquals($mockResponseData['riskReport']['score'], $response->riskReport['score'], 'Scenario '.($i + 1).': riskReport.score matches');
+
+            if ($i === 0) {
+                $domain = $response->domain;
+                if (is_array($domain)) {
+                    $this->assertArrayHasKey('creationDate', $domain, 'Scenario 1: domain should include creationDate key');
+                    $this->assertArrayHasKey('expirationDate', $domain, 'Scenario 1: domain should include expirationDate key');
+                    $this->assertArrayHasKey('updatedDate', $domain, 'Scenario 1: domain should include updatedDate key');
+                    $this->assertNull($domain['creationDate'], 'Scenario 1: creationDate should be null when enrichment is unavailable');
+                    $this->assertNull($domain['expirationDate'], 'Scenario 1: expirationDate should be null when enrichment is unavailable');
+                    $this->assertNull($domain['updatedDate'], 'Scenario 1: updatedDate should be null when enrichment is unavailable');
+                } else {
+                    $this->assertNull($domain->creationDate, 'Scenario 1: creationDate should be null when enrichment is unavailable');
+                    $this->assertNull($domain->expirationDate, 'Scenario 1: expirationDate should be null when enrichment is unavailable');
+                    $this->assertNull($domain->updatedDate, 'Scenario 1: updatedDate should be null when enrichment is unavailable');
+                }
+            }
+        }
+    }
 }
