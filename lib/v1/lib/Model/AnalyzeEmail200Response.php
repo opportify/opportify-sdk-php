@@ -55,6 +55,12 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
      */
     protected static $openAPIModelName = 'analyzeEmail_200_response';
 
+    public const IS_DELIVERABLE_YES = 'yes';
+
+    public const IS_DELIVERABLE_NO = 'no';
+
+    public const IS_DELIVERABLE_UNKNOWN = 'unknown';
+
     /**
      * Array of property to type mappings. Used for (de)serialization
      *
@@ -294,6 +300,18 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     protected $container = [];
 
     /**
+     * Gets allowable values of the enum
+     */
+    public function getIsDeliverableAllowableValues(): array
+    {
+        return [
+            self::IS_DELIVERABLE_YES,
+            self::IS_DELIVERABLE_NO,
+            self::IS_DELIVERABLE_UNKNOWN,
+        ];
+    }
+
+    /**
      * Constructor
      *
      * @param  mixed[]|null  $data  Associated array of property values
@@ -356,6 +374,14 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         }
         if ($this->container['is_deliverable'] === null) {
             $invalidProperties[] = "'is_deliverable' can't be null";
+        }
+        $allowedValues = $this->getIsDeliverableAllowableValues();
+        if ($this->container['is_deliverable'] !== null && !in_array($this->container['is_deliverable'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'is_deliverable', must be one of '%s'",
+                $this->container['is_deliverable'],
+                implode("', '", $allowedValues)
+            );
         }
         if ($this->container['is_catch_all'] === null) {
             $invalidProperties[] = "'is_catch_all' can't be null";
@@ -537,6 +563,16 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     {
         if (is_null($is_deliverable)) {
             throw new \InvalidArgumentException('non-nullable is_deliverable cannot be null');
+        }
+        $allowedValues = $this->getIsDeliverableAllowableValues();
+        if (!in_array($is_deliverable, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'is_deliverable', must be one of '%s'",
+                    $is_deliverable,
+                    implode("', '", $allowedValues)
+                )
+            );
         }
         $this->container['is_deliverable'] = $is_deliverable;
 
