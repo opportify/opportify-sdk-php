@@ -26,6 +26,8 @@ class IPInsightsApiTest extends TestCase
         $mockConfig->shouldReceive('getUserAgent')->andReturn('MockUserAgent');
         $mockConfig->shouldReceive('getDebug')->andReturn(false);
         $mockConfig->shouldReceive('getDebugFile')->andReturn('/dev/null');
+        $mockConfig->shouldReceive('getCertFile')->andReturn(null);
+        $mockConfig->shouldReceive('getKeyFile')->andReturn(null);
 
         return $mockConfig;
     }

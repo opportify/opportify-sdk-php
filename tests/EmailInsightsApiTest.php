@@ -28,7 +28,7 @@ class EmailInsightsApiTest extends TestCase
             'isFormatValid' => true,
             'emailCorrection' => '',
             'isReachable' => true,
-            'isDeliverable' => 'yes',
+            'isDeliverable' => 'true',
             'isMailboxFull' => false,
             'isCatchAll' => false,
             'emailDNS' => [
@@ -57,6 +57,8 @@ class EmailInsightsApiTest extends TestCase
         $config->shouldReceive('getUserAgent')->andReturn('MockUserAgent');
         $config->shouldReceive('getDebug')->andReturn(false);
         $config->shouldReceive('getDebugFile')->andReturn('/dev/null');
+        $config->shouldReceive('getCertFile')->andReturn(null);
+        $config->shouldReceive('getKeyFile')->andReturn(null);
 
         $headerSelector = Mockery::mock(\OpenAPI\Client\HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
@@ -97,6 +99,8 @@ class EmailInsightsApiTest extends TestCase
         $config->shouldReceive('getUserAgent')->andReturn('MockUserAgent');
         $config->shouldReceive('getDebug')->andReturn(false);
         $config->shouldReceive('getDebugFile')->andReturn('/dev/null');
+        $config->shouldReceive('getCertFile')->andReturn(null);
+        $config->shouldReceive('getKeyFile')->andReturn(null);
 
         $headerSelector = Mockery::mock(HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
@@ -130,6 +134,8 @@ class EmailInsightsApiTest extends TestCase
         $config->shouldReceive('getUserAgent')->andReturn('MockUserAgent');
         $config->shouldReceive('getDebug')->andReturn(false);
         $config->shouldReceive('getDebugFile')->andReturn('/dev/null');
+        $config->shouldReceive('getCertFile')->andReturn(null);
+        $config->shouldReceive('getKeyFile')->andReturn(null);
 
         $headerSelector = Mockery::mock(HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
@@ -163,6 +169,8 @@ class EmailInsightsApiTest extends TestCase
         $config->shouldReceive('getUserAgent')->andReturn('MockUserAgent');
         $config->shouldReceive('getDebug')->andReturn(false);
         $config->shouldReceive('getDebugFile')->andReturn('/dev/null');
+        $config->shouldReceive('getCertFile')->andReturn(null);
+        $config->shouldReceive('getKeyFile')->andReturn(null);
 
         $headerSelector = Mockery::mock(HeaderSelector::class);
         $headerSelector->shouldReceive('selectHeaders')->andReturn([
