@@ -306,9 +306,9 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
 
     public const EMAIL_TYPE_UNKNOWN = 'unknown';
 
-    public const IS_DELIVERABLE_TRUE = 'true';
+    public const IS_DELIVERABLE_YES = 'yes';
 
-    public const IS_DELIVERABLE_FALSE = 'false';
+    public const IS_DELIVERABLE_NO = 'no';
 
     public const IS_DELIVERABLE_UNKNOWN = 'unknown';
 
@@ -335,8 +335,8 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     public function getIsDeliverableAllowableValues()
     {
         return [
-            self::IS_DELIVERABLE_TRUE,
-            self::IS_DELIVERABLE_FALSE,
+            self::IS_DELIVERABLE_YES,
+            self::IS_DELIVERABLE_NO,
             self::IS_DELIVERABLE_UNKNOWN,
         ];
     }

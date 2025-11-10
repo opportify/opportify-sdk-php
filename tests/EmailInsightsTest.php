@@ -121,7 +121,7 @@ class EmailInsightsTest extends TestCase
             'isFormatValid' => true,
             'emailCorrection' => '',
             'isReachable' => true,
-            'isDeliverable' => 'true',
+            'isDeliverable' => 'yes',
             'isMailboxFull' => false,
             'isCatchAll' => false,
             'emailDNS' => [
@@ -490,7 +490,7 @@ class EmailInsightsTest extends TestCase
                 \PHPUnit\Framework\Assert::assertInstanceOf(ExportRequest::class, $request);
                 \PHPUnit\Framework\Assert::assertEquals('json', $request->getExportType());
                 \PHPUnit\Framework\Assert::assertEquals(['emailAddress', 'riskReport.score'], $request->getColumns());
-                \PHPUnit\Framework\Assert::assertEquals(['isDeliverable' => 'true'], $request->getFilters());
+                \PHPUnit\Framework\Assert::assertEquals(['isDeliverable' => 'yes'], $request->getFilters());
 
                 return true;
             }))
@@ -501,7 +501,7 @@ class EmailInsightsTest extends TestCase
         $response = $emailInsights->createBatchExport('job-123', [
             'exportType' => 'JSON',
             'columns' => ['emailAddress', 'riskReport.score'],
-            'filters' => ['isDeliverable' => 'true'],
+            'filters' => ['isDeliverable' => 'yes'],
         ]);
 
         $this->assertEquals('export-123', $response->exportId);
@@ -562,7 +562,7 @@ class EmailInsightsTest extends TestCase
         $this->expectExceptionMessage('Filters must be provided as an array.');
 
         $emailInsights->createBatchExport('job-101', [
-            'filters' => 'isDeliverable=true',
+            'filters' => 'isDeliverable=yes',
         ]);
     }
 

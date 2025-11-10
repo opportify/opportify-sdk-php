@@ -28,7 +28,7 @@ class EmailInsightsApiTest extends TestCase
             'isFormatValid' => true,
             'emailCorrection' => '',
             'isReachable' => true,
-            'isDeliverable' => 'true',
+            'isDeliverable' => 'yes',
             'isMailboxFull' => false,
             'isCatchAll' => false,
             'emailDNS' => [
