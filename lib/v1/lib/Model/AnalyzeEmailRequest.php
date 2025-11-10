@@ -260,9 +260,9 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     public function __construct(?array $data = null)
     {
         $this->setIfExists('email', $data ?? [], null);
-        $this->setIfExists('enable_ai', $data ?? [], true);
-        $this->setIfExists('enable_auto_correction', $data ?? [], true);
-        $this->setIfExists('enable_domain_enrichment', $data ?? [], true);
+        $this->setIfExists('enable_ai', $data ?? [], null);
+        $this->setIfExists('enable_auto_correction', $data ?? [], null);
+        $this->setIfExists('enable_domain_enrichment', $data ?? [], null);
     }
 
     /**
@@ -354,7 +354,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets enable_ai
      *
-     * @param  bool|null  $enable_ai  Enable AI-driven risk analysis. Optional; defaults to `true`.
+     * @param  bool|null  $enable_ai  Enable AI-driven risk analysis. Optional; defaults to `true`. Example: true.
      * @return self
      */
     public function setEnableAi($enable_ai)
@@ -380,7 +380,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets enable_auto_correction
      *
-     * @param  bool|null  $enable_auto_correction  Attempt typo correction and return `emailCorrection` when confident. Optional; defaults to `true`.
+     * @param  bool|null  $enable_auto_correction  Attempt typo correction and return `emailCorrection` when confident. Optional; defaults to `true`. Example: true.
      * @return self
      */
     public function setEnableAutoCorrection($enable_auto_correction)
@@ -406,7 +406,7 @@ class AnalyzeEmailRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     /**
      * Sets enable_domain_enrichment
      *
-     * @param  bool|null  $enable_domain_enrichment  Include domain-level enrichment details. Optional; defaults to `true`. Set to `false` to omit the `domain` block even when the data exists.
+     * @param  bool|null  $enable_domain_enrichment  Include domain-level enrichment details. Optional; defaults to `true`. Set to `false` to omit the `domain` block even when the data exists. Example: true.
      * @return self
      */
     public function setEnableDomainEnrichment($enable_domain_enrichment)

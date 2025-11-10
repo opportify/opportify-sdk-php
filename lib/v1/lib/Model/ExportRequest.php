@@ -240,23 +240,6 @@ class ExportRequest implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
-    public const EXPORT_TYPE_CSV = 'csv';
-
-    public const EXPORT_TYPE_JSON = 'json';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getExportTypeAllowableValues()
-    {
-        return [
-            self::EXPORT_TYPE_CSV,
-            self::EXPORT_TYPE_JSON,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -302,15 +285,6 @@ class ExportRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getExportTypeAllowableValues();
-        if (!is_null($this->container['export_type']) && !in_array($this->container['export_type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'export_type', must be one of '%s'",
-                $this->container['export_type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if (!is_null($this->container['columns']) && (count($this->container['columns']) > 100)) {
             $invalidProperties[] = "invalid value for 'columns', number of items must be less than or equal to 100.";
         }
@@ -342,23 +316,13 @@ class ExportRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets export_type
      *
-     * @param  string|null  $export_type  Output format for the export. If omitted, the server will use `csv` as the default format.
+     * @param  string|null  $export_type  Output format for the export. If omitted, the server will use `csv` as the default format. Allowed values: `csv`, `json`. Example: `csv`.
      * @return self
      */
     public function setExportType($export_type)
     {
         if (is_null($export_type)) {
             throw new \InvalidArgumentException('non-nullable export_type cannot be null');
-        }
-        $allowedValues = $this->getExportTypeAllowableValues();
-        if (!in_array($export_type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'export_type', must be one of '%s'",
-                    $export_type,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['export_type'] = $export_type;
 

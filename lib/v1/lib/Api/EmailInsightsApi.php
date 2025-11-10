@@ -813,7 +813,7 @@ class EmailInsightsApi
      *
      * Create Email Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
      * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  export_request (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createEmailBatchExport'] to see the possible values for this operation
      * @return \OpenAPI\Client\Model\ExportCreatedResponse|\OpenAPI\Client\Model\CreateEmailBatchExport400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\CreateEmailBatchExport404Response|\OpenAPI\Client\Model\CreateEmailBatchExport409Response
@@ -833,7 +833,7 @@ class EmailInsightsApi
      *
      * Create Email Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
      * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createEmailBatchExport'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\ExportCreatedResponse|\OpenAPI\Client\Model\CreateEmailBatchExport400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\CreateEmailBatchExport404Response|\OpenAPI\Client\Model\CreateEmailBatchExport409Response, HTTP status code, HTTP response headers (array of strings)
@@ -971,7 +971,7 @@ class EmailInsightsApi
      *
      * Create Email Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
      * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createEmailBatchExport'] to see the possible values for this operation
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -993,7 +993,7 @@ class EmailInsightsApi
      *
      * Create Email Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
      * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createEmailBatchExport'] to see the possible values for this operation
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1044,7 +1044,7 @@ class EmailInsightsApi
     /**
      * Create request for operation 'createEmailBatchExport'
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
      * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createEmailBatchExport'] to see the possible values for this operation
      * @return \GuzzleHttp\Psr7\Request
@@ -1148,8 +1148,8 @@ class EmailInsightsApi
      *
      * Get Email Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getEmailBatchExportStatus'] to see the possible values for this operation
      * @return \OpenAPI\Client\Model\ExportStatusResponse|\OpenAPI\Client\Model\GetEmailBatchExportStatus400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\GetEmailBatchExportStatus404Response
      *
@@ -1168,8 +1168,8 @@ class EmailInsightsApi
      *
      * Get Email Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getEmailBatchExportStatus'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\ExportStatusResponse|\OpenAPI\Client\Model\GetEmailBatchExportStatus400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\GetEmailBatchExportStatus404Response, HTTP status code, HTTP response headers (array of strings)
      *
@@ -1292,8 +1292,8 @@ class EmailInsightsApi
      *
      * Get Email Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getEmailBatchExportStatus'] to see the possible values for this operation
      * @return \GuzzleHttp\Promise\PromiseInterface
      *
@@ -1314,8 +1314,8 @@ class EmailInsightsApi
      *
      * Get Email Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getEmailBatchExportStatus'] to see the possible values for this operation
      * @return \GuzzleHttp\Promise\PromiseInterface
      *
@@ -1365,8 +1365,8 @@ class EmailInsightsApi
     /**
      * Create request for operation 'getEmailBatchExportStatus'
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;84d22c8b-2cb6-4606-bfb1-361244a097e4\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getEmailBatchExportStatus'] to see the possible values for this operation
      * @return \GuzzleHttp\Psr7\Request
      *

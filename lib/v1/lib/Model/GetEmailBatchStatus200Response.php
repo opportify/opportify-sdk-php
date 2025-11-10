@@ -256,29 +256,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
         return self::$openAPIModelName;
     }
 
-    public const STATUS_QUEUED = 'QUEUED';
-
-    public const STATUS_PROCESSING = 'PROCESSING';
-
-    public const STATUS_COMPLETED = 'COMPLETED';
-
-    public const STATUS_ERROR = 'ERROR';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_QUEUED,
-            self::STATUS_PROCESSING,
-            self::STATUS_COMPLETED,
-            self::STATUS_ERROR,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -326,15 +303,6 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     public function listInvalidProperties()
     {
         $invalidProperties = [];
-
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
 
         return $invalidProperties;
     }
@@ -415,23 +383,13 @@ class GetEmailBatchStatus200Response implements \JsonSerializable, ArrayAccess, 
     /**
      * Sets status
      *
-     * @param  string|null  $status  Current status of the batch job.
+     * @param  string|null  $status  Current status of the batch job. Allowed values: `QUEUED`, `PROCESSING`, `COMPLETED`, `ERROR`. Example: `COMPLETED`.
      * @return self
      */
     public function setStatus($status)
     {
         if (is_null($status)) {
             throw new \InvalidArgumentException('non-nullable status cannot be null');
-        }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['status'] = $status;
 

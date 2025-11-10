@@ -66,7 +66,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         'is_block_listed' => 'bool',
         'sources' => 'int',
         'active_reports' => 'int',
-        'last_detected' => '\DateTime',
+        'last_detected' => 'string',
     ];
 
     /**
@@ -82,7 +82,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
         'is_block_listed' => null,
         'sources' => null,
         'active_reports' => null,
-        'last_detected' => 'date-time',
+        'last_detected' => null,
     ];
 
     /**
@@ -397,7 +397,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Gets last_detected
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getLastDetected()
     {
@@ -407,7 +407,7 @@ class BlockListed implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets last_detected
      *
-     * @param  \DateTime|null  $last_detected  Date and time of the last blocklist detection. ISO 8601 standard.
+     * @param  string|null  $last_detected  Date and time of the last blocklist detection. ISO 8601 standard. Format: date-time. Example: \"2022-01-01T12:00:00Z\".
      * @return self
      */
     public function setLastDetected($last_detected)

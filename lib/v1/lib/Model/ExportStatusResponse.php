@@ -69,10 +69,10 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
         'format' => 'string',
         'filters' => '\OpenAPI\Client\Model\ExportFilter[]',
         'columns' => 'string[]',
-        'requested_at' => '\DateTime',
-        'updated_at' => '\DateTime',
+        'requested_at' => 'string',
+        'updated_at' => 'string',
         'download_url' => 'string',
-        'expires_at' => '\DateTime',
+        'expires_at' => 'string',
         'result_size_bytes' => 'int',
         'error_code' => 'string',
         'error_message' => 'string',
@@ -88,16 +88,16 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'job_id' => 'uuid',
-        'export_id' => 'uuid',
+        'job_id' => null,
+        'export_id' => null,
         'status' => null,
         'format' => null,
         'filters' => null,
         'columns' => null,
-        'requested_at' => 'date-time',
-        'updated_at' => 'date-time',
-        'download_url' => 'uri',
-        'expires_at' => 'date-time',
+        'requested_at' => null,
+        'updated_at' => null,
+        'download_url' => null,
+        'expires_at' => null,
         'result_size_bytes' => null,
         'error_code' => null,
         'error_message' => null,
@@ -300,46 +300,6 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
         return self::$openAPIModelName;
     }
 
-    public const STATUS_QUEUED = 'QUEUED';
-
-    public const STATUS_PROCESSING = 'PROCESSING';
-
-    public const STATUS_COMPLETED = 'COMPLETED';
-
-    public const STATUS_FAILED = 'FAILED';
-
-    public const FORMAT_CSV = 'csv';
-
-    public const FORMAT_JSON = 'json';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_QUEUED,
-            self::STATUS_PROCESSING,
-            self::STATUS_COMPLETED,
-            self::STATUS_FAILED,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getFormatAllowableValues()
-    {
-        return [
-            self::FORMAT_CSV,
-            self::FORMAT_JSON,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -404,27 +364,9 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
         if ($this->container['status'] === null) {
             $invalidProperties[] = "'status' can't be null";
         }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['format'] === null) {
             $invalidProperties[] = "'format' can't be null";
         }
-        $allowedValues = $this->getFormatAllowableValues();
-        if (!is_null($this->container['format']) && !in_array($this->container['format'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'format', must be one of '%s'",
-                $this->container['format'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['requested_at'] === null) {
             $invalidProperties[] = "'requested_at' can't be null";
         }
@@ -459,7 +401,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets job_id
      *
-     * @param  string  $job_id  The batch job identifier.
+     * @param  string  $job_id  The batch job identifier. Format: uuid. Example: \"84d22c8b-2cb6-4606-bfb1-361244a097e4\".
      * @return self
      */
     public function setJobId($job_id)
@@ -485,7 +427,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets export_id
      *
-     * @param  string  $export_id  The unique identifier for the export job.
+     * @param  string  $export_id  The unique identifier for the export job. Format: uuid. Example: \"6f8d88ef-0896-4f69-90cd-7cc6ce5e6ddf\".
      * @return self
      */
     public function setExportId($export_id)
@@ -511,23 +453,13 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets status
      *
-     * @param  string  $status  Current status of the export job.
+     * @param  string  $status  Current status of the export job. Allowed values: `QUEUED`, `PROCESSING`, `COMPLETED`, `FAILED`. Example: `COMPLETED`.
      * @return self
      */
     public function setStatus($status)
     {
         if (is_null($status)) {
             throw new \InvalidArgumentException('non-nullable status cannot be null');
-        }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['status'] = $status;
 
@@ -547,23 +479,13 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets format
      *
-     * @param  string  $format  The output format of the export.
+     * @param  string  $format  The output format of the export. Allowed values: `csv`, `json`. Example: `csv`.
      * @return self
      */
     public function setFormat($format)
     {
         if (is_null($format)) {
             throw new \InvalidArgumentException('non-nullable format cannot be null');
-        }
-        $allowedValues = $this->getFormatAllowableValues();
-        if (!in_array($format, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'format', must be one of '%s'",
-                    $format,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['format'] = $format;
 
@@ -625,7 +547,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Gets requested_at
      *
-     * @return \DateTime
+     * @return string
      */
     public function getRequestedAt()
     {
@@ -635,7 +557,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets requested_at
      *
-     * @param  \DateTime  $requested_at  Timestamp when the export was requested (ISO 8601 format).
+     * @param  string  $requested_at  Timestamp when the export was requested (ISO 8601 format). Format: date-time. Example: \"2025-11-07T10:30:00.000Z\".
      * @return self
      */
     public function setRequestedAt($requested_at)
@@ -651,7 +573,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Gets updated_at
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -661,7 +583,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets updated_at
      *
-     * @param  \DateTime  $updated_at  Timestamp when the export status was last updated (ISO 8601 format).
+     * @param  string  $updated_at  Timestamp when the export status was last updated (ISO 8601 format). Format: date-time. Example: \"2025-11-07T10:32:15.000Z\".
      * @return self
      */
     public function setUpdatedAt($updated_at)
@@ -687,7 +609,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets download_url
      *
-     * @param  string|null  $download_url  Pre-signed URL to download the export file. Only present when status is `COMPLETED`.
+     * @param  string|null  $download_url  Pre-signed URL to download the export file. Only present when status is `COMPLETED`. Format: uri. Example: \"https://opportify-batch-analysis.s3.amazonaws.com/...\".
      * @return self
      */
     public function setDownloadUrl($download_url)
@@ -703,7 +625,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Gets expires_at
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getExpiresAt()
     {
@@ -713,7 +635,7 @@ class ExportStatusResponse implements \JsonSerializable, ArrayAccess, ModelInter
     /**
      * Sets expires_at
      *
-     * @param  \DateTime|null  $expires_at  Expiration timestamp for the download URL (ISO 8601 format). Only present when status is `COMPLETED`.
+     * @param  string|null  $expires_at  Expiration timestamp for the download URL (ISO 8601 format). Only present when status is `COMPLETED`. Format: date-time. Example: \"2025-11-07T14:32:15.000Z\".
      * @return self
      */
     public function setExpiresAt($expires_at)

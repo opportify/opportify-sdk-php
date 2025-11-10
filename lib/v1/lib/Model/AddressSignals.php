@@ -279,13 +279,13 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('tag_detected', $data ?? [], false);
-        $this->setIfExists('tag_value', $data ?? [], '');
-        $this->setIfExists('normalized_address', $data ?? [], '');
-        $this->setIfExists('is_role_address', $data ?? [], false);
-        $this->setIfExists('role_type', $data ?? [], '');
-        $this->setIfExists('is_no_reply', $data ?? [], false);
-        $this->setIfExists('no_reply_pattern', $data ?? [], '');
+        $this->setIfExists('tag_detected', $data ?? [], null);
+        $this->setIfExists('tag_value', $data ?? [], null);
+        $this->setIfExists('normalized_address', $data ?? [], null);
+        $this->setIfExists('is_role_address', $data ?? [], null);
+        $this->setIfExists('role_type', $data ?? [], null);
+        $this->setIfExists('is_no_reply', $data ?? [], null);
+        $this->setIfExists('no_reply_pattern', $data ?? [], null);
     }
 
     /**
@@ -362,7 +362,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets tag_detected
      *
-     * @param  bool  $tag_detected  Indicates whether the local-part contains `+tag` sub-addressing.
+     * @param  bool  $tag_detected  Indicates whether the local-part contains `+tag` sub-addressing. Default: false. Example: true.
      * @return self
      */
     public function setTagDetected($tag_detected)
@@ -388,7 +388,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets tag_value
      *
-     * @param  string  $tag_value  Raw tag contents following the plus sign. Empty string when a tag is not present or has no suffix.
+     * @param  string  $tag_value  Raw tag contents following the plus sign. Empty string when a tag is not present or has no suffix. Default: empty string. Example: \"campaign-123\".
      * @return self
      */
     public function setTagValue($tag_value)
@@ -414,7 +414,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets normalized_address
      *
-     * @param  string  $normalized_address  Email rebuilt without the tag. Always lower-case.
+     * @param  string  $normalized_address  Email rebuilt without the tag. Always lower-case. Default: empty string. Example: \"noreply@company.com\".
      * @return self
      */
     public function setNormalizedAddress($normalized_address)
@@ -440,7 +440,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets is_role_address
      *
-     * @param  bool  $is_role_address  True when the local-part maps to a catalogued role inbox (e.g., support, sales, billing).
+     * @param  bool  $is_role_address  True when the local-part maps to a catalogued role inbox (e.g., support, sales, billing). Default: false. Example: true.
      * @return self
      */
     public function setIsRoleAddress($is_role_address)
@@ -466,7 +466,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets role_type
      *
-     * @param  string  $role_type  Role category slug. Empty string when `isRoleAddress` is false.
+     * @param  string  $role_type  Role category slug. Empty string when `isRoleAddress` is false. Default: empty string. Example: \"support\".
      * @return self
      */
     public function setRoleType($role_type)
@@ -492,7 +492,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets is_no_reply
      *
-     * @param  bool  $is_no_reply  True when the local-part matches no-reply or do-not-reply patterns (multi-language aware).
+     * @param  bool  $is_no_reply  True when the local-part matches no-reply or do-not-reply patterns (multi-language aware). Default: false. Example: true.
      * @return self
      */
     public function setIsNoReply($is_no_reply)
@@ -518,7 +518,7 @@ class AddressSignals implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets no_reply_pattern
      *
-     * @param  string  $no_reply_pattern  Canonical pattern matched when `isNoReply` is true (for example `noreply`, `no-responder`, `mailer-daemon`). Empty string when no pattern applies.
+     * @param  string  $no_reply_pattern  Canonical pattern matched when `isNoReply` is true (for example `noreply`, `no-responder`, `mailer-daemon`). Empty string when no pattern applies. Default: empty string. Example: \"noreply\".
      * @return self
      */
     public function setNoReplyPattern($no_reply_pattern)

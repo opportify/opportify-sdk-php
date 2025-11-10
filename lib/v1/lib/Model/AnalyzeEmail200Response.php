@@ -298,49 +298,6 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         return self::$openAPIModelName;
     }
 
-    public const EMAIL_TYPE__PRIVATE = 'private';
-
-    public const EMAIL_TYPE_FREE = 'free';
-
-    public const EMAIL_TYPE_DISPOSABLE = 'disposable';
-
-    public const EMAIL_TYPE_UNKNOWN = 'unknown';
-
-    public const IS_DELIVERABLE_YES = 'yes';
-
-    public const IS_DELIVERABLE_NO = 'no';
-
-    public const IS_DELIVERABLE_UNKNOWN = 'unknown';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getEmailTypeAllowableValues()
-    {
-        return [
-            self::EMAIL_TYPE__PRIVATE,
-            self::EMAIL_TYPE_FREE,
-            self::EMAIL_TYPE_DISPOSABLE,
-            self::EMAIL_TYPE_UNKNOWN,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getIsDeliverableAllowableValues()
-    {
-        return [
-            self::IS_DELIVERABLE_YES,
-            self::IS_DELIVERABLE_NO,
-            self::IS_DELIVERABLE_UNKNOWN,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -405,27 +362,9 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         if ($this->container['email_type'] === null) {
             $invalidProperties[] = "'email_type' can't be null";
         }
-        $allowedValues = $this->getEmailTypeAllowableValues();
-        if (!is_null($this->container['email_type']) && !in_array($this->container['email_type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'email_type', must be one of '%s'",
-                $this->container['email_type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['is_deliverable'] === null) {
             $invalidProperties[] = "'is_deliverable' can't be null";
         }
-        $allowedValues = $this->getIsDeliverableAllowableValues();
-        if (!is_null($this->container['is_deliverable']) && !in_array($this->container['is_deliverable'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'is_deliverable', must be one of '%s'",
-                $this->container['is_deliverable'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['is_catch_all'] === null) {
             $invalidProperties[] = "'is_catch_all' can't be null";
         }
@@ -524,23 +463,13 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_type
      *
-     * @param  string  $email_type  Email classification based on provider and enrichment signals.
+     * @param  string  $email_type  Email classification based on provider and enrichment signals. Allowed values: `private`, `free`, `disposable`, `unknown`. Example: `free`.
      * @return self
      */
     public function setEmailType($email_type)
     {
         if (is_null($email_type)) {
             throw new \InvalidArgumentException('non-nullable email_type cannot be null');
-        }
-        $allowedValues = $this->getEmailTypeAllowableValues();
-        if (!in_array($email_type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'email_type', must be one of '%s'",
-                    $email_type,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['email_type'] = $email_type;
 
@@ -560,23 +489,13 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_deliverable
      *
-     * @param  string  $is_deliverable  Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification.
+     * @param  string  $is_deliverable  Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification. Allowed values: `yes`, `no`, `unknown`. Example: `yes`.
      * @return self
      */
     public function setIsDeliverable($is_deliverable)
     {
         if (is_null($is_deliverable)) {
             throw new \InvalidArgumentException('non-nullable is_deliverable cannot be null');
-        }
-        $allowedValues = $this->getIsDeliverableAllowableValues();
-        if (!in_array($is_deliverable, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'is_deliverable', must be one of '%s'",
-                    $is_deliverable,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['is_deliverable'] = $is_deliverable;
 

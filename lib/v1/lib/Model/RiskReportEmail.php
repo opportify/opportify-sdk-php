@@ -240,32 +240,6 @@ class RiskReportEmail implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
-    public const LEVEL_HIGHEST = 'highest';
-
-    public const LEVEL_HIGH = 'high';
-
-    public const LEVEL_MEDIUM = 'medium';
-
-    public const LEVEL_LOW = 'low';
-
-    public const LEVEL_LOWEST = 'lowest';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getLevelAllowableValues()
-    {
-        return [
-            self::LEVEL_HIGHEST,
-            self::LEVEL_HIGH,
-            self::LEVEL_MEDIUM,
-            self::LEVEL_LOW,
-            self::LEVEL_LOWEST,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -317,15 +291,6 @@ class RiskReportEmail implements \JsonSerializable, ArrayAccess, ModelInterface
 
         if (!is_null($this->container['score']) && ($this->container['score'] < 200)) {
             $invalidProperties[] = "invalid value for 'score', must be bigger than or equal to 200.";
-        }
-
-        $allowedValues = $this->getLevelAllowableValues();
-        if (!is_null($this->container['level']) && !in_array($this->container['level'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'level', must be one of '%s'",
-                $this->container['level'],
-                implode("', '", $allowedValues)
-            );
         }
 
         return $invalidProperties;
@@ -389,23 +354,13 @@ class RiskReportEmail implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets level
      *
-     * @param  string|null  $level  Static representation of the risk level bucket aligned to the score range.
+     * @param  string|null  $level  Static representation of the risk level bucket aligned to the score range. Allowed values: `highest`, `high`, `medium`, `low`, `lowest`. Example: `highest`.
      * @return self
      */
     public function setLevel($level)
     {
         if (is_null($level)) {
             throw new \InvalidArgumentException('non-nullable level cannot be null');
-        }
-        $allowedValues = $this->getLevelAllowableValues();
-        if (!in_array($level, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'level', must be one of '%s'",
-                    $level,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['level'] = $level;
 

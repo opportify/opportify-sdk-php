@@ -274,11 +274,11 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     public function __construct(?array $data = null)
     {
         $this->setIfExists('mx', $data ?? [], null);
-        $this->setIfExists('spf_valid', $data ?? [], false);
-        $this->setIfExists('dkim_configured', $data ?? [], false);
-        $this->setIfExists('dmarc_valid', $data ?? [], false);
-        $this->setIfExists('mx_relay', $data ?? [], '');
-        $this->setIfExists('mx_relay_category', $data ?? [], '');
+        $this->setIfExists('spf_valid', $data ?? [], null);
+        $this->setIfExists('dkim_configured', $data ?? [], null);
+        $this->setIfExists('dmarc_valid', $data ?? [], null);
+        $this->setIfExists('mx_relay', $data ?? [], null);
+        $this->setIfExists('mx_relay_category', $data ?? [], null);
     }
 
     /**
@@ -352,7 +352,7 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets mx
      *
-     * @param  string[]  $mx  Mail exchange records for the domain formatted as \"<priority> <hostname>\". Records are sorted ascending by numeric priority before responding.
+     * @param  string[]  $mx  Mail exchange records for the domain formatted as \"<priority> <hostname>\". Records are sorted ascending by numeric priority before responding. Default: empty array. Example: [\"0 mx1.example.com\", \"10 mx2.example.com\"].
      * @return self
      */
     public function setMx($mx)
@@ -378,7 +378,7 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets spf_valid
      *
-     * @param  bool  $spf_valid  Indicates whether SPF validation succeeded for the domain.
+     * @param  bool  $spf_valid  Indicates whether SPF validation succeeded for the domain. Default: false. Example: true.
      * @return self
      */
     public function setSpfValid($spf_valid)
@@ -404,7 +404,7 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets dkim_configured
      *
-     * @param  bool  $dkim_configured  Indicates whether DKIM selectors are configured for the domain.
+     * @param  bool  $dkim_configured  Indicates whether DKIM selectors are configured for the domain. Default: false. Example: true.
      * @return self
      */
     public function setDkimConfigured($dkim_configured)
@@ -430,7 +430,7 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets dmarc_valid
      *
-     * @param  bool  $dmarc_valid  Indicates whether a valid DMARC policy is present for the domain.
+     * @param  bool  $dmarc_valid  Indicates whether a valid DMARC policy is present for the domain. Default: false. Example: false.
      * @return self
      */
     public function setDmarcValid($dmarc_valid)
@@ -456,7 +456,7 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets mx_relay
      *
-     * @param  string  $mx_relay  Primary MX relay hostname identified during analysis.
+     * @param  string  $mx_relay  Primary MX relay hostname identified during analysis. Default: empty string. Example: \"mx1.example.com\".
      * @return self
      */
     public function setMxRelay($mx_relay)
@@ -482,7 +482,7 @@ class EmailDNS implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets mx_relay_category
      *
-     * @param  string  $mx_relay_category  Categorization of the MX relay (provider slug or classification when available).
+     * @param  string  $mx_relay_category  Categorization of the MX relay (provider slug or classification when available). Default: empty string. Example: \"google\".
      * @return self
      */
     public function setMxRelayCategory($mx_relay_category)

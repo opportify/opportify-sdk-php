@@ -252,26 +252,6 @@ class ExportFilter implements \JsonSerializable, ArrayAccess, ModelInterface
         return self::$openAPIModelName;
     }
 
-    public const KIND_STRING = 'string';
-
-    public const KIND_NUMBER_RANGE = 'number-range';
-
-    public const KIND_NUMBER = 'number';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getKindAllowableValues()
-    {
-        return [
-            self::KIND_STRING,
-            self::KIND_NUMBER_RANGE,
-            self::KIND_NUMBER,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -324,14 +304,6 @@ class ExportFilter implements \JsonSerializable, ArrayAccess, ModelInterface
         }
         if ($this->container['kind'] === null) {
             $invalidProperties[] = "'kind' can't be null";
-        }
-        $allowedValues = $this->getKindAllowableValues();
-        if (!is_null($this->container['kind']) && !in_array($this->container['kind'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'kind', must be one of '%s'",
-                $this->container['kind'],
-                implode("', '", $allowedValues)
-            );
         }
 
         return $invalidProperties;
@@ -387,23 +359,13 @@ class ExportFilter implements \JsonSerializable, ArrayAccess, ModelInterface
     /**
      * Sets kind
      *
-     * @param  string  $kind  The type of filter applied.
+     * @param  string  $kind  The type of filter applied. Allowed values: `string`, `number-range`, `number`. Example: `number-range`.
      * @return self
      */
     public function setKind($kind)
     {
         if (is_null($kind)) {
             throw new \InvalidArgumentException('non-nullable kind cannot be null');
-        }
-        $allowedValues = $this->getKindAllowableValues();
-        if (!in_array($kind, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'kind', must be one of '%s'",
-                    $kind,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['kind'] = $kind;
 
