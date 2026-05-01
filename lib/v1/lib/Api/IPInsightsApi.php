@@ -33,12 +33,40 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Utils;
 use OpenAPI\Client\ApiException;
 use OpenAPI\Client\Configuration;
 use OpenAPI\Client\HeaderSelector;
+use OpenAPI\Client\Model\AnalyzeEmail403Response;
+use OpenAPI\Client\Model\AnalyzeEmail500Response;
+use OpenAPI\Client\Model\AnalyzeIp200Response;
+use OpenAPI\Client\Model\AnalyzeIp400Response;
+use OpenAPI\Client\Model\AnalyzeIpRequest;
+use OpenAPI\Client\Model\BatchAnalyzeEmails401Response;
+use OpenAPI\Client\Model\BatchAnalyzeEmails402Response;
+use OpenAPI\Client\Model\BatchAnalyzeEmails403Response;
+use OpenAPI\Client\Model\BatchAnalyzeEmails413Response;
+use OpenAPI\Client\Model\BatchAnalyzeEmails429Response;
+use OpenAPI\Client\Model\BatchAnalyzeIps202Response;
+use OpenAPI\Client\Model\BatchAnalyzeIps400Response;
+use OpenAPI\Client\Model\BatchAnalyzeIpsRequest;
+use OpenAPI\Client\Model\CreateEmailBatchExport400Response;
+use OpenAPI\Client\Model\CreateEmailBatchExport403Response;
+use OpenAPI\Client\Model\CreateEmailBatchExport404Response;
+use OpenAPI\Client\Model\CreateEmailBatchExport409Response;
+use OpenAPI\Client\Model\ExportCreatedResponse;
+use OpenAPI\Client\Model\ExportRequest;
+use OpenAPI\Client\Model\ExportStatusResponse;
+use OpenAPI\Client\Model\GetEmailBatchExportStatus400Response;
+use OpenAPI\Client\Model\GetEmailBatchExportStatus404Response;
+use OpenAPI\Client\Model\GetEmailBatchStatus404Response;
+use OpenAPI\Client\Model\GetIpBatchStatus200Response;
+use OpenAPI\Client\Model\INTERNALERROR1;
+use OpenAPI\Client\Model\NOTFOUND;
 use OpenAPI\Client\ObjectSerializer;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -143,11 +171,11 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  analyze_ip_request (required)
+     * @param  AnalyzeIpRequest  $analyze_ip_request  analyze_ip_request (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\NOTFOUND|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\INTERNALERROR1
+     * @return AnalyzeIp200Response|AnalyzeIp400Response|NOTFOUND|AnalyzeEmail403Response|INTERNALERROR1
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function analyzeIp($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
@@ -162,11 +190,11 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  AnalyzeIpRequest  $analyze_ip_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\AnalyzeIp200Response|\OpenAPI\Client\Model\AnalyzeIp400Response|\OpenAPI\Client\Model\NOTFOUND|\OpenAPI\Client\Model\AnalyzeEmail403Response|\OpenAPI\Client\Model\INTERNALERROR1, HTTP status code, HTTP response headers (array of strings)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function analyzeIpWithHttpInfo($analyze_ip_request, string $contentType = self::contentTypes['analyzeIp'][0])
@@ -299,9 +327,9 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  AnalyzeIpRequest  $analyze_ip_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -320,9 +348,9 @@ class IPInsightsApi
      *
      * Analyze IP
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  AnalyzeIpRequest  $analyze_ip_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -370,9 +398,9 @@ class IPInsightsApi
     /**
      * Create request for operation 'analyzeIp'
      *
-     * @param  \OpenAPI\Client\Model\AnalyzeIpRequest  $analyze_ip_request  (required)
+     * @param  AnalyzeIpRequest  $analyze_ip_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeIp'] to see the possible values for this operation
-     * @return \GuzzleHttp\Psr7\Request
+     * @return Request
      *
      * @throws \InvalidArgumentException
      */
@@ -403,7 +431,7 @@ class IPInsightsApi
         if (isset($analyze_ip_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($analyze_ip_request));
+                $httpBody = Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($analyze_ip_request));
             } else {
                 $httpBody = $analyze_ip_request;
             }
@@ -424,7 +452,7 @@ class IPInsightsApi
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+                $httpBody = Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -464,11 +492,11 @@ class IPInsightsApi
      *
      * Batch Analyze IPs
      *
-     * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  batch_analyze_ips_request (required)
+     * @param  BatchAnalyzeIpsRequest  $batch_analyze_ips_request  batch_analyze_ips_request (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\BatchAnalyzeIps202Response|\OpenAPI\Client\Model\BatchAnalyzeIps400Response|\OpenAPI\Client\Model\BatchAnalyzeEmails401Response|\OpenAPI\Client\Model\BatchAnalyzeEmails402Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\BatchAnalyzeEmails413Response|\OpenAPI\Client\Model\BatchAnalyzeEmails429Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
+     * @return BatchAnalyzeIps202Response|BatchAnalyzeIps400Response|BatchAnalyzeEmails401Response|BatchAnalyzeEmails402Response|BatchAnalyzeEmails403Response|BatchAnalyzeEmails413Response|BatchAnalyzeEmails429Response|AnalyzeEmail500Response
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function batchAnalyzeIps($batch_analyze_ips_request, string $contentType = self::contentTypes['batchAnalyzeIps'][0])
@@ -483,11 +511,11 @@ class IPInsightsApi
      *
      * Batch Analyze IPs
      *
-     * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
+     * @param  BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\BatchAnalyzeIps202Response|\OpenAPI\Client\Model\BatchAnalyzeIps400Response|\OpenAPI\Client\Model\BatchAnalyzeEmails401Response|\OpenAPI\Client\Model\BatchAnalyzeEmails402Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\BatchAnalyzeEmails413Response|\OpenAPI\Client\Model\BatchAnalyzeEmails429Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function batchAnalyzeIpsWithHttpInfo($batch_analyze_ips_request, string $contentType = self::contentTypes['batchAnalyzeIps'][0])
@@ -662,9 +690,9 @@ class IPInsightsApi
      *
      * Batch Analyze IPs
      *
-     * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
+     * @param  BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -683,9 +711,9 @@ class IPInsightsApi
      *
      * Batch Analyze IPs
      *
-     * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
+     * @param  BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -733,9 +761,9 @@ class IPInsightsApi
     /**
      * Create request for operation 'batchAnalyzeIps'
      *
-     * @param  \OpenAPI\Client\Model\BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
+     * @param  BatchAnalyzeIpsRequest  $batch_analyze_ips_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['batchAnalyzeIps'] to see the possible values for this operation
-     * @return \GuzzleHttp\Psr7\Request
+     * @return Request
      *
      * @throws \InvalidArgumentException
      */
@@ -766,7 +794,7 @@ class IPInsightsApi
         if (isset($batch_analyze_ips_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($batch_analyze_ips_request));
+                $httpBody = Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($batch_analyze_ips_request));
             } else {
                 $httpBody = $batch_analyze_ips_request;
             }
@@ -787,7 +815,7 @@ class IPInsightsApi
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+                $httpBody = Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -827,12 +855,12 @@ class IPInsightsApi
      *
      * Create IP Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
-     * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  export_request (optional)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  ExportRequest|null  $export_request  export_request (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createIpBatchExport'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\ExportCreatedResponse|\OpenAPI\Client\Model\CreateEmailBatchExport400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\CreateEmailBatchExport404Response|\OpenAPI\Client\Model\CreateEmailBatchExport409Response
+     * @return ExportCreatedResponse|CreateEmailBatchExport400Response|CreateEmailBatchExport403Response|CreateEmailBatchExport404Response|CreateEmailBatchExport409Response
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function createIpBatchExport($job_id, $export_request = null, string $contentType = self::contentTypes['createIpBatchExport'][0])
@@ -847,12 +875,12 @@ class IPInsightsApi
      *
      * Create IP Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
-     * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createIpBatchExport'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\ExportCreatedResponse|\OpenAPI\Client\Model\CreateEmailBatchExport400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\CreateEmailBatchExport404Response|\OpenAPI\Client\Model\CreateEmailBatchExport409Response, HTTP status code, HTTP response headers (array of strings)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function createIpBatchExportWithHttpInfo($job_id, $export_request = null, string $contentType = self::contentTypes['createIpBatchExport'][0])
@@ -985,10 +1013,10 @@ class IPInsightsApi
      *
      * Create IP Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
-     * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createIpBatchExport'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -1007,10 +1035,10 @@ class IPInsightsApi
      *
      * Create IP Batch Export
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
-     * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createIpBatchExport'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -1058,10 +1086,10 @@ class IPInsightsApi
     /**
      * Create request for operation 'createIpBatchExport'
      *
-     * @param  string  $job_id  The unique identifier of the completed batch job. (required)
-     * @param  \OpenAPI\Client\Model\ExportRequest|null  $export_request  (optional)
+     * @param  string  $job_id  The unique identifier of the completed batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  ExportRequest|null  $export_request  (optional)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['createIpBatchExport'] to see the possible values for this operation
-     * @return \GuzzleHttp\Psr7\Request
+     * @return Request
      *
      * @throws \InvalidArgumentException
      */
@@ -1101,7 +1129,7 @@ class IPInsightsApi
         if (isset($export_request)) {
             if (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($export_request));
+                $httpBody = Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($export_request));
             } else {
                 $httpBody = $export_request;
             }
@@ -1122,7 +1150,7 @@ class IPInsightsApi
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+                $httpBody = Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1162,12 +1190,12 @@ class IPInsightsApi
      *
      * Get IP Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;3b90d156-a0d8-4630-8230-f59e9a4e9e33\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchExportStatus'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\ExportStatusResponse|\OpenAPI\Client\Model\GetEmailBatchExportStatus400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\GetEmailBatchExportStatus404Response
+     * @return ExportStatusResponse|GetEmailBatchExportStatus400Response|CreateEmailBatchExport403Response|GetEmailBatchExportStatus404Response
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function getIpBatchExportStatus($job_id, $export_id, string $contentType = self::contentTypes['getIpBatchExportStatus'][0])
@@ -1182,12 +1210,12 @@ class IPInsightsApi
      *
      * Get IP Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;3b90d156-a0d8-4630-8230-f59e9a4e9e33\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchExportStatus'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\ExportStatusResponse|\OpenAPI\Client\Model\GetEmailBatchExportStatus400Response|\OpenAPI\Client\Model\CreateEmailBatchExport403Response|\OpenAPI\Client\Model\GetEmailBatchExportStatus404Response, HTTP status code, HTTP response headers (array of strings)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function getIpBatchExportStatusWithHttpInfo($job_id, $export_id, string $contentType = self::contentTypes['getIpBatchExportStatus'][0])
@@ -1306,10 +1334,10 @@ class IPInsightsApi
      *
      * Get IP Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;3b90d156-a0d8-4630-8230-f59e9a4e9e33\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchExportStatus'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -1328,10 +1356,10 @@ class IPInsightsApi
      *
      * Get IP Batch Export Status
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;3b90d156-a0d8-4630-8230-f59e9a4e9e33\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchExportStatus'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -1379,10 +1407,10 @@ class IPInsightsApi
     /**
      * Create request for operation 'getIpBatchExportStatus'
      *
-     * @param  string  $job_id  The unique identifier of the batch job. (required)
-     * @param  string  $export_id  The unique identifier of the export job. (required)
+     * @param  string  $job_id  The unique identifier of the batch job. Format: uuid. Example: \&quot;52b36b1f-0c21-41fa-8a4f-423d25a9a8e2\&quot;. (required)
+     * @param  string  $export_id  The unique identifier of the export job. Format: uuid. Example: \&quot;3b90d156-a0d8-4630-8230-f59e9a4e9e33\&quot;. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchExportStatus'] to see the possible values for this operation
-     * @return \GuzzleHttp\Psr7\Request
+     * @return Request
      *
      * @throws \InvalidArgumentException
      */
@@ -1451,7 +1479,7 @@ class IPInsightsApi
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+                $httpBody = Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -1493,9 +1521,9 @@ class IPInsightsApi
      *
      * @param  string  $job_id  The unique identifier of the batch job to retrieve status for. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
-     * @return \OpenAPI\Client\Model\GetIpBatchStatus200Response|\OpenAPI\Client\Model\BatchAnalyzeEmails401Response|\OpenAPI\Client\Model\BatchAnalyzeEmails402Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\GetEmailBatchStatus404Response|\OpenAPI\Client\Model\BatchAnalyzeEmails429Response|\OpenAPI\Client\Model\AnalyzeEmail500Response
+     * @return GetIpBatchStatus200Response|BatchAnalyzeEmails401Response|BatchAnalyzeEmails402Response|BatchAnalyzeEmails403Response|GetEmailBatchStatus404Response|BatchAnalyzeEmails429Response|AnalyzeEmail500Response
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function getIpBatchStatus($job_id, string $contentType = self::contentTypes['getIpBatchStatus'][0])
@@ -1514,7 +1542,7 @@ class IPInsightsApi
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
      * @return array of \OpenAPI\Client\Model\GetIpBatchStatus200Response|\OpenAPI\Client\Model\BatchAnalyzeEmails401Response|\OpenAPI\Client\Model\BatchAnalyzeEmails402Response|\OpenAPI\Client\Model\BatchAnalyzeEmails403Response|\OpenAPI\Client\Model\GetEmailBatchStatus404Response|\OpenAPI\Client\Model\BatchAnalyzeEmails429Response|\OpenAPI\Client\Model\AnalyzeEmail500Response, HTTP status code, HTTP response headers (array of strings)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      */
     public function getIpBatchStatusWithHttpInfo($job_id, string $contentType = self::contentTypes['getIpBatchStatus'][0])
@@ -1677,7 +1705,7 @@ class IPInsightsApi
      *
      * @param  string  $job_id  The unique identifier of the batch job to retrieve status for. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -1698,7 +1726,7 @@ class IPInsightsApi
      *
      * @param  string  $job_id  The unique identifier of the batch job to retrieve status for. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -1748,7 +1776,7 @@ class IPInsightsApi
      *
      * @param  string  $job_id  The unique identifier of the batch job to retrieve status for. (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['getIpBatchStatus'] to see the possible values for this operation
-     * @return \GuzzleHttp\Psr7\Request
+     * @return Request
      *
      * @throws \InvalidArgumentException
      */
@@ -1802,7 +1830,7 @@ class IPInsightsApi
 
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 // if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+                $httpBody = Utils::jsonEncode($formParams);
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);

@@ -42,7 +42,7 @@ use OpenAPI\Client\ObjectSerializer;
  *
  * @link     https://openapi-generator.tech
  *
- * @implements \ArrayAccess<string, mixed>
+ * @implements ArrayAccess<string, mixed>
  */
 class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelInterface
 {
@@ -298,49 +298,6 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         return self::$openAPIModelName;
     }
 
-    public const EMAIL_TYPE__PRIVATE = 'private';
-
-    public const EMAIL_TYPE_FREE = 'free';
-
-    public const EMAIL_TYPE_DISPOSABLE = 'disposable';
-
-    public const EMAIL_TYPE_UNKNOWN = 'unknown';
-
-    public const IS_DELIVERABLE_YES = 'yes';
-
-    public const IS_DELIVERABLE_NO = 'no';
-
-    public const IS_DELIVERABLE_UNKNOWN = 'unknown';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getEmailTypeAllowableValues()
-    {
-        return [
-            self::EMAIL_TYPE__PRIVATE,
-            self::EMAIL_TYPE_FREE,
-            self::EMAIL_TYPE_DISPOSABLE,
-            self::EMAIL_TYPE_UNKNOWN,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getIsDeliverableAllowableValues()
-    {
-        return [
-            self::IS_DELIVERABLE_YES,
-            self::IS_DELIVERABLE_NO,
-            self::IS_DELIVERABLE_UNKNOWN,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -405,27 +362,9 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
         if ($this->container['email_type'] === null) {
             $invalidProperties[] = "'email_type' can't be null";
         }
-        $allowedValues = $this->getEmailTypeAllowableValues();
-        if (!is_null($this->container['email_type']) && !in_array($this->container['email_type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'email_type', must be one of '%s'",
-                $this->container['email_type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['is_deliverable'] === null) {
             $invalidProperties[] = "'is_deliverable' can't be null";
         }
-        $allowedValues = $this->getIsDeliverableAllowableValues();
-        if (!is_null($this->container['is_deliverable']) && !in_array($this->container['is_deliverable'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'is_deliverable', must be one of '%s'",
-                $this->container['is_deliverable'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['is_catch_all'] === null) {
             $invalidProperties[] = "'is_catch_all' can't be null";
         }
@@ -524,23 +463,13 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_type
      *
-     * @param  string  $email_type  Email classification based on provider and enrichment signals.
+     * @param  string  $email_type  Email classification based on provider and enrichment signals. Allowed values: `private`, `free`, `disposable`, `unknown`. Example: `free`.
      * @return self
      */
     public function setEmailType($email_type)
     {
         if (is_null($email_type)) {
             throw new \InvalidArgumentException('non-nullable email_type cannot be null');
-        }
-        $allowedValues = $this->getEmailTypeAllowableValues();
-        if (!in_array($email_type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'email_type', must be one of '%s'",
-                    $email_type,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['email_type'] = $email_type;
 
@@ -560,23 +489,13 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets is_deliverable
      *
-     * @param  string  $is_deliverable  Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification.
+     * @param  string  $is_deliverable  Checks if the email address exists and is deliverable using SMTP handshake simulation. This involves connecting to the mail server and issuing commands to verify deliverability. The possible answers are `yes`, `no`, or `unknown`. We guarantee a high confidence level on this parameter since this is a real time verification. Allowed values: `yes`, `no`, `unknown`. Example: `yes`.
      * @return self
      */
     public function setIsDeliverable($is_deliverable)
     {
         if (is_null($is_deliverable)) {
             throw new \InvalidArgumentException('non-nullable is_deliverable cannot be null');
-        }
-        $allowedValues = $this->getIsDeliverableAllowableValues();
-        if (!in_array($is_deliverable, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'is_deliverable', must be one of '%s'",
-                    $is_deliverable,
-                    implode("', '", $allowedValues)
-                )
-            );
         }
         $this->container['is_deliverable'] = $is_deliverable;
 
@@ -716,7 +635,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets address_signals
      *
-     * @return \OpenAPI\Client\Model\AddressSignals
+     * @return AddressSignals
      */
     public function getAddressSignals()
     {
@@ -726,7 +645,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets address_signals
      *
-     * @param  \OpenAPI\Client\Model\AddressSignals  $address_signals  Local-part parsing details for the analyzed address. Always present; fields default to empty strings when a signal is not applicable.
+     * @param  AddressSignals  $address_signals  Local-part parsing details for the analyzed address. Always present; fields default to empty strings when a signal is not applicable.
      * @return self
      */
     public function setAddressSignals($address_signals)
@@ -742,7 +661,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets email_dns
      *
-     * @return \OpenAPI\Client\Model\EmailDNS
+     * @return EmailDNS
      */
     public function getEmailDns()
     {
@@ -752,7 +671,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets email_dns
      *
-     * @param  \OpenAPI\Client\Model\EmailDNS  $email_dns  email_dns
+     * @param  EmailDNS  $email_dns  email_dns
      * @return self
      */
     public function setEmailDns($email_dns)
@@ -768,7 +687,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets risk_report
      *
-     * @return \OpenAPI\Client\Model\RiskReportEmail|null
+     * @return RiskReportEmail|null
      */
     public function getRiskReport()
     {
@@ -778,7 +697,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets risk_report
      *
-     * @param  \OpenAPI\Client\Model\RiskReportEmail|null  $risk_report  AI-generated risk report detailing the evaluated risk bucket. Returned only when `enableAI` is true.
+     * @param  RiskReportEmail|null  $risk_report  AI-generated risk report detailing the evaluated risk bucket. Returned only when `enableAI` is true.
      * @return self
      */
     public function setRiskReport($risk_report)
@@ -794,7 +713,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets domain
      *
-     * @return \OpenAPI\Client\Model\EmailDomain|null
+     * @return EmailDomain|null
      */
     public function getDomain()
     {
@@ -804,7 +723,7 @@ class AnalyzeEmail200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets domain
      *
-     * @param  \OpenAPI\Client\Model\EmailDomain|null  $domain  Domain summary derived from enrichment providers. Omitted when enrichment is unavailable or `enableDomainEnrichment` is set to `false`.
+     * @param  EmailDomain|null  $domain  Domain summary derived from enrichment providers. Omitted when enrichment is unavailable or `enableDomainEnrichment` is set to `false`.
      * @return self
      */
     public function setDomain($domain)
