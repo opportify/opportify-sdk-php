@@ -17,8 +17,9 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Opportify\\Sdk\\": "src/",
-            "OpenAPI\\Client\\": "lib/v1/lib"
+            "OpenAPI\\Client\\": "lib/v1/lib",
+            "OpenAPI\\FraudIntel\\Client\\": "lib/fraud-intel/lib",
+            "Opportify\\Sdk\\": "src/"
         }
     },
     "require": {
