@@ -64,12 +64,12 @@ class FraudProtectionTest extends TestCase
     public function test_analyze_success()
     {
         $mockResponseData = (object) [
-            'score'   => 72,
-            'level'   => 'high',
+            'score' => 72,
+            'level' => 'high',
             'factors' => ['suspicious_email', 'vpn_detected'],
             'sources' => (object) [
                 'email' => (object) ['isDisposable' => true, 'isFormatValid' => true],
-                'ip'    => (object) ['isVpn' => true, 'isTor' => false],
+                'ip' => (object) ['isVpn' => true, 'isTor' => false],
             ],
             'meta' => (object) ['requestId' => 'req_abc123'],
         ];
@@ -85,8 +85,8 @@ class FraudProtectionTest extends TestCase
         $fp = new FraudProtection('fake_api_key', $mockApiInstance);
 
         $response = $fp->analyze([
-            'email'     => 'test@example.com',
-            'user_ip'   => '1.2.3.4',
+            'email' => 'test@example.com',
+            'user_ip' => '1.2.3.4',
             'enable_ai' => true,
         ]);
 
@@ -138,19 +138,19 @@ class FraudProtectionTest extends TestCase
         $fp = new FraudProtection('fake_api_key');
 
         $input = [
-            'email'       => 'user@example.com',
-            'user_ip'     => '10.0.0.1',
-            'first_name'  => 'Jane',
-            'last_name'   => 'Doe',
-            'enable_ai'   => false,
+            'email' => 'user@example.com',
+            'user_ip' => '10.0.0.1',
+            'first_name' => 'Jane',
+            'last_name' => 'Doe',
+            'enable_ai' => false,
         ];
 
         $expected = [
-            'email'      => 'user@example.com',
-            'user_ip'    => '10.0.0.1',
+            'email' => 'user@example.com',
+            'user_ip' => '10.0.0.1',
             'first_name' => 'Jane',
-            'last_name'  => 'Doe',
-            'enable_ai'  => false,
+            'last_name' => 'Doe',
+            'enable_ai' => false,
         ];
 
         $reflection = new \ReflectionClass($fp);
@@ -166,10 +166,10 @@ class FraudProtectionTest extends TestCase
         $fp = new FraudProtection('fake_api_key');
 
         $input = [
-            'userIp'    => '10.0.0.1',
+            'userIp' => '10.0.0.1',
             'firstName' => 'Jane',
-            'lastName'  => 'Doe',
-            'enableAi'  => true,
+            'lastName' => 'Doe',
+            'enableAi' => true,
         ];
 
         $reflection = new \ReflectionClass($fp);
@@ -188,7 +188,7 @@ class FraudProtectionTest extends TestCase
         $fp = new FraudProtection('fake_api_key');
 
         $input = [
-            'email'     => 'user@example.com',
+            'email' => 'user@example.com',
             'form_data' => ['field1' => 'value1', 'field2' => 'value2'],
         ];
 

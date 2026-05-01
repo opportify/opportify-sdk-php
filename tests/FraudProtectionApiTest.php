@@ -39,8 +39,8 @@ class FraudProtectionApiTest extends TestCase
             'level' => 'high',
             'factors' => ['suspicious_email', 'vpn_detected'],
             'sources' => [
-                'email' => ['format' => (object)['isFormatValid' => true]],
-                'ip'    => ['isVpn' => true, 'isTor' => false],
+                'email' => ['format' => (object) ['isFormatValid' => true]],
+                'ip' => ['isVpn' => true, 'isTor' => false],
             ],
             'meta' => ['requestId' => 'req_abc123'],
         ]);

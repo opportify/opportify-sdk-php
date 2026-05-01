@@ -92,19 +92,19 @@ class FraudProtection
      * signals in a single HTTP call.
      *
      * @param  array  $params  Submission fields to analyze. Supported keys:
-     *   - email (string)
-     *   - phone1, phone2 (string)
-     *   - user_ip / userIp (string)
-     *   - first_name / firstName, last_name / lastName, full_name / fullName (string)
-     *   - username, company_name / companyName, website (string)
-     *   - subject, message (string)
-     *   - address1, address2, city, region, country, postal_code / postalCode (string)
-     *   - origin (string)
-     *   - submission_type / submissionType (string)
-     *   - form_data / formData (array)
-     *   - opportify_token / opportifyToken (string)
-     *   - opportify_form_uuid / opportifyFormUUID (string)
-     *   - enable_ai / enableAi (bool, default: true)
+     *                         - email (string)
+     *                         - phone1, phone2 (string)
+     *                         - user_ip / userIp (string)
+     *                         - first_name / firstName, last_name / lastName, full_name / fullName (string)
+     *                         - username, company_name / companyName, website (string)
+     *                         - subject, message (string)
+     *                         - address1, address2, city, region, country, postal_code / postalCode (string)
+     *                         - origin (string)
+     *                         - submission_type / submissionType (string)
+     *                         - form_data / formData (array)
+     *                         - opportify_token / opportifyToken (string)
+     *                         - opportify_form_uuid / opportifyFormUUID (string)
+     *                         - enable_ai / enableAi (bool, default: true)
      *
      * @throws \Exception
      */
@@ -190,27 +190,27 @@ class FraudProtection
 
         // String fields: accept snake_case or camelCase
         $stringFields = [
-            'email'               => ['email'],
-            'phone1'              => ['phone1'],
-            'phone2'              => ['phone2'],
-            'user_ip'             => ['user_ip', 'userIp'],
-            'first_name'          => ['first_name', 'firstName'],
-            'last_name'           => ['last_name', 'lastName'],
-            'full_name'           => ['full_name', 'fullName'],
-            'username'            => ['username'],
-            'company_name'        => ['company_name', 'companyName'],
-            'website'             => ['website'],
-            'subject'             => ['subject'],
-            'message'             => ['message'],
-            'address1'            => ['address1'],
-            'address2'            => ['address2'],
-            'city'                => ['city'],
-            'region'              => ['region'],
-            'country'             => ['country'],
-            'postal_code'         => ['postal_code', 'postalCode'],
-            'origin'              => ['origin'],
-            'submission_type'     => ['submission_type', 'submissionType'],
-            'opportify_token'     => ['opportify_token', 'opportifyToken'],
+            'email' => ['email'],
+            'phone1' => ['phone1'],
+            'phone2' => ['phone2'],
+            'user_ip' => ['user_ip', 'userIp'],
+            'first_name' => ['first_name', 'firstName'],
+            'last_name' => ['last_name', 'lastName'],
+            'full_name' => ['full_name', 'fullName'],
+            'username' => ['username'],
+            'company_name' => ['company_name', 'companyName'],
+            'website' => ['website'],
+            'subject' => ['subject'],
+            'message' => ['message'],
+            'address1' => ['address1'],
+            'address2' => ['address2'],
+            'city' => ['city'],
+            'region' => ['region'],
+            'country' => ['country'],
+            'postal_code' => ['postal_code', 'postalCode'],
+            'origin' => ['origin'],
+            'submission_type' => ['submission_type', 'submissionType'],
+            'opportify_token' => ['opportify_token', 'opportifyToken'],
             'opportify_form_uuid' => ['opportify_form_uuid', 'opportifyFormUUID', 'opportifyFormUuid'],
         ];
 
