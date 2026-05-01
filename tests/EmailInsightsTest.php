@@ -2,8 +2,12 @@
 
 use Mockery as m;
 use OpenAPI\Client\Api\EmailInsightsApi;
+use OpenAPI\Client\ApiException;
+use OpenAPI\Client\Model\EmailDomain;
 use OpenAPI\Client\Model\ExportRequest;
+use OpenAPI\Client\ObjectSerializer;
 use Opportify\Sdk\EmailInsights;
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class EmailInsightsTest extends TestCase
@@ -18,7 +22,7 @@ class EmailInsightsTest extends TestCase
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setHost('https://new-api.opportify.ai');
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $property = $reflection->getProperty('host');
         $property->setAccessible(true);
 
@@ -30,7 +34,7 @@ class EmailInsightsTest extends TestCase
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setVersion('v2');
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $property = $reflection->getProperty('version');
         $property->setAccessible(true);
 
@@ -42,7 +46,7 @@ class EmailInsightsTest extends TestCase
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setPrefix('new-prefix');
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $property = $reflection->getProperty('prefix');
         $property->setAccessible(true);
 
@@ -54,7 +58,7 @@ class EmailInsightsTest extends TestCase
         $emailInsights = new EmailInsights('fake_api_key');
         $emailInsights->setDebugMode(true);
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $property = $reflection->getProperty('debugMode');
         $property->setAccessible(true);
 
@@ -78,7 +82,7 @@ class EmailInsightsTest extends TestCase
             'enable_domain_enrichment' => true,
         ];
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $method = $reflection->getMethod('normalizeRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($emailInsights, [$input]);
@@ -104,7 +108,7 @@ class EmailInsightsTest extends TestCase
             'enable_domain_enrichment' => false,
         ];
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $method = $reflection->getMethod('normalizeRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($emailInsights, [$input]);
@@ -136,11 +140,11 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('analyzeEmail')
             ->once()
             ->andReturn($mockResponse);
@@ -163,10 +167,10 @@ class EmailInsightsTest extends TestCase
 
     public function test_throws_exception_when_analyze_fails()
     {
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('analyzeEmail')
             ->once()
-            ->andThrow(new \OpenAPI\Client\ApiException(
+            ->andThrow(new ApiException(
                 '[403] Client error: `POST https://api.opportify.ai/insights/v1/email/analyze` resulted in a `403 Forbidden` response: {"errorCode": "INVALID_TOKEN", "errorMessage": "The token provided is either invalid, expired, or missing"}',
                 403
             ));
@@ -174,12 +178,12 @@ class EmailInsightsTest extends TestCase
         $emailInsights = new EmailInsights('invalid_api_key');
 
         // Inject mock using Reflection
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $property = $reflection->getProperty('apiInstance');
         $property->setAccessible(true);
         $property->setValue($emailInsights, $mockApiInstance);
 
-        $this->expectException(\OpenAPI\Client\ApiException::class);
+        $this->expectException(ApiException::class);
         $this->expectExceptionMessage('[403]');
         $this->expectExceptionMessage('INVALID_TOKEN');
 
@@ -206,7 +210,7 @@ class EmailInsightsTest extends TestCase
             'enable_auto_correction' => false,
         ];
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $method = $reflection->getMethod('normalizeBatchRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($emailInsights, [$input]);
@@ -223,11 +227,11 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
             ->andReturn($mockResponse);
@@ -256,14 +260,14 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance - now expects MultipartStream instead of array
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
-            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->with(m::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -291,7 +295,7 @@ class EmailInsightsTest extends TestCase
     {
         $emailInsights = new EmailInsights('fake_api_key');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File parameter is required and must be a valid file path');
 
         $emailInsights->batchAnalyze([
@@ -303,7 +307,7 @@ class EmailInsightsTest extends TestCase
     {
         $emailInsights = new EmailInsights('fake_api_key');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File parameter is required and must be a valid file path');
 
         $emailInsights->batchAnalyze([
@@ -323,7 +327,7 @@ class EmailInsightsTest extends TestCase
         // Test with a path that's guaranteed to fail (null byte is invalid in filenames)
         $invalidPath = "invalid\0path.csv";
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File parameter is required and must be a valid file path');
 
         $emailInsights->batchAnalyze([
@@ -341,14 +345,14 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
-            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->with(m::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -382,14 +386,14 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
-            ->with(Mockery::type('string'), 'text/plain')
+            ->with(m::type('string'), 'text/plain')
             ->andReturn($mockResponse);
 
         // Inject the mock API instance via constructor
@@ -414,11 +418,11 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
             ->andReturn($mockResponse);
@@ -451,11 +455,11 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('getEmailBatchStatus')
             ->once()
             ->with('job-123456')
@@ -480,17 +484,17 @@ class EmailInsightsTest extends TestCase
             'status' => 'QUEUED',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('createEmailBatchExport')
             ->once()
-            ->with('job-123', Mockery::on(function ($request) {
-                \PHPUnit\Framework\Assert::assertInstanceOf(ExportRequest::class, $request);
-                \PHPUnit\Framework\Assert::assertEquals('json', $request->getExportType());
-                \PHPUnit\Framework\Assert::assertEquals(['emailAddress', 'riskReport.score'], $request->getColumns());
-                \PHPUnit\Framework\Assert::assertEquals(['isDeliverable' => 'yes'], $request->getFilters());
+            ->with('job-123', m::on(function ($request) {
+                Assert::assertInstanceOf(ExportRequest::class, $request);
+                Assert::assertEquals('json', $request->getExportType());
+                Assert::assertEquals(['emailAddress', 'riskReport.score'], $request->getColumns());
+                Assert::assertEquals(['isDeliverable' => 'yes'], $request->getFilters());
 
                 return true;
             }))
@@ -515,10 +519,10 @@ class EmailInsightsTest extends TestCase
             'status' => 'PROCESSING',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('createEmailBatchExport')
             ->once()
             ->with('job-456', null)
@@ -534,9 +538,9 @@ class EmailInsightsTest extends TestCase
 
     public function test_create_batch_export_validates_job_id()
     {
-        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+        $emailInsights = new EmailInsights('fake_api_key', m::mock(EmailInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job ID cannot be empty when creating an export.');
 
         $emailInsights->createBatchExport('   ');
@@ -544,9 +548,9 @@ class EmailInsightsTest extends TestCase
 
     public function test_create_batch_export_validates_columns_type()
     {
-        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+        $emailInsights = new EmailInsights('fake_api_key', m::mock(EmailInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Columns must be provided as an array.');
 
         $emailInsights->createBatchExport('job-101', [
@@ -556,9 +560,9 @@ class EmailInsightsTest extends TestCase
 
     public function test_create_batch_export_validates_filters_type()
     {
-        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+        $emailInsights = new EmailInsights('fake_api_key', m::mock(EmailInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Filters must be provided as an array.');
 
         $emailInsights->createBatchExport('job-101', [
@@ -574,10 +578,10 @@ class EmailInsightsTest extends TestCase
             'downloadUrl' => 'https://example.com/download.csv',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('getEmailBatchExportStatus')
             ->once()
             ->with('job-789', 'export-789')
@@ -594,9 +598,9 @@ class EmailInsightsTest extends TestCase
 
     public function test_get_batch_export_status_validates_identifiers()
     {
-        $emailInsights = new EmailInsights('fake_api_key', Mockery::mock(EmailInsightsApi::class));
+        $emailInsights = new EmailInsights('fake_api_key', m::mock(EmailInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job ID and export ID are required to fetch export status.');
 
         $emailInsights->getBatchExportStatus('job-001', '   ');
@@ -612,11 +616,11 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
             ->andReturn($mockResponse);
@@ -648,14 +652,14 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance - expects MultipartStream with name parameter
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
-            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->with(m::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -695,11 +699,11 @@ class EmailInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance should still receive batchAnalyzeEmails call once
-        $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+        $mockApiInstance = m::mock(EmailInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeEmails')
             ->once()
             ->andReturn($mockResponse);
@@ -739,7 +743,7 @@ class EmailInsightsTest extends TestCase
             'enable_auto_correction' => false,
         ];
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $method = $reflection->getMethod('normalizeBatchRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($emailInsights, [$input]);
@@ -763,7 +767,7 @@ class EmailInsightsTest extends TestCase
             'enable_auto_correction' => false,
         ];
 
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $method = $reflection->getMethod('normalizeBatchRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($emailInsights, [$input]);
@@ -811,7 +815,7 @@ class EmailInsightsTest extends TestCase
         $emailInsights->setVersion($version);
 
         // Force refresh to rebuild apiInstance & finalUrl
-        $reflection = new \ReflectionClass($emailInsights);
+        $reflection = new ReflectionClass($emailInsights);
         $method = $reflection->getMethod('refreshApiInstance');
         $method->setAccessible(true);
         $method->invokeArgs($emailInsights, []);
@@ -1053,10 +1057,10 @@ class EmailInsightsTest extends TestCase
         ];
 
         foreach ($scenarios as $i => $mockResponseData) {
-            $mockResponse = Mockery::mock();
+            $mockResponse = m::mock();
             $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-            $mockApiInstance = Mockery::mock(EmailInsightsApi::class);
+            $mockApiInstance = m::mock(EmailInsightsApi::class);
             $mockApiInstance->shouldReceive('analyzeEmail')
                 ->once()
                 ->andReturn($mockResponse);
@@ -1092,7 +1096,86 @@ class EmailInsightsTest extends TestCase
                     $this->assertNull($domain->expirationDate, 'Scenario 1: expirationDate should be null when enrichment is unavailable');
                     $this->assertNull($domain->updatedDate, 'Scenario 1: updatedDate should be null when enrichment is unavailable');
                 }
+            } elseif ($i === 1) {
+                $domain = $response->domain;
+                $expectedDomain = $mockResponseData['domain'];
+                if (is_array($domain)) {
+                    $this->assertArrayHasKey('creationDate', $domain, 'Scenario 2: domain should include creationDate key');
+                    $this->assertArrayHasKey('expirationDate', $domain, 'Scenario 2: domain should include expirationDate key');
+                    $this->assertArrayHasKey('updatedDate', $domain, 'Scenario 2: domain should include updatedDate key');
+                    $this->assertNotNull($domain['creationDate'], 'Scenario 2: creationDate should not be null when enrichment is available');
+                    $this->assertNotNull($domain['expirationDate'], 'Scenario 2: expirationDate should not be null when enrichment is available');
+                    $this->assertNotNull($domain['updatedDate'], 'Scenario 2: updatedDate should not be null when enrichment is available');
+                    $this->assertEquals($expectedDomain['creationDate'], $domain['creationDate'], 'Scenario 2: creationDate matches expected value');
+                    $this->assertEquals($expectedDomain['expirationDate'], $domain['expirationDate'], 'Scenario 2: expirationDate matches expected value');
+                    $this->assertEquals($expectedDomain['updatedDate'], $domain['updatedDate'], 'Scenario 2: updatedDate matches expected value');
+                } else {
+                    $this->assertNotNull($domain->creationDate, 'Scenario 2: creationDate should not be null when enrichment is available');
+                    $this->assertNotNull($domain->expirationDate, 'Scenario 2: expirationDate should not be null when enrichment is available');
+                    $this->assertNotNull($domain->updatedDate, 'Scenario 2: updatedDate should not be null when enrichment is available');
+                    $this->assertEquals($expectedDomain['creationDate'], $domain->creationDate, 'Scenario 2: creationDate matches expected value');
+                    $this->assertEquals($expectedDomain['expirationDate'], $domain->expirationDate, 'Scenario 2: expirationDate matches expected value');
+                    $this->assertEquals($expectedDomain['updatedDate'], $domain->updatedDate, 'Scenario 2: updatedDate matches expected value');
+                }
             }
         }
+    }
+
+    public function test_email_domain_nullable_date_fields_via_deserialize(): void
+    {
+        // Verifies that ObjectSerializer::deserialize() correctly hydrates EmailDomain
+        // when date fields are null (enrichment unavailable), exercising the setters
+        // directly — the scenario that previously threw InvalidArgumentException.
+
+        $nullDateData = (object) [
+            'name' => 'example.com',
+            'enrichmentAvailable' => false,
+            'creationDate' => null,
+            'expirationDate' => null,
+            'updatedDate' => null,
+            'ageYears' => 0,
+            'registrar' => '',
+            'isBlockListed' => false,
+            'mtaStsStatus' => 'unknown',
+            'bimiStatus' => 'unknown',
+            'hasVMC' => false,
+            'aRecordValid' => false,
+            'aRecordReverseHost' => '',
+            'sslValid' => false,
+        ];
+
+        /** @var EmailDomain $domain */
+        $domain = ObjectSerializer::deserialize($nullDateData, EmailDomain::class);
+
+        $this->assertNull($domain->getCreationDate(), 'creationDate should be null when enrichment is unavailable');
+        $this->assertNull($domain->getExpirationDate(), 'expirationDate should be null when enrichment is unavailable');
+        $this->assertNull($domain->getUpdatedDate(), 'updatedDate should be null when enrichment is unavailable');
+
+        $populatedDateData = (object) [
+            'name' => 'gmail.com',
+            'enrichmentAvailable' => true,
+            'creationDate' => '1995-08-13T04:00:00.000Z',
+            'expirationDate' => '2026-08-12T04:00:00.000Z',
+            'updatedDate' => '2025-07-11T10:10:56.000Z',
+            'ageYears' => 30,
+            'registrar' => 'MarkMonitor Inc.',
+            'isBlockListed' => false,
+            'mtaStsStatus' => 'present',
+            'bimiStatus' => 'absent',
+            'hasVMC' => false,
+            'aRecordValid' => true,
+            'aRecordReverseHost' => 'ord37s32-in-f5.1e100.net',
+            'sslValid' => true,
+        ];
+
+        /** @var EmailDomain $domain */
+        $domain = ObjectSerializer::deserialize($populatedDateData, EmailDomain::class);
+
+        $this->assertNotNull($domain->getCreationDate(), 'creationDate should not be null when enrichment is available');
+        $this->assertNotNull($domain->getExpirationDate(), 'expirationDate should not be null when enrichment is available');
+        $this->assertNotNull($domain->getUpdatedDate(), 'updatedDate should not be null when enrichment is available');
+        $this->assertSame('1995-08-13T04:00:00.000Z', $domain->getCreationDate(), 'creationDate matches expected value');
+        $this->assertSame('2026-08-12T04:00:00.000Z', $domain->getExpirationDate(), 'expirationDate matches expected value');
+        $this->assertSame('2025-07-11T10:10:56.000Z', $domain->getUpdatedDate(), 'updatedDate matches expected value');
     }
 }
