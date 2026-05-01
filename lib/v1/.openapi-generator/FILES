@@ -30,6 +30,8 @@ docs/Model/BatchAnalyzeIps400Response.md
 docs/Model/BatchAnalyzeIpsRequest.md
 docs/Model/BlockListed.md
 docs/Model/CreateEmailBatchExport400Response.md
+docs/Model/CreateEmailBatchExport400ResponseOneOf.md
+docs/Model/CreateEmailBatchExport400ResponseOneOf1.md
 docs/Model/CreateEmailBatchExport403Response.md
 docs/Model/CreateEmailBatchExport404Response.md
 docs/Model/CreateEmailBatchExport409Response.md
@@ -105,6 +107,8 @@ lib/Model/BatchAnalyzeIps400Response.php
 lib/Model/BatchAnalyzeIpsRequest.php
 lib/Model/BlockListed.php
 lib/Model/CreateEmailBatchExport400Response.php
+lib/Model/CreateEmailBatchExport400ResponseOneOf.php
+lib/Model/CreateEmailBatchExport400ResponseOneOf1.php
 lib/Model/CreateEmailBatchExport403Response.php
 lib/Model/CreateEmailBatchExport404Response.php
 lib/Model/CreateEmailBatchExport409Response.php
@@ -177,6 +181,8 @@ test/Model/BatchAnalyzeIps202ResponseTest.php
 test/Model/BatchAnalyzeIps400ResponseTest.php
 test/Model/BatchAnalyzeIpsRequestTest.php
 test/Model/BlockListedTest.php
+test/Model/CreateEmailBatchExport400ResponseOneOf1Test.php
+test/Model/CreateEmailBatchExport400ResponseOneOfTest.php
 test/Model/CreateEmailBatchExport400ResponseTest.php
 test/Model/CreateEmailBatchExport403ResponseTest.php
 test/Model/CreateEmailBatchExport404ResponseTest.php

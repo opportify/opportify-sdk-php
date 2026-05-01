@@ -12,6 +12,7 @@
 - [Getting Started](#getting-started)
     - [Calling Email Insights](#calling-email-insights)
     - [Calling IP Insights](#calling-ip-insights)
+    - [Calling Fraud Protection](#calling-fraud-protection)
 - [Batch Analysis (Email & IP)](#batch-analysis-email--ip)
     - [Batch Email Analysis (JSON)](#1-batch-email-analysis-json)
     - [Batch Email Analysis (Plain Text)](#2-batch-email-analysis-plain-text)
@@ -23,21 +24,29 @@
     - [Email Batch Exports](#email-batch-exports)
     - [IP Batch Exports](#ip-batch-exports)
 - [Enabling Debug Mode](#enabling-debug-mode)
-- [Handling Error](#handling-error)
+- [Handling Errors](#handling-errors)
 - [About this package](#about-this-package)
 
 ## Overview
 
-The **Opportify Insights API** provides access to a powerful and up-to-date platform. With advanced data warehousing and AI-driven capabilities, this API is designed to empower your business to make informed, data-driven decisions and effectively assess potential risks.
+The **Opportify SDK** gives your PHP application access to the full Opportify platform:
+
+| Product | Purpose |
+|---------|---------|
+| **Email Insights** | Validate, enrich, and score email addresses |
+| **IP Insights** | Geolocate, enrich, and assess risk for IP addresses |
+| **Fraud Protection** | Analyze form submissions for fraud risk across email, IP, geo, session, and velocity signals |
+
+All products share a common API key and the same SDK installation.
 
 [Sign Up Free](https://www.opportify.ai)
 
-### Base URL
-Use the following base URL for all API requests:
+### Base URLs
 
-```plaintext
-https://api.opportify.ai/insights/v1/<service>/<endpoint>
-```
+| Product | Base URL |
+|---------|----------|
+| Email & IP Insights | `https://api.opportify.ai/insights/v1/` |
+| Fraud Protection | `https://api.opportify.ai/intel/v1/` |
 
 ## Requirements
 
@@ -83,8 +92,66 @@ $params = [
 $result = $ipInsights->analyze($params);
 ```
 
+### Calling Fraud Protection
 
-### Batch Analysis (Email & IP)
+Analyze a form submission for fraud risk. The response provides an overall risk score with a breakdown by signal source (email, IP, geo, session, velocity).
+
+```php
+use Opportify\Sdk\FraudProtection;
+
+$fraudProtection = new FraudProtection("<YOUR-KEY-HERE>");
+
+$params = [
+    // Identity
+    "email"          => "user@example.com",
+    "firstName"      => "Jane",
+    "lastName"       => "Doe",
+    "username"       => "jane_doe",
+    "companyName"    => "Acme Corp",
+
+    // Network
+    "userIp"         => "3.1.122.82",
+
+    // Contact details
+    "phone1"         => "+1-800-555-0100",
+    "website"        => "https://acme.example.com",
+
+    // Submission context
+    "subject"        => "Contact form submission",
+    "message"        => "Hello, I am interested in your service.",
+    "submissionType" => "contact",  // e.g. "contact", "signup", "checkout"
+    "origin"         => "yoursite.com",  // hostname only — no protocol, path, or port
+
+    // Address (all optional)
+    "address1"       => "123 Main St",
+    "city"           => "Springfield",
+    "region"         => "IL",
+    "country"        => "US",
+    "postalCode"     => "62701",
+
+    // Token & form tracking (optional)
+    "opportifyToken"   => "opportify-generated-token",
+    "opportifyFormUUID" => "uuid-of-the-form",
+
+    // Raw form fields as key-value pairs (optional)
+    "formData"       => ["custom_field" => "value"],
+
+    "enableAi"       => true, // default: true
+];
+
+$result = $fraudProtection->analyze($params);
+// $result->score    — integer 0–1000 (higher = riskier)
+// $result->level    — "low" | "medium" | "high"
+// $result->factors  — string[] of detected risk signals
+// $result->sources  — per-signal breakdown (email, IP, geo, session, velocity)
+// $result->meta     — request metadata (requestId, etc.)
+```
+
+All parameter names accept both `snake_case` and `camelCase` (e.g. `user_ip` or `userIp`).
+The `enableAi` flag defaults to `true`; pass `false` to skip AI-powered enrichment.
+
+
+## Batch Analysis (Email & IP)
 
 You can submit multiple emails or IPs in a single request. Batch jobs are processed asynchronously; the response returns a job identifier (`jobId`) you can poll for status.
 
@@ -239,34 +306,60 @@ if ($status->status === 'COMPLETED') {
 ```
 
 
-### Enabling Debug Mode
+## Enabling Debug Mode
+
+All wrappers support debug mode, which enables verbose HTTP logging via Guzzle:
 
 ```php
-$clientInsights->setDebugMode(true);
+$emailInsights->setDebugMode(true);
+$ipInsights->setDebugMode(true);
+$fraudProtection->setDebugMode(true);
 ```
 
-### Handling Error
+You can also override the host, API prefix, or version for testing against staging environments:
 
-We strongly recommend that any usage of this SDK happens within a try-catch to properly handle any exceptions or errors.
+```php
+$fraudProtection->setHost('https://staging.api.opportify.ai');
+$fraudProtection->setVersion('v2');
+$fraudProtection->setPrefix('intel');
+```
+
+## Handling Errors
+
+We strongly recommend wrapping all SDK calls in a try-catch to handle API errors.
+
+**Email Insights & IP Insights** use `OpenAPI\Client\ApiException`:
 
 ```php
 use OpenAPI\Client\ApiException;
 
 try {
-
-    // Email or IP Insights usage...
-
+    $result = $emailInsights->analyze($params);
+    // or: $result = $ipInsights->analyze($params);
 } catch (ApiException $e) {
     throw new \Exception($e->getResponseBody());
 }
 ```
-Below are the `ApiException` functions available:
 
-| Function | Type | Value Sample |
-|------------|------|--------------|
-| `$e->getMessage();` | string | `"[403] Client error: POST https://api.opportify.ai/insights/v1/... resulted in a 403 Forbidden"` |
-| `$e->getResponseBody();` | string | `"{"errorMessage":"Your plan does not support AI features, please upgrade your plan or set enableAI as false.","errorCode":"INVALID_PLAN"}"` |
-| `$e->getCode();` | integer | `403` |
+**Fraud Protection** uses its own namespace `OpenAPI\FraudIntel\Client\ApiException`:
+
+```php
+use OpenAPI\FraudIntel\Client\ApiException;
+
+try {
+    $result = $fraudProtection->analyze($params);
+} catch (ApiException $e) {
+    throw new \Exception($e->getResponseBody());
+}
+```
+
+All `ApiException` instances expose the same interface:
+
+| Method | Type | Example |
+|--------|------|---------|
+| `$e->getMessage()` | string | `"[403] Client error: POST https://api.opportify.ai/... resulted in a 403 Forbidden"` |
+| `$e->getResponseBody()` | string | `'{"errorMessage":"Your plan does not support AI features","errorCode":"INVALID_PLAN"}'` |
+| `$e->getCode()` | integer | `403` |
 
 ## About this package
 

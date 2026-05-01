@@ -23,3 +23,10 @@ phpunit.xml.*
 
 # Ignore coverage reports
 coverage/
+
+# Never allow OpenAPI spec files to be committed to this repo.
+# Specs live in opportify/documentation — they are read-only inputs.
+openapi-*.yml
+openapi-*.yaml
+*.openapi.yml
+*.openapi.yaml
