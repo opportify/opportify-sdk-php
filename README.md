@@ -120,7 +120,7 @@ $params = [
     "subject"        => "Contact form submission",
     "message"        => "Hello, I am interested in your service.",
     "submissionType" => "contact",  // e.g. "contact", "signup", "checkout"
-    "origin"         => "https://yoursite.com/contact",
+    "origin"         => "yoursite.com",  // hostname only — no protocol, path, or port
 
     // Address (all optional)
     "address1"       => "123 Main St",

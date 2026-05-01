@@ -225,4 +225,73 @@ class FraudProtectionTest extends TestCase
 
         $this->assertTrue($normalized['enable_ai']);
     }
+
+    public function test_normalize_request_missing_email_and_user_ip_throws()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('At least one of email or user_ip is required.');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $method->invokeArgs($fp, [['first_name' => 'Jane']]);
+    }
+
+    public function test_normalize_request_email_only_is_valid()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($fp, [['email' => 'user@example.com']]);
+
+        $this->assertEquals('user@example.com', $normalized['email']);
+        $this->assertArrayNotHasKey('user_ip', $normalized);
+    }
+
+    public function test_normalize_request_user_ip_only_is_valid()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($fp, [['user_ip' => '1.2.3.4']]);
+
+        $this->assertEquals('1.2.3.4', $normalized['user_ip']);
+        $this->assertArrayNotHasKey('email', $normalized);
+    }
+
+    public function test_normalize_request_opportify_token_without_origin_throws()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('origin is required when opportify_token is provided.');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $method->invokeArgs($fp, [['email' => 'user@example.com', 'opportify_token' => 'tok_abc']]);
+    }
+
+    public function test_normalize_request_opportify_token_with_origin_is_valid()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($fp, [[
+            'email' => 'user@example.com',
+            'opportify_token' => 'tok_abc',
+            'origin' => 'yoursite.com',
+        ]]);
+
+        $this->assertEquals('tok_abc', $normalized['opportify_token']);
+        $this->assertEquals('yoursite.com', $normalized['origin']);
+    }
 }

@@ -237,6 +237,14 @@ class FraudProtection
         // enable_ai: default true
         $normalized['enable_ai'] = $this->resolveBoolean($params, ['enable_ai', 'enableAi'], true);
 
+        if (!isset($normalized['email']) && !isset($normalized['user_ip'])) {
+            throw new \InvalidArgumentException('At least one of email or user_ip is required.');
+        }
+
+        if (isset($normalized['opportify_token']) && !isset($normalized['origin'])) {
+            throw new \InvalidArgumentException('origin is required when opportify_token is provided.');
+        }
+
         return $normalized;
     }
 
