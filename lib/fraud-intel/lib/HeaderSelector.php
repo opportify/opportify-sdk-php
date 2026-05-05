@@ -19,7 +19,7 @@ class HeaderSelector
             $headers['Accept'] = $accept;
         }
 
-        if (!$isMultipart) {
+        if (! $isMultipart) {
             if ($contentType === '') {
                 $contentType = 'application/json';
             }

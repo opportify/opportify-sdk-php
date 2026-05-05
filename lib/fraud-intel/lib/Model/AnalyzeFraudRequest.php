@@ -47,7 +47,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         'form_data' => 'array<string,mixed>',
         'opportify_token' => 'string',
         'opportify_form_uuid' => 'string',
-        'enable_ai' => 'bool',
     ];
 
     /**
@@ -83,7 +82,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         'form_data' => null,
         'opportify_token' => null,
         'opportify_form_uuid' => null,
-        'enable_ai' => null,
     ];
 
     /**
@@ -115,7 +113,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         'form_data' => false,
         'opportify_token' => false,
         'opportify_form_uuid' => false,
-        'enable_ai' => false,
     ];
 
     /**
@@ -219,7 +216,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         'form_data' => 'formData',
         'opportify_token' => 'opportifyToken',
         'opportify_form_uuid' => 'opportifyFormUUID',
-        'enable_ai' => 'enableAI',
     ];
 
     /**
@@ -251,7 +247,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         'form_data' => 'setFormData',
         'opportify_token' => 'setOpportifyToken',
         'opportify_form_uuid' => 'setOpportifyFormUuid',
-        'enable_ai' => 'setEnableAi',
     ];
 
     /**
@@ -283,7 +278,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         'form_data' => 'getFormData',
         'opportify_token' => 'getOpportifyToken',
         'opportify_form_uuid' => 'getOpportifyFormUuid',
-        'enable_ai' => 'getEnableAi',
     ];
 
     /**
@@ -365,7 +359,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
         $this->setIfExists('form_data', $data ?? [], null);
         $this->setIfExists('opportify_token', $data ?? [], null);
         $this->setIfExists('opportify_form_uuid', $data ?? [], null);
-        $this->setIfExists('enable_ai', $data ?? [], null);
     }
 
     /**
@@ -393,7 +386,7 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['email']) && (mb_strlen($this->container['email']) > 320)) {
+        if (! is_null($this->container['email']) && (mb_strlen($this->container['email']) > 320)) {
             $invalidProperties[] = "invalid value for 'email', the character length must be smaller than or equal to 320.";
         }
 
@@ -1009,32 +1002,6 @@ class AnalyzeFraudRequest implements \JsonSerializable, ArrayAccess, ModelInterf
             throw new \InvalidArgumentException('non-nullable opportify_form_uuid cannot be null');
         }
         $this->container['opportify_form_uuid'] = $opportify_form_uuid;
-
-        return $this;
-    }
-
-    /**
-     * Gets enable_ai
-     *
-     * @return bool|null
-     */
-    public function getEnableAi()
-    {
-        return $this->container['enable_ai'];
-    }
-
-    /**
-     * Sets enable_ai
-     *
-     * @param  bool|null  $enable_ai  Enable AI-driven composite risk scoring. When `true`, the response includes `score`, `level`, and `factors`. Defaults to `true`.
-     * @return self
-     */
-    public function setEnableAi($enable_ai)
-    {
-        if (is_null($enable_ai)) {
-            throw new \InvalidArgumentException('non-nullable enable_ai cannot be null');
-        }
-        $this->container['enable_ai'] = $enable_ai;
 
         return $this;
     }

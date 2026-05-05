@@ -26,6 +26,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     protected static $openAPITypes = [
         'consistent' => 'bool',
         'signals' => '\OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesGeoSignals',
+        'risk_report' => '\OpenAPI\FraudIntel\Client\Model\RiskReport',
     ];
 
     /**
@@ -40,6 +41,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     protected static $openAPIFormats = [
         'consistent' => null,
         'signals' => null,
+        'risk_report' => null,
     ];
 
     /**
@@ -50,6 +52,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     protected static array $openAPINullables = [
         'consistent' => false,
         'signals' => false,
+        'risk_report' => false,
     ];
 
     /**
@@ -132,6 +135,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     protected static $attributeMap = [
         'consistent' => 'consistent',
         'signals' => 'signals',
+        'risk_report' => 'riskReport',
     ];
 
     /**
@@ -142,6 +146,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     protected static $setters = [
         'consistent' => 'setConsistent',
         'signals' => 'setSignals',
+        'risk_report' => 'setRiskReport',
     ];
 
     /**
@@ -152,6 +157,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     protected static $getters = [
         'consistent' => 'getConsistent',
         'signals' => 'getSignals',
+        'risk_report' => 'getRiskReport',
     ];
 
     /**
@@ -212,6 +218,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     {
         $this->setIfExists('consistent', $data ?? [], null);
         $this->setIfExists('signals', $data ?? [], null);
+        $this->setIfExists('risk_report', $data ?? [], null);
     }
 
     /**
@@ -239,6 +246,16 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     {
         $invalidProperties = [];
 
+        if ($this->container['consistent'] === null) {
+            $invalidProperties[] = "'consistent' can't be null";
+        }
+        if ($this->container['signals'] === null) {
+            $invalidProperties[] = "'signals' can't be null";
+        }
+        if ($this->container['risk_report'] === null) {
+            $invalidProperties[] = "'risk_report' can't be null";
+        }
+
         return $invalidProperties;
     }
 
@@ -256,7 +273,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     /**
      * Gets consistent
      *
-     * @return bool|null
+     * @return bool
      */
     public function getConsistent()
     {
@@ -266,7 +283,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     /**
      * Sets consistent
      *
-     * @param  bool|null  $consistent  True when the email domain country and the IP geolocation country are consistent.
+     * @param  bool  $consistent  True when all available geographic signals resolve to the same country code.
      * @return self
      */
     public function setConsistent($consistent)
@@ -282,7 +299,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     /**
      * Gets signals
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesGeoSignals|null
+     * @return \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesGeoSignals
      */
     public function getSignals()
     {
@@ -292,7 +309,7 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
     /**
      * Sets signals
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesGeoSignals|null  $signals  signals
+     * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesGeoSignals  $signals  signals
      * @return self
      */
     public function setSignals($signals)
@@ -301,6 +318,32 @@ class AnalyzeFraud200ResponseSourcesGeo implements \JsonSerializable, ArrayAcces
             throw new \InvalidArgumentException('non-nullable signals cannot be null');
         }
         $this->container['signals'] = $signals;
+
+        return $this;
+    }
+
+    /**
+     * Gets risk_report
+     *
+     * @return \OpenAPI\FraudIntel\Client\Model\RiskReport
+     */
+    public function getRiskReport()
+    {
+        return $this->container['risk_report'];
+    }
+
+    /**
+     * Sets risk_report
+     *
+     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReport  $risk_report  Risk report for geographic consistency. Score is elevated when signals are inconsistent.
+     * @return self
+     */
+    public function setRiskReport($risk_report)
+    {
+        if (is_null($risk_report)) {
+            throw new \InvalidArgumentException('non-nullable risk_report cannot be null');
+        }
+        $this->container['risk_report'] = $risk_report;
 
         return $this;
     }

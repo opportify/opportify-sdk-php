@@ -28,7 +28,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'level' => 'string',
         'factors' => 'string[]',
         'sources' => '\OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSources',
-        'meta' => '\OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseMeta',
     ];
 
     /**
@@ -45,7 +44,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'level' => null,
         'factors' => null,
         'sources' => null,
-        'meta' => null,
     ];
 
     /**
@@ -58,7 +56,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'level' => false,
         'factors' => false,
         'sources' => false,
-        'meta' => false,
     ];
 
     /**
@@ -143,7 +140,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'level' => 'level',
         'factors' => 'factors',
         'sources' => 'sources',
-        'meta' => 'meta',
     ];
 
     /**
@@ -156,7 +152,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'level' => 'setLevel',
         'factors' => 'setFactors',
         'sources' => 'setSources',
-        'meta' => 'setMeta',
     ];
 
     /**
@@ -169,7 +164,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         'level' => 'getLevel',
         'factors' => 'getFactors',
         'sources' => 'getSources',
-        'meta' => 'getMeta',
     ];
 
     /**
@@ -232,7 +226,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
         $this->setIfExists('level', $data ?? [], null);
         $this->setIfExists('factors', $data ?? [], null);
         $this->setIfExists('sources', $data ?? [], null);
-        $this->setIfExists('meta', $data ?? [], null);
     }
 
     /**
@@ -260,11 +253,17 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     {
         $invalidProperties = [];
 
+        if ($this->container['score'] === null) {
+            $invalidProperties[] = "'score' can't be null";
+        }
+        if ($this->container['level'] === null) {
+            $invalidProperties[] = "'level' can't be null";
+        }
+        if ($this->container['factors'] === null) {
+            $invalidProperties[] = "'factors' can't be null";
+        }
         if ($this->container['sources'] === null) {
             $invalidProperties[] = "'sources' can't be null";
-        }
-        if ($this->container['meta'] === null) {
-            $invalidProperties[] = "'meta' can't be null";
         }
 
         return $invalidProperties;
@@ -284,7 +283,7 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets score
      *
-     * @return int|null
+     * @return int
      */
     public function getScore()
     {
@@ -294,7 +293,7 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets score
      *
-     * @param  int|null  $score  Composite fraud risk score normalized to 200–1000. Present when `enableAI` is `true`.
+     * @param  int  $score  Composite fraud risk score normalized to 200–1000. Always present in the response.
      * @return self
      */
     public function setScore($score)
@@ -310,7 +309,7 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets level
      *
-     * @return string|null
+     * @return string
      */
     public function getLevel()
     {
@@ -320,7 +319,7 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets level
      *
-     * @param  string|null  $level  Human-readable risk level derived from `score`. Present when `enableAI` is `true`. Allowed values: lowest, low, medium, high, highest.
+     * @param  string  $level  Human-readable risk level derived from `score`. Always present in the response. Allowed values: lowest, low, medium, high, highest.
      * @return self
      */
     public function setLevel($level)
@@ -336,7 +335,7 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Gets factors
      *
-     * @return string[]|null
+     * @return string[]
      */
     public function getFactors()
     {
@@ -346,7 +345,7 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
     /**
      * Sets factors
      *
-     * @param  string[]|null  $factors  Top weighted risk factor codes contributing to the composite score. Present when `enableAI` is `true`.
+     * @param  string[]  $factors  Top weighted risk factor codes contributing to the composite score. Always present in the response. Each code is prefixed with its source using the format `source:factor-code`. Possible source…
      * @return self
      */
     public function setFactors($factors)
@@ -381,32 +380,6 @@ class AnalyzeFraud200Response implements \JsonSerializable, ArrayAccess, ModelIn
             throw new \InvalidArgumentException('non-nullable sources cannot be null');
         }
         $this->container['sources'] = $sources;
-
-        return $this;
-    }
-
-    /**
-     * Gets meta
-     *
-     * @return \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseMeta
-     */
-    public function getMeta()
-    {
-        return $this->container['meta'];
-    }
-
-    /**
-     * Sets meta
-     *
-     * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseMeta  $meta  meta
-     * @return self
-     */
-    public function setMeta($meta)
-    {
-        if (is_null($meta)) {
-            throw new \InvalidArgumentException('non-nullable meta cannot be null');
-        }
-        $this->container['meta'] = $meta;
 
         return $this;
     }

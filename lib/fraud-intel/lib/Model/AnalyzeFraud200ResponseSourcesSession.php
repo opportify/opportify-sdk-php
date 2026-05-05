@@ -30,6 +30,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         'token_age' => 'float',
         'token_valid' => 'bool',
         'detections' => '\OpenAPI\FraudIntel\Client\Model\FraudAnalyzeSessionDetectionsInner[]',
+        'score' => 'int',
+        'level' => 'string',
+        'factors' => 'string[]',
+        'event_count' => 'int',
+        'risk_report' => '\OpenAPI\FraudIntel\Client\Model\RiskReport',
     ];
 
     /**
@@ -48,6 +53,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         'token_age' => null,
         'token_valid' => null,
         'detections' => null,
+        'score' => null,
+        'level' => null,
+        'factors' => null,
+        'event_count' => null,
+        'risk_report' => null,
     ];
 
     /**
@@ -62,6 +72,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         'token_age' => false,
         'token_valid' => false,
         'detections' => false,
+        'score' => false,
+        'level' => false,
+        'factors' => false,
+        'event_count' => false,
+        'risk_report' => false,
     ];
 
     /**
@@ -148,6 +163,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         'token_age' => 'tokenAge',
         'token_valid' => 'tokenValid',
         'detections' => 'detections',
+        'score' => 'score',
+        'level' => 'level',
+        'factors' => 'factors',
+        'event_count' => 'eventCount',
+        'risk_report' => 'riskReport',
     ];
 
     /**
@@ -162,6 +182,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         'token_age' => 'setTokenAge',
         'token_valid' => 'setTokenValid',
         'detections' => 'setDetections',
+        'score' => 'setScore',
+        'level' => 'setLevel',
+        'factors' => 'setFactors',
+        'event_count' => 'setEventCount',
+        'risk_report' => 'setRiskReport',
     ];
 
     /**
@@ -176,6 +201,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         'token_age' => 'getTokenAge',
         'token_valid' => 'getTokenValid',
         'detections' => 'getDetections',
+        'score' => 'getScore',
+        'level' => 'getLevel',
+        'factors' => 'getFactors',
+        'event_count' => 'getEventCount',
+        'risk_report' => 'getRiskReport',
     ];
 
     /**
@@ -240,6 +270,11 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
         $this->setIfExists('token_age', $data ?? [], null);
         $this->setIfExists('token_valid', $data ?? [], null);
         $this->setIfExists('detections', $data ?? [], null);
+        $this->setIfExists('score', $data ?? [], null);
+        $this->setIfExists('level', $data ?? [], null);
+        $this->setIfExists('factors', $data ?? [], null);
+        $this->setIfExists('event_count', $data ?? [], null);
+        $this->setIfExists('risk_report', $data ?? [], null);
     }
 
     /**
@@ -433,6 +468,136 @@ class AnalyzeFraud200ResponseSourcesSession implements \JsonSerializable, ArrayA
             throw new \InvalidArgumentException('non-nullable detections cannot be null');
         }
         $this->container['detections'] = $detections;
+
+        return $this;
+    }
+
+    /**
+     * Gets score
+     *
+     * @return int|null
+     */
+    public function getScore()
+    {
+        return $this->container['score'];
+    }
+
+    /**
+     * Sets score
+     *
+     * @param  int|null  $score  Composite session risk score normalized to 200–1000. Present when behavioral analysis produced a session risk score.
+     * @return self
+     */
+    public function setScore($score)
+    {
+        if (is_null($score)) {
+            throw new \InvalidArgumentException('non-nullable score cannot be null');
+        }
+        $this->container['score'] = $score;
+
+        return $this;
+    }
+
+    /**
+     * Gets level
+     *
+     * @return string|null
+     */
+    public function getLevel()
+    {
+        return $this->container['level'];
+    }
+
+    /**
+     * Sets level
+     *
+     * @param  string|null  $level  Risk level derived from session behavioral analysis. Allowed values: lowest, low, medium, high, highest.
+     * @return self
+     */
+    public function setLevel($level)
+    {
+        if (is_null($level)) {
+            throw new \InvalidArgumentException('non-nullable level cannot be null');
+        }
+        $this->container['level'] = $level;
+
+        return $this;
+    }
+
+    /**
+     * Gets factors
+     *
+     * @return string[]|null
+     */
+    public function getFactors()
+    {
+        return $this->container['factors'];
+    }
+
+    /**
+     * Sets factors
+     *
+     * @param  string[]|null  $factors  Factor codes contributing to the session risk score. Values follow the `session:factor-code` format.
+     * @return self
+     */
+    public function setFactors($factors)
+    {
+        if (is_null($factors)) {
+            throw new \InvalidArgumentException('non-nullable factors cannot be null');
+        }
+        $this->container['factors'] = $factors;
+
+        return $this;
+    }
+
+    /**
+     * Gets event_count
+     *
+     * @return int|null
+     */
+    public function getEventCount()
+    {
+        return $this->container['event_count'];
+    }
+
+    /**
+     * Sets event_count
+     *
+     * @param  int|null  $event_count  Number of telemetry events recorded for this session.
+     * @return self
+     */
+    public function setEventCount($event_count)
+    {
+        if (is_null($event_count)) {
+            throw new \InvalidArgumentException('non-nullable event_count cannot be null');
+        }
+        $this->container['event_count'] = $event_count;
+
+        return $this;
+    }
+
+    /**
+     * Gets risk_report
+     *
+     * @return \OpenAPI\FraudIntel\Client\Model\RiskReport|null
+     */
+    public function getRiskReport()
+    {
+        return $this->container['risk_report'];
+    }
+
+    /**
+     * Sets risk_report
+     *
+     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReport|null  $risk_report  Risk report from session behavioral analysis.
+     * @return self
+     */
+    public function setRiskReport($risk_report)
+    {
+        if (is_null($risk_report)) {
+            throw new \InvalidArgumentException('non-nullable risk_report cannot be null');
+        }
+        $this->container['risk_report'] = $risk_report;
 
         return $this;
     }

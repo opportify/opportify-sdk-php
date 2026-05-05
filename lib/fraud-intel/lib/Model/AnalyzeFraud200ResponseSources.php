@@ -58,7 +58,7 @@ class AnalyzeFraud200ResponseSources implements \JsonSerializable, ArrayAccess, 
     protected static array $openAPINullables = [
         'email' => false,
         'ip' => false,
-        'content' => false,
+        'content' => true,
         'session' => true,
         'velocity' => true,
         'geo' => true,
@@ -352,7 +352,14 @@ class AnalyzeFraud200ResponseSources implements \JsonSerializable, ArrayAccess, 
     public function setContent($content)
     {
         if (is_null($content)) {
-            throw new \InvalidArgumentException('non-nullable content cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'content');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('content', $nullablesSetToNull);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['content'] = $content;
 

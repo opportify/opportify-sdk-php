@@ -358,7 +358,7 @@ class AnalyzeFraud200ResponseSourcesContent implements \JsonSerializable, ArrayA
     /**
      * Sets risk_report
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReport|null  $risk_report  AI risk report for content signals. Present when `enableAI` is `true`.
+     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReport|null  $risk_report  Risk report for content signals. Present when content fields were supplied.
      * @return self
      */
     public function setRiskReport($risk_report)

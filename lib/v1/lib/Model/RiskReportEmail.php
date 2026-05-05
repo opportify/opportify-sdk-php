@@ -246,11 +246,11 @@ class RiskReportEmail implements \JsonSerializable, ArrayAccess, ModelInterface
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['score']) && ($this->container['score'] > 1000)) {
+        if (! is_null($this->container['score']) && ($this->container['score'] > 1000)) {
             $invalidProperties[] = "invalid value for 'score', must be smaller than or equal to 1000.";
         }
 
-        if (!is_null($this->container['score']) && ($this->container['score'] < 200)) {
+        if (! is_null($this->container['score']) && ($this->container['score'] < 200)) {
             $invalidProperties[] = "invalid value for 'score', must be bigger than or equal to 200.";
         }
 

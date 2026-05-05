@@ -25,11 +25,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
      */
     protected static $openAPITypes = [
         'ip_address' => 'string',
+        'ip_address_number' => 'int',
+        'ip_type' => 'string',
+        'ip_cidr' => 'string',
         'connection_type' => 'string',
+        'host_reverse' => 'string',
         'geo' => '\OpenAPI\FraudIntel\Client\Model\Geo',
-        'blocklisted' => '\OpenAPI\FraudIntel\Client\Model\BlockListed',
-        'trusted_provider' => '\OpenAPI\FraudIntel\Client\Model\TrustedProvider',
         'whois' => '\OpenAPI\FraudIntel\Client\Model\Whois',
+        'trusted_provider' => '\OpenAPI\FraudIntel\Client\Model\TrustedProvider',
+        'blocklisted' => '\OpenAPI\FraudIntel\Client\Model\BlockListed',
         'risk_report' => '\OpenAPI\FraudIntel\Client\Model\RiskReportIp',
     ];
 
@@ -44,11 +48,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
      */
     protected static $openAPIFormats = [
         'ip_address' => null,
+        'ip_address_number' => null,
+        'ip_type' => null,
+        'ip_cidr' => null,
         'connection_type' => null,
+        'host_reverse' => null,
         'geo' => null,
-        'blocklisted' => null,
-        'trusted_provider' => null,
         'whois' => null,
+        'trusted_provider' => null,
+        'blocklisted' => null,
         'risk_report' => null,
     ];
 
@@ -59,11 +67,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
      */
     protected static array $openAPINullables = [
         'ip_address' => false,
+        'ip_address_number' => false,
+        'ip_type' => false,
+        'ip_cidr' => false,
         'connection_type' => false,
+        'host_reverse' => false,
         'geo' => false,
-        'blocklisted' => false,
-        'trusted_provider' => false,
         'whois' => false,
+        'trusted_provider' => false,
+        'blocklisted' => false,
         'risk_report' => false,
     ];
 
@@ -146,11 +158,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
      */
     protected static $attributeMap = [
         'ip_address' => 'ipAddress',
+        'ip_address_number' => 'ipAddressNumber',
+        'ip_type' => 'ipType',
+        'ip_cidr' => 'ipCidr',
         'connection_type' => 'connectionType',
+        'host_reverse' => 'hostReverse',
         'geo' => 'geo',
-        'blocklisted' => 'blocklisted',
-        'trusted_provider' => 'trustedProvider',
         'whois' => 'whois',
+        'trusted_provider' => 'trustedProvider',
+        'blocklisted' => 'blocklisted',
         'risk_report' => 'riskReport',
     ];
 
@@ -161,11 +177,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
      */
     protected static $setters = [
         'ip_address' => 'setIpAddress',
+        'ip_address_number' => 'setIpAddressNumber',
+        'ip_type' => 'setIpType',
+        'ip_cidr' => 'setIpCidr',
         'connection_type' => 'setConnectionType',
+        'host_reverse' => 'setHostReverse',
         'geo' => 'setGeo',
-        'blocklisted' => 'setBlocklisted',
-        'trusted_provider' => 'setTrustedProvider',
         'whois' => 'setWhois',
+        'trusted_provider' => 'setTrustedProvider',
+        'blocklisted' => 'setBlocklisted',
         'risk_report' => 'setRiskReport',
     ];
 
@@ -176,11 +196,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
      */
     protected static $getters = [
         'ip_address' => 'getIpAddress',
+        'ip_address_number' => 'getIpAddressNumber',
+        'ip_type' => 'getIpType',
+        'ip_cidr' => 'getIpCidr',
         'connection_type' => 'getConnectionType',
+        'host_reverse' => 'getHostReverse',
         'geo' => 'getGeo',
-        'blocklisted' => 'getBlocklisted',
-        'trusted_provider' => 'getTrustedProvider',
         'whois' => 'getWhois',
+        'trusted_provider' => 'getTrustedProvider',
+        'blocklisted' => 'getBlocklisted',
         'risk_report' => 'getRiskReport',
     ];
 
@@ -241,11 +265,15 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     public function __construct(?array $data = null)
     {
         $this->setIfExists('ip_address', $data ?? [], null);
+        $this->setIfExists('ip_address_number', $data ?? [], null);
+        $this->setIfExists('ip_type', $data ?? [], null);
+        $this->setIfExists('ip_cidr', $data ?? [], null);
         $this->setIfExists('connection_type', $data ?? [], null);
+        $this->setIfExists('host_reverse', $data ?? [], null);
         $this->setIfExists('geo', $data ?? [], null);
-        $this->setIfExists('blocklisted', $data ?? [], null);
-        $this->setIfExists('trusted_provider', $data ?? [], null);
         $this->setIfExists('whois', $data ?? [], null);
+        $this->setIfExists('trusted_provider', $data ?? [], null);
+        $this->setIfExists('blocklisted', $data ?? [], null);
         $this->setIfExists('risk_report', $data ?? [], null);
     }
 
@@ -274,6 +302,40 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['ip_address'] === null) {
+            $invalidProperties[] = "'ip_address' can't be null";
+        }
+        if ($this->container['ip_address_number'] === null) {
+            $invalidProperties[] = "'ip_address_number' can't be null";
+        }
+        if ($this->container['ip_type'] === null) {
+            $invalidProperties[] = "'ip_type' can't be null";
+        }
+        if ($this->container['ip_cidr'] === null) {
+            $invalidProperties[] = "'ip_cidr' can't be null";
+        }
+        if ($this->container['connection_type'] === null) {
+            $invalidProperties[] = "'connection_type' can't be null";
+        }
+        if ($this->container['host_reverse'] === null) {
+            $invalidProperties[] = "'host_reverse' can't be null";
+        }
+        if ($this->container['geo'] === null) {
+            $invalidProperties[] = "'geo' can't be null";
+        }
+        if ($this->container['whois'] === null) {
+            $invalidProperties[] = "'whois' can't be null";
+        }
+        if ($this->container['trusted_provider'] === null) {
+            $invalidProperties[] = "'trusted_provider' can't be null";
+        }
+        if ($this->container['blocklisted'] === null) {
+            $invalidProperties[] = "'blocklisted' can't be null";
+        }
+        if ($this->container['risk_report'] === null) {
+            $invalidProperties[] = "'risk_report' can't be null";
+        }
+
         return $invalidProperties;
     }
 
@@ -291,7 +353,7 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     /**
      * Gets ip_address
      *
-     * @return string|null
+     * @return string
      */
     public function getIpAddress()
     {
@@ -301,7 +363,7 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     /**
      * Sets ip_address
      *
-     * @param  string|null  $ip_address  The analyzed IP address.
+     * @param  string  $ip_address  The analyzed IP address.
      * @return self
      */
     public function setIpAddress($ip_address)
@@ -315,9 +377,87 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     }
 
     /**
+     * Gets ip_address_number
+     *
+     * @return int
+     */
+    public function getIpAddressNumber()
+    {
+        return $this->container['ip_address_number'];
+    }
+
+    /**
+     * Sets ip_address_number
+     *
+     * @param  int  $ip_address_number  Numeric representation of the IP address.
+     * @return self
+     */
+    public function setIpAddressNumber($ip_address_number)
+    {
+        if (is_null($ip_address_number)) {
+            throw new \InvalidArgumentException('non-nullable ip_address_number cannot be null');
+        }
+        $this->container['ip_address_number'] = $ip_address_number;
+
+        return $this;
+    }
+
+    /**
+     * Gets ip_type
+     *
+     * @return string
+     */
+    public function getIpType()
+    {
+        return $this->container['ip_type'];
+    }
+
+    /**
+     * Sets ip_type
+     *
+     * @param  string  $ip_type  Type of the IP address (IPv4 or IPv6).
+     * @return self
+     */
+    public function setIpType($ip_type)
+    {
+        if (is_null($ip_type)) {
+            throw new \InvalidArgumentException('non-nullable ip_type cannot be null');
+        }
+        $this->container['ip_type'] = $ip_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets ip_cidr
+     *
+     * @return string
+     */
+    public function getIpCidr()
+    {
+        return $this->container['ip_cidr'];
+    }
+
+    /**
+     * Sets ip_cidr
+     *
+     * @param  string  $ip_cidr  CIDR notation of the IP address.
+     * @return self
+     */
+    public function setIpCidr($ip_cidr)
+    {
+        if (is_null($ip_cidr)) {
+            throw new \InvalidArgumentException('non-nullable ip_cidr cannot be null');
+        }
+        $this->container['ip_cidr'] = $ip_cidr;
+
+        return $this;
+    }
+
+    /**
      * Gets connection_type
      *
-     * @return string|null
+     * @return string
      */
     public function getConnectionType()
     {
@@ -327,7 +467,7 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     /**
      * Sets connection_type
      *
-     * @param  string|null  $connection_type  Detected connection type.
+     * @param  string  $connection_type  The type of connection associated with the IP address. Allowed values: `wired`, `mobile`, `enterprise`, `satellite`, `vpn`, `cloud-provider`, `open-proxy`, `tor`.
      * @return self
      */
     public function setConnectionType($connection_type)
@@ -341,9 +481,35 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     }
 
     /**
+     * Gets host_reverse
+     *
+     * @return string
+     */
+    public function getHostReverse()
+    {
+        return $this->container['host_reverse'];
+    }
+
+    /**
+     * Sets host_reverse
+     *
+     * @param  string  $host_reverse  Real time reverse DNS lookup result for the IP address.
+     * @return self
+     */
+    public function setHostReverse($host_reverse)
+    {
+        if (is_null($host_reverse)) {
+            throw new \InvalidArgumentException('non-nullable host_reverse cannot be null');
+        }
+        $this->container['host_reverse'] = $host_reverse;
+
+        return $this;
+    }
+
+    /**
      * Gets geo
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\Geo|null
+     * @return \OpenAPI\FraudIntel\Client\Model\Geo
      */
     public function getGeo()
     {
@@ -353,7 +519,7 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     /**
      * Sets geo
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\Geo|null  $geo  geo
+     * @param  \OpenAPI\FraudIntel\Client\Model\Geo  $geo  geo
      * @return self
      */
     public function setGeo($geo)
@@ -367,61 +533,9 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     }
 
     /**
-     * Gets blocklisted
-     *
-     * @return \OpenAPI\FraudIntel\Client\Model\BlockListed|null
-     */
-    public function getBlocklisted()
-    {
-        return $this->container['blocklisted'];
-    }
-
-    /**
-     * Sets blocklisted
-     *
-     * @param  \OpenAPI\FraudIntel\Client\Model\BlockListed|null  $blocklisted  blocklisted
-     * @return self
-     */
-    public function setBlocklisted($blocklisted)
-    {
-        if (is_null($blocklisted)) {
-            throw new \InvalidArgumentException('non-nullable blocklisted cannot be null');
-        }
-        $this->container['blocklisted'] = $blocklisted;
-
-        return $this;
-    }
-
-    /**
-     * Gets trusted_provider
-     *
-     * @return \OpenAPI\FraudIntel\Client\Model\TrustedProvider|null
-     */
-    public function getTrustedProvider()
-    {
-        return $this->container['trusted_provider'];
-    }
-
-    /**
-     * Sets trusted_provider
-     *
-     * @param  \OpenAPI\FraudIntel\Client\Model\TrustedProvider|null  $trusted_provider  trusted_provider
-     * @return self
-     */
-    public function setTrustedProvider($trusted_provider)
-    {
-        if (is_null($trusted_provider)) {
-            throw new \InvalidArgumentException('non-nullable trusted_provider cannot be null');
-        }
-        $this->container['trusted_provider'] = $trusted_provider;
-
-        return $this;
-    }
-
-    /**
      * Gets whois
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\Whois|null
+     * @return \OpenAPI\FraudIntel\Client\Model\Whois
      */
     public function getWhois()
     {
@@ -431,7 +545,7 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     /**
      * Sets whois
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\Whois|null  $whois  whois
+     * @param  \OpenAPI\FraudIntel\Client\Model\Whois  $whois  whois
      * @return self
      */
     public function setWhois($whois)
@@ -445,9 +559,61 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     }
 
     /**
+     * Gets trusted_provider
+     *
+     * @return \OpenAPI\FraudIntel\Client\Model\TrustedProvider
+     */
+    public function getTrustedProvider()
+    {
+        return $this->container['trusted_provider'];
+    }
+
+    /**
+     * Sets trusted_provider
+     *
+     * @param  \OpenAPI\FraudIntel\Client\Model\TrustedProvider  $trusted_provider  trusted_provider
+     * @return self
+     */
+    public function setTrustedProvider($trusted_provider)
+    {
+        if (is_null($trusted_provider)) {
+            throw new \InvalidArgumentException('non-nullable trusted_provider cannot be null');
+        }
+        $this->container['trusted_provider'] = $trusted_provider;
+
+        return $this;
+    }
+
+    /**
+     * Gets blocklisted
+     *
+     * @return \OpenAPI\FraudIntel\Client\Model\BlockListed
+     */
+    public function getBlocklisted()
+    {
+        return $this->container['blocklisted'];
+    }
+
+    /**
+     * Sets blocklisted
+     *
+     * @param  \OpenAPI\FraudIntel\Client\Model\BlockListed  $blocklisted  blocklisted
+     * @return self
+     */
+    public function setBlocklisted($blocklisted)
+    {
+        if (is_null($blocklisted)) {
+            throw new \InvalidArgumentException('non-nullable blocklisted cannot be null');
+        }
+        $this->container['blocklisted'] = $blocklisted;
+
+        return $this;
+    }
+
+    /**
      * Gets risk_report
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\RiskReportIp|null
+     * @return \OpenAPI\FraudIntel\Client\Model\RiskReportIp
      */
     public function getRiskReport()
     {
@@ -457,7 +623,7 @@ class AnalyzeFraud200ResponseSourcesIp implements \JsonSerializable, ArrayAccess
     /**
      * Sets risk_report
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReportIp|null  $risk_report  AI risk report. Present when `enableAI` is `true`.
+     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReportIp  $risk_report  Risk report from IP Insights analysis.
      * @return self
      */
     public function setRiskReport($risk_report)
