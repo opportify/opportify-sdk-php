@@ -284,7 +284,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Gets email_submissions
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow
+     * @return \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow|null
      */
     public function getEmailSubmissions()
     {
@@ -294,7 +294,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Sets email_submissions
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow  $email_submissions  email_submissions
+     * @param  \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow|null  $email_submissions  email_submissions
      * @return self
      */
     public function setEmailSubmissions($email_submissions)
@@ -317,7 +317,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Gets ip_submissions
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow
+     * @return \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow|null
      */
     public function getIpSubmissions()
     {
@@ -327,7 +327,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Sets ip_submissions
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow  $ip_submissions  ip_submissions
+     * @param  \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow|null  $ip_submissions  ip_submissions
      * @return self
      */
     public function setIpSubmissions($ip_submissions)
@@ -350,7 +350,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Gets phone_submissions
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow
+     * @return \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow|null
      */
     public function getPhoneSubmissions()
     {
@@ -360,7 +360,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Sets phone_submissions
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow  $phone_submissions  phone_submissions
+     * @param  \OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow|null  $phone_submissions  phone_submissions
      * @return self
      */
     public function setPhoneSubmissions($phone_submissions)
