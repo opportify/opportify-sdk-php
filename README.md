@@ -135,20 +135,16 @@ $params = [
 
     // Raw form fields as key-value pairs (optional)
     "formData"       => ["custom_field" => "value"],
-
-    "enableAi"       => true, // default: true
 ];
 
 $result = $fraudProtection->analyze($params);
-// $result->score    — integer 0–1000 (higher = riskier)
-// $result->level    — "low" | "medium" | "high"
+// $result->score    — integer 200–1000 (higher = riskier)
+// $result->level    — "lowest" | "low" | "medium" | "high" | "highest"
 // $result->factors  — string[] of detected risk signals
 // $result->sources  — per-signal breakdown (email, IP, geo, session, velocity)
-// $result->meta     — request metadata (requestId, etc.)
 ```
 
 All parameter names accept both `snake_case` and `camelCase` (e.g. `user_ip` or `userIp`).
-The `enableAi` flag defaults to `true`; pass `false` to skip AI-powered enrichment.
 
 
 ## Batch Analysis (Email & IP)

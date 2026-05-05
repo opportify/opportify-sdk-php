@@ -39,10 +39,21 @@ class FraudProtectionApiTest extends TestCase
             'level' => 'high',
             'factors' => ['suspicious_email', 'vpn_detected'],
             'sources' => [
-                'email' => ['format' => (object) ['isFormatValid' => true]],
+                'email' => [
+                    'emailAddress' => 'test@example.com',
+                    'emailProvider' => 'google',
+                    'emailType' => 'free',
+                    'isDeliverable' => 'yes',
+                    'isCatchAll' => false,
+                    'isMailboxFull' => false,
+                    'isReachable' => true,
+                    'isFormatValid' => true,
+                    'emailCorrection' => '',
+                    'addressSignals' => ['localPart' => 'test', 'tags' => []],
+                    'emailDNS' => ['hasMx' => true, 'hasDmarc' => false, 'hasSpf' => false],
+                ],
                 'ip' => ['isVpn' => true, 'isTor' => false],
             ],
-            'meta' => ['requestId' => 'req_abc123'],
         ]);
 
         $mockResponse = new Response(200, ['Content-Type' => 'application/json'], $mockResponseData);
@@ -55,12 +66,10 @@ class FraudProtectionApiTest extends TestCase
         $config = $this->createMockConfig();
         $apiInstance = new FraudProtectionApi($mockClient, $config);
 
-        $request = new AnalyzeFraudRequest(['email' => 'test@example.com', 'enable_ai' => true]);
+        $request = new AnalyzeFraudRequest(['email' => 'test@example.com']);
         $response = $apiInstance->analyzeFraud($request);
 
         $decoded = json_decode(json_encode($response));
-
-        $this->assertIsObject($decoded);
         $this->assertEquals(72, $decoded->score);
         $this->assertEquals('high', $decoded->level);
         $this->assertIsArray($decoded->factors);
@@ -110,7 +119,7 @@ class FraudProtectionApiTest extends TestCase
         $config = $this->createMockConfig();
         $apiInstance = new FraudProtectionApi($mockClient, $config);
 
-        $request = new AnalyzeFraudRequest(['email' => 'test@example.com', 'enable_ai' => true]);
+        $request = new AnalyzeFraudRequest(['email' => 'test@example.com']);
         $apiInstance->analyzeFraud($request);
     }
 
@@ -133,7 +142,7 @@ class FraudProtectionApiTest extends TestCase
         $config = $this->createMockConfig();
         $apiInstance = new FraudProtectionApi($mockClient, $config);
 
-        $request = new AnalyzeFraudRequest(['email' => 'test@example.com', 'enable_ai' => true]);
+        $request = new AnalyzeFraudRequest(['email' => 'test@example.com']);
         $apiInstance->analyzeFraud($request);
     }
 }

@@ -246,7 +246,7 @@ class ExportRequest implements \JsonSerializable, ArrayAccess, ModelInterface
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['columns']) && (count($this->container['columns']) > 100)) {
+        if (! is_null($this->container['columns']) && (count($this->container['columns']) > 100)) {
             $invalidProperties[] = "invalid value for 'columns', number of items must be less than or equal to 100.";
         }
 

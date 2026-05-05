@@ -104,7 +104,6 @@ class FraudProtection
      *                         - form_data / formData (array)
      *                         - opportify_token / opportifyToken (string)
      *                         - opportify_form_uuid / opportifyFormUUID (string)
-     *                         - enable_ai / enableAi (bool, default: true)
      *
      * @throws \Exception
      */
@@ -234,9 +233,6 @@ class FraudProtection
             }
         }
 
-        // enable_ai: default true
-        $normalized['enable_ai'] = $this->resolveBoolean($params, ['enable_ai', 'enableAi'], true);
-
         if (!isset($normalized['email']) && !isset($normalized['user_ip'])) {
             throw new \InvalidArgumentException('At least one of email or user_ip is required.');
         }
@@ -246,34 +242,5 @@ class FraudProtection
         }
 
         return $normalized;
-    }
-
-    private function resolveBoolean(array $params, array $keys, ?bool $default = null): ?bool
-    {
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $params)) {
-                return $this->toBoolean($params[$key], $key);
-            }
-        }
-
-        return $default;
-    }
-
-    private function toBoolean(mixed $value, string $parameterName): bool
-    {
-        if (is_bool($value)) {
-            return $value;
-        }
-
-        if ($value === 1 || $value === 0 || $value === '1' || $value === '0') {
-            return (bool) $value;
-        }
-
-        $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        if ($filtered === null) {
-            throw new \InvalidArgumentException(sprintf('Invalid boolean value provided for %s', $parameterName));
-        }
-
-        return $filtered;
     }
 }

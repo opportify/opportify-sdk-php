@@ -55,12 +55,12 @@ class ObjectSerializer
                 foreach ($data::openAPITypes() as $property => $openAPIType) {
                     $getter = $data::getters()[$property];
                     $value = $data->$getter();
-                    if ($value !== null && !in_array($openAPIType, ['\DateTime', '\SplFileObject', 'array', 'bool', 'boolean', 'byte', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
+                    if ($value !== null && ! in_array($openAPIType, ['\DateTime', '\SplFileObject', 'array', 'bool', 'boolean', 'byte', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
                         $callable = [$openAPIType, 'getAllowableEnumValues'];
                         if (is_callable($callable)) {
                             /** array $callable */
                             $allowedEnumTypes = $callable();
-                            if (!in_array($value, $allowedEnumTypes, true)) {
+                            if (! in_array($value, $allowedEnumTypes, true)) {
                                 $imploded = implode("', '", $allowedEnumTypes);
                                 throw new \InvalidArgumentException("Invalid value for enum '$openAPIType', must be one of: '$imploded'");
                             }
@@ -106,7 +106,7 @@ class ObjectSerializer
      */
     public static function sanitizeTimestamp($timestamp)
     {
-        if (!is_string($timestamp)) {
+        if (! is_string($timestamp)) {
             return $timestamp;
         }
 
@@ -134,7 +134,7 @@ class ObjectSerializer
     private static function isEmptyValue($value, string $openApiType): bool
     {
         // If empty() returns false, it is not empty regardless of its type.
-        if (!empty($value)) {
+        if (! empty($value)) {
             return false;
         }
 
@@ -158,7 +158,7 @@ class ObjectSerializer
                 // For boolean values, '' is considered empty
             case 'bool':
             case 'boolean':
-                return !in_array($value, [false, 0], true);
+                return ! in_array($value, [false, 0], true);
 
                 // For string values, '' is considered empty.
             case 'string':
@@ -213,7 +213,7 @@ class ObjectSerializer
         // since \GuzzleHttp\Psr7\Query::build fails with nested arrays
         // need to flatten array first
         $flattenArray = function ($arr, $name, &$result = []) use (&$flattenArray, $style, $explode) {
-            if (!is_array($arr)) {
+            if (! is_array($arr)) {
                 return $arr;
             }
 
@@ -223,7 +223,7 @@ class ObjectSerializer
                 if (is_array($v)) {
                     $flattenArray($v, $prop, $result);
                 } else {
-                    if ($style !== 'deepObject' && !$explode) {
+                    if ($style !== 'deepObject' && ! $explode) {
                         // push key itself
                         $result[] = $prop;
                     }
@@ -361,7 +361,7 @@ class ObjectSerializer
         if (strcasecmp(substr($class, -2), '[]') === 0) {
             $data = is_string($data) ? json_decode($data) : $data;
 
-            if (!is_array($data)) {
+            if (! is_array($data)) {
                 throw new \InvalidArgumentException("Invalid array '$class'");
             }
 
@@ -407,7 +407,7 @@ class ObjectSerializer
             // what is meant. The invalid empty string is probably to
             // be interpreted as a missing field/value. Let's handle
             // this graceful.
-            if (!empty($data)) {
+            if (! empty($data)) {
                 try {
                     return new \DateTime($data);
                 } catch (\Exception $exception) {
@@ -454,7 +454,7 @@ class ObjectSerializer
         }
 
         if (method_exists($class, 'getAllowableEnumValues')) {
-            if (!in_array($data, $class::getAllowableEnumValues(), true)) {
+            if (! in_array($data, $class::getAllowableEnumValues(), true)) {
                 $imploded = implode("', '", $class::getAllowableEnumValues());
                 throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
             }
@@ -469,7 +469,7 @@ class ObjectSerializer
 
             // If a discriminator is defined and points to a valid subclass, use it.
             $discriminator = $class::DISCRIMINATOR;
-            if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
+            if (! empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
                 $subclass = '\OpenAPI\Client\Model\\'.$data->{$discriminator};
                 if (is_subclass_of($subclass, $class)) {
                     $class = $subclass;
@@ -481,11 +481,11 @@ class ObjectSerializer
             foreach ($instance::openAPITypes() as $property => $type) {
                 $propertySetter = $instance::setters()[$property];
 
-                if (!isset($propertySetter)) {
+                if (! isset($propertySetter)) {
                     continue;
                 }
 
-                if (!isset($data->{$instance::attributeMap()[$property]})) {
+                if (! isset($data->{$instance::attributeMap()[$property]})) {
                     if ($instance::isNullable($property)) {
                         $instance->$propertySetter(null);
                     }
@@ -520,7 +520,7 @@ class ObjectSerializer
      */
     public static function buildQuery(array $params, $encoding = PHP_QUERY_RFC3986): string
     {
-        if (!$params) {
+        if (! $params) {
             return '';
         }
 
@@ -547,7 +547,7 @@ class ObjectSerializer
         $qs = '';
         foreach ($params as $k => $v) {
             $k = $encoder((string) $k);
-            if (!is_array($v)) {
+            if (! is_array($v)) {
                 $qs .= $k;
                 $v = is_bool($v) ? $castBool($v) : $v;
                 if ($v !== null) {

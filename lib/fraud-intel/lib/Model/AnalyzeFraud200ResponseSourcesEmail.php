@@ -24,11 +24,20 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      * @var string[]
      */
     protected static $openAPITypes = [
-        'format' => '\OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesEmailFormat',
+        'email_address' => 'string',
+        'email_provider' => 'string',
+        'email_type' => 'string',
+        'is_deliverable' => 'string',
+        'is_catch_all' => 'bool',
+        'is_mailbox_full' => 'bool',
+        'is_reachable' => 'bool',
+        'is_format_valid' => 'bool',
+        'email_correction' => 'string',
+        'email_auto_corrected_from' => 'string',
         'address_signals' => '\OpenAPI\FraudIntel\Client\Model\AddressSignals',
-        'dns' => '\OpenAPI\FraudIntel\Client\Model\EmailDNS',
-        'domain' => '\OpenAPI\FraudIntel\Client\Model\EmailDomain',
+        'email_dns' => '\OpenAPI\FraudIntel\Client\Model\EmailDNS',
         'risk_report' => '\OpenAPI\FraudIntel\Client\Model\RiskReportEmail',
+        'domain' => '\OpenAPI\FraudIntel\Client\Model\EmailDomain',
     ];
 
     /**
@@ -41,11 +50,20 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'format' => null,
+        'email_address' => null,
+        'email_provider' => null,
+        'email_type' => null,
+        'is_deliverable' => null,
+        'is_catch_all' => null,
+        'is_mailbox_full' => null,
+        'is_reachable' => null,
+        'is_format_valid' => null,
+        'email_correction' => null,
+        'email_auto_corrected_from' => null,
         'address_signals' => null,
-        'dns' => null,
-        'domain' => null,
+        'email_dns' => null,
         'risk_report' => null,
+        'domain' => null,
     ];
 
     /**
@@ -54,11 +72,19 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      * @var bool[]
      */
     protected static array $openAPINullables = [
-        'format' => false,
-        'address_signals' => false,
-        'dns' => false,
-        'domain' => false,
+        'email_address' => false,
+        'email_provider' => false,
+        'email_type' => false,
+        'is_deliverable' => false,
+        'is_catch_all' => false,
+        'is_mailbox_full' => false,
+        'is_reachable' => false,
+        'is_format_valid' => false,
+        'email_correction' => false,
+        'email_auto_corrected_from' => true,
+        'email_dns' => false,
         'risk_report' => false,
+        'domain' => false,
     ];
 
     /**
@@ -139,11 +165,20 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      * @var string[]
      */
     protected static $attributeMap = [
-        'format' => 'format',
+        'email_address' => 'emailAddress',
+        'email_provider' => 'emailProvider',
+        'email_type' => 'emailType',
+        'is_deliverable' => 'isDeliverable',
+        'is_catch_all' => 'isCatchAll',
+        'is_mailbox_full' => 'isMailboxFull',
+        'is_reachable' => 'isReachable',
+        'is_format_valid' => 'isFormatValid',
+        'email_correction' => 'emailCorrection',
+        'email_auto_corrected_from' => 'emailAutoCorrectedFrom',
         'address_signals' => 'addressSignals',
-        'dns' => 'dns',
-        'domain' => 'domain',
+        'email_dns' => 'emailDNS',
         'risk_report' => 'riskReport',
+        'domain' => 'domain',
     ];
 
     /**
@@ -152,11 +187,20 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      * @var string[]
      */
     protected static $setters = [
-        'format' => 'setFormat',
+        'email_address' => 'setEmailAddress',
+        'email_provider' => 'setEmailProvider',
+        'email_type' => 'setEmailType',
+        'is_deliverable' => 'setIsDeliverable',
+        'is_catch_all' => 'setIsCatchAll',
+        'is_mailbox_full' => 'setIsMailboxFull',
+        'is_reachable' => 'setIsReachable',
+        'is_format_valid' => 'setIsFormatValid',
+        'email_correction' => 'setEmailCorrection',
+        'email_auto_corrected_from' => 'setEmailAutoCorrectedFrom',
         'address_signals' => 'setAddressSignals',
-        'dns' => 'setDns',
-        'domain' => 'setDomain',
+        'email_dns' => 'setEmailDns',
         'risk_report' => 'setRiskReport',
+        'domain' => 'setDomain',
     ];
 
     /**
@@ -165,11 +209,20 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      * @var string[]
      */
     protected static $getters = [
-        'format' => 'getFormat',
+        'email_address' => 'getEmailAddress',
+        'email_provider' => 'getEmailProvider',
+        'email_type' => 'getEmailType',
+        'is_deliverable' => 'getIsDeliverable',
+        'is_catch_all' => 'getIsCatchAll',
+        'is_mailbox_full' => 'getIsMailboxFull',
+        'is_reachable' => 'getIsReachable',
+        'is_format_valid' => 'getIsFormatValid',
+        'email_correction' => 'getEmailCorrection',
+        'email_auto_corrected_from' => 'getEmailAutoCorrectedFrom',
         'address_signals' => 'getAddressSignals',
-        'dns' => 'getDns',
-        'domain' => 'getDomain',
+        'email_dns' => 'getEmailDns',
         'risk_report' => 'getRiskReport',
+        'domain' => 'getDomain',
     ];
 
     /**
@@ -228,11 +281,20 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('format', $data ?? [], null);
+        $this->setIfExists('email_address', $data ?? [], null);
+        $this->setIfExists('email_provider', $data ?? [], null);
+        $this->setIfExists('email_type', $data ?? [], null);
+        $this->setIfExists('is_deliverable', $data ?? [], null);
+        $this->setIfExists('is_catch_all', $data ?? [], null);
+        $this->setIfExists('is_mailbox_full', $data ?? [], null);
+        $this->setIfExists('is_reachable', $data ?? [], null);
+        $this->setIfExists('is_format_valid', $data ?? [], null);
+        $this->setIfExists('email_correction', $data ?? [], null);
+        $this->setIfExists('email_auto_corrected_from', $data ?? [], null);
         $this->setIfExists('address_signals', $data ?? [], null);
-        $this->setIfExists('dns', $data ?? [], null);
-        $this->setIfExists('domain', $data ?? [], null);
+        $this->setIfExists('email_dns', $data ?? [], null);
         $this->setIfExists('risk_report', $data ?? [], null);
+        $this->setIfExists('domain', $data ?? [], null);
     }
 
     /**
@@ -260,6 +322,40 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     {
         $invalidProperties = [];
 
+        if ($this->container['email_address'] === null) {
+            $invalidProperties[] = "'email_address' can't be null";
+        }
+        if ($this->container['email_provider'] === null) {
+            $invalidProperties[] = "'email_provider' can't be null";
+        }
+        if ($this->container['email_type'] === null) {
+            $invalidProperties[] = "'email_type' can't be null";
+        }
+        if ($this->container['is_deliverable'] === null) {
+            $invalidProperties[] = "'is_deliverable' can't be null";
+        }
+        if ($this->container['is_catch_all'] === null) {
+            $invalidProperties[] = "'is_catch_all' can't be null";
+        }
+        if ($this->container['is_mailbox_full'] === null) {
+            $invalidProperties[] = "'is_mailbox_full' can't be null";
+        }
+        if ($this->container['is_reachable'] === null) {
+            $invalidProperties[] = "'is_reachable' can't be null";
+        }
+        if ($this->container['is_format_valid'] === null) {
+            $invalidProperties[] = "'is_format_valid' can't be null";
+        }
+        if ($this->container['email_correction'] === null) {
+            $invalidProperties[] = "'email_correction' can't be null";
+        }
+        if ($this->container['address_signals'] === null) {
+            $invalidProperties[] = "'address_signals' can't be null";
+        }
+        if ($this->container['email_dns'] === null) {
+            $invalidProperties[] = "'email_dns' can't be null";
+        }
+
         return $invalidProperties;
     }
 
@@ -275,27 +371,268 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     }
 
     /**
-     * Gets format
+     * Gets email_address
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesEmailFormat|null
+     * @return string
      */
-    public function getFormat()
+    public function getEmailAddress()
     {
-        return $this->container['format'];
+        return $this->container['email_address'];
     }
 
     /**
-     * Sets format
+     * Sets email_address
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraud200ResponseSourcesEmailFormat|null  $format  format
+     * @param  string  $email_address  Normalized email address returned by the service (always lower-case).
      * @return self
      */
-    public function setFormat($format)
+    public function setEmailAddress($email_address)
     {
-        if (is_null($format)) {
-            throw new \InvalidArgumentException('non-nullable format cannot be null');
+        if (is_null($email_address)) {
+            throw new \InvalidArgumentException('non-nullable email_address cannot be null');
         }
-        $this->container['format'] = $format;
+        $this->container['email_address'] = $email_address;
+
+        return $this;
+    }
+
+    /**
+     * Gets email_provider
+     *
+     * @return string
+     */
+    public function getEmailProvider()
+    {
+        return $this->container['email_provider'];
+    }
+
+    /**
+     * Sets email_provider
+     *
+     * @param  string  $email_provider  Provider slug derived from the domain, or `unknown` when not classified.
+     * @return self
+     */
+    public function setEmailProvider($email_provider)
+    {
+        if (is_null($email_provider)) {
+            throw new \InvalidArgumentException('non-nullable email_provider cannot be null');
+        }
+        $this->container['email_provider'] = $email_provider;
+
+        return $this;
+    }
+
+    /**
+     * Gets email_type
+     *
+     * @return string
+     */
+    public function getEmailType()
+    {
+        return $this->container['email_type'];
+    }
+
+    /**
+     * Sets email_type
+     *
+     * @param  string  $email_type  Email classification based on provider and enrichment signals. Allowed values: `private`, `free`, `disposable`, `unknown`.
+     * @return self
+     */
+    public function setEmailType($email_type)
+    {
+        if (is_null($email_type)) {
+            throw new \InvalidArgumentException('non-nullable email_type cannot be null');
+        }
+        $this->container['email_type'] = $email_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_deliverable
+     *
+     * @return string
+     */
+    public function getIsDeliverable()
+    {
+        return $this->container['is_deliverable'];
+    }
+
+    /**
+     * Sets is_deliverable
+     *
+     * @param  string  $is_deliverable  Checks if the email address exists and is deliverable using SMTP handshake simulation. Allowed values: `yes`, `no`, `unknown`.
+     * @return self
+     */
+    public function setIsDeliverable($is_deliverable)
+    {
+        if (is_null($is_deliverable)) {
+            throw new \InvalidArgumentException('non-nullable is_deliverable cannot be null');
+        }
+        $this->container['is_deliverable'] = $is_deliverable;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_catch_all
+     *
+     * @return bool
+     */
+    public function getIsCatchAll()
+    {
+        return $this->container['is_catch_all'];
+    }
+
+    /**
+     * Sets is_catch_all
+     *
+     * @param  bool  $is_catch_all  Determines if the email domain is configured as a catch-all.
+     * @return self
+     */
+    public function setIsCatchAll($is_catch_all)
+    {
+        if (is_null($is_catch_all)) {
+            throw new \InvalidArgumentException('non-nullable is_catch_all cannot be null');
+        }
+        $this->container['is_catch_all'] = $is_catch_all;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_mailbox_full
+     *
+     * @return bool
+     */
+    public function getIsMailboxFull()
+    {
+        return $this->container['is_mailbox_full'];
+    }
+
+    /**
+     * Sets is_mailbox_full
+     *
+     * @param  bool  $is_mailbox_full  Determines if the mailbox associated with the email is full.
+     * @return self
+     */
+    public function setIsMailboxFull($is_mailbox_full)
+    {
+        if (is_null($is_mailbox_full)) {
+            throw new \InvalidArgumentException('non-nullable is_mailbox_full cannot be null');
+        }
+        $this->container['is_mailbox_full'] = $is_mailbox_full;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_reachable
+     *
+     * @return bool
+     */
+    public function getIsReachable()
+    {
+        return $this->container['is_reachable'];
+    }
+
+    /**
+     * Sets is_reachable
+     *
+     * @param  bool  $is_reachable  Confirms if the email domain has valid MX DNS records using DNS lookup.
+     * @return self
+     */
+    public function setIsReachable($is_reachable)
+    {
+        if (is_null($is_reachable)) {
+            throw new \InvalidArgumentException('non-nullable is_reachable cannot be null');
+        }
+        $this->container['is_reachable'] = $is_reachable;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_format_valid
+     *
+     * @return bool
+     */
+    public function getIsFormatValid()
+    {
+        return $this->container['is_format_valid'];
+    }
+
+    /**
+     * Sets is_format_valid
+     *
+     * @param  bool  $is_format_valid  Indicates if the email address meets syntax validation rules.
+     * @return self
+     */
+    public function setIsFormatValid($is_format_valid)
+    {
+        if (is_null($is_format_valid)) {
+            throw new \InvalidArgumentException('non-nullable is_format_valid cannot be null');
+        }
+        $this->container['is_format_valid'] = $is_format_valid;
+
+        return $this;
+    }
+
+    /**
+     * Gets email_correction
+     *
+     * @return string
+     */
+    public function getEmailCorrection()
+    {
+        return $this->container['email_correction'];
+    }
+
+    /**
+     * Sets email_correction
+     *
+     * @param  string  $email_correction  The corrected email address when the system is highly confident about a typo or misspelling. Empty string when no correction is needed.
+     * @return self
+     */
+    public function setEmailCorrection($email_correction)
+    {
+        if (is_null($email_correction)) {
+            throw new \InvalidArgumentException('non-nullable email_correction cannot be null');
+        }
+        $this->container['email_correction'] = $email_correction;
+
+        return $this;
+    }
+
+    /**
+     * Gets email_auto_corrected_from
+     *
+     * @return string|null
+     */
+    public function getEmailAutoCorrectedFrom()
+    {
+        return $this->container['email_auto_corrected_from'];
+    }
+
+    /**
+     * Sets email_auto_corrected_from
+     *
+     * @param  string|null  $email_auto_corrected_from  The original email address before auto-correction was applied. Present only when auto-correction was applied.
+     * @return self
+     */
+    public function setEmailAutoCorrectedFrom($email_auto_corrected_from)
+    {
+        if (is_null($email_auto_corrected_from)) {
+            array_push($this->openAPINullablesSetToNull, 'email_auto_corrected_from');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('email_auto_corrected_from', $nullablesSetToNull);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['email_auto_corrected_from'] = $email_auto_corrected_from;
 
         return $this;
     }
@@ -303,7 +640,7 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     /**
      * Gets address_signals
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\AddressSignals|null
+     * @return \OpenAPI\FraudIntel\Client\Model\AddressSignals
      */
     public function getAddressSignals()
     {
@@ -313,7 +650,7 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     /**
      * Sets address_signals
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\AddressSignals|null  $address_signals  address_signals
+     * @param  \OpenAPI\FraudIntel\Client\Model\AddressSignals  $address_signals  Local-part parsing details for the analyzed address.
      * @return self
      */
     public function setAddressSignals($address_signals)
@@ -327,53 +664,27 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     }
 
     /**
-     * Gets dns
+     * Gets email_dns
      *
-     * @return \OpenAPI\FraudIntel\Client\Model\EmailDNS|null
+     * @return \OpenAPI\FraudIntel\Client\Model\EmailDNS
      */
-    public function getDns()
+    public function getEmailDns()
     {
-        return $this->container['dns'];
+        return $this->container['email_dns'];
     }
 
     /**
-     * Sets dns
+     * Sets email_dns
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\EmailDNS|null  $dns  dns
+     * @param  \OpenAPI\FraudIntel\Client\Model\EmailDNS  $email_dns  email_dns
      * @return self
      */
-    public function setDns($dns)
+    public function setEmailDns($email_dns)
     {
-        if (is_null($dns)) {
-            throw new \InvalidArgumentException('non-nullable dns cannot be null');
+        if (is_null($email_dns)) {
+            throw new \InvalidArgumentException('non-nullable email_dns cannot be null');
         }
-        $this->container['dns'] = $dns;
-
-        return $this;
-    }
-
-    /**
-     * Gets domain
-     *
-     * @return \OpenAPI\FraudIntel\Client\Model\EmailDomain|null
-     */
-    public function getDomain()
-    {
-        return $this->container['domain'];
-    }
-
-    /**
-     * Sets domain
-     *
-     * @param  \OpenAPI\FraudIntel\Client\Model\EmailDomain|null  $domain  domain
-     * @return self
-     */
-    public function setDomain($domain)
-    {
-        if (is_null($domain)) {
-            throw new \InvalidArgumentException('non-nullable domain cannot be null');
-        }
-        $this->container['domain'] = $domain;
+        $this->container['email_dns'] = $email_dns;
 
         return $this;
     }
@@ -391,7 +702,7 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     /**
      * Sets risk_report
      *
-     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReportEmail|null  $risk_report  AI risk report. Present when `enableAI` is `true`.
+     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReportEmail|null  $risk_report  Risk report from Email Insights analysis.
      * @return self
      */
     public function setRiskReport($risk_report)
@@ -400,6 +711,32 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
             throw new \InvalidArgumentException('non-nullable risk_report cannot be null');
         }
         $this->container['risk_report'] = $risk_report;
+
+        return $this;
+    }
+
+    /**
+     * Gets domain
+     *
+     * @return \OpenAPI\FraudIntel\Client\Model\EmailDomain|null
+     */
+    public function getDomain()
+    {
+        return $this->container['domain'];
+    }
+
+    /**
+     * Sets domain
+     *
+     * @param  \OpenAPI\FraudIntel\Client\Model\EmailDomain|null  $domain  Domain summary derived from enrichment providers.
+     * @return self
+     */
+    public function setDomain($domain)
+    {
+        if (is_null($domain)) {
+            throw new \InvalidArgumentException('non-nullable domain cannot be null');
+        }
+        $this->container['domain'] = $domain;
 
         return $this;
     }

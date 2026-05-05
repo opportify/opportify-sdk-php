@@ -81,7 +81,7 @@ class FormDataProcessor
         foreach ($source as $key => $val) {
             $currentName .= $currentPrefix.$key;
 
-            if (is_array($val) && !empty($val)) {
+            if (is_array($val) && ! empty($val)) {
                 $currentName .= $currentSuffix;
                 $result += self::flatten($val, $currentName);
             } else {
@@ -123,7 +123,7 @@ class FormDataProcessor
             return $this->processModel($value);
         }
 
-        if (is_array($value) || (is_object($value) && !$value instanceof \DateTimeInterface)) {
+        if (is_array($value) || (is_object($value) && ! $value instanceof \DateTimeInterface)) {
             $data = [];
 
             foreach ($value as $k => $v) {

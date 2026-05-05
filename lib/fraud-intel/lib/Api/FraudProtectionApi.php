@@ -93,7 +93,7 @@ class FraudProtectionApi
     /**
      * Operation analyzeFraud
      *
-     * Analyze Fraud
+     * Analyze
      *
      * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraudRequest  $analyze_fraud_request  analyze_fraud_request (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeFraud'] to see the possible values for this operation
@@ -112,7 +112,7 @@ class FraudProtectionApi
     /**
      * Operation analyzeFraudWithHttpInfo
      *
-     * Analyze Fraud
+     * Analyze
      *
      * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraudRequest  $analyze_fraud_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeFraud'] to see the possible values for this operation
@@ -291,7 +291,7 @@ class FraudProtectionApi
     /**
      * Operation analyzeFraudAsync
      *
-     * Analyze Fraud
+     * Analyze
      *
      * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraudRequest  $analyze_fraud_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeFraud'] to see the possible values for this operation
@@ -312,7 +312,7 @@ class FraudProtectionApi
     /**
      * Operation analyzeFraudAsyncWithHttpInfo
      *
-     * Analyze Fraud
+     * Analyze
      *
      * @param  \OpenAPI\FraudIntel\Client\Model\AnalyzeFraudRequest  $analyze_fraud_request  (required)
      * @param  string  $contentType  The value for the Content-Type header. Check self::contentTypes['analyzeFraud'] to see the possible values for this operation
@@ -465,7 +465,7 @@ class FraudProtectionApi
         $options = [];
         if ($this->config->getDebug()) {
             $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
+            if (! $options[RequestOptions::DEBUG]) {
                 throw new \RuntimeException('Failed to open the debug file: '.$this->config->getDebugFile());
             }
         }

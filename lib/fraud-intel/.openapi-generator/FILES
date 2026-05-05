@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .php-cs-fixer.dist.php
 .travis.yml
 README.md
@@ -9,11 +8,9 @@ docs/Model/AbuseContact.md
 docs/Model/AddressSignals.md
 docs/Model/AdminContact.md
 docs/Model/AnalyzeFraud200Response.md
-docs/Model/AnalyzeFraud200ResponseMeta.md
 docs/Model/AnalyzeFraud200ResponseSources.md
 docs/Model/AnalyzeFraud200ResponseSourcesContent.md
 docs/Model/AnalyzeFraud200ResponseSourcesEmail.md
-docs/Model/AnalyzeFraud200ResponseSourcesEmailFormat.md
 docs/Model/AnalyzeFraud200ResponseSourcesGeo.md
 docs/Model/AnalyzeFraud200ResponseSourcesGeoSignals.md
 docs/Model/AnalyzeFraud200ResponseSourcesIp.md
@@ -55,11 +52,9 @@ lib/Model/AbuseContact.php
 lib/Model/AddressSignals.php
 lib/Model/AdminContact.php
 lib/Model/AnalyzeFraud200Response.php
-lib/Model/AnalyzeFraud200ResponseMeta.php
 lib/Model/AnalyzeFraud200ResponseSources.php
 lib/Model/AnalyzeFraud200ResponseSourcesContent.php
 lib/Model/AnalyzeFraud200ResponseSourcesEmail.php
-lib/Model/AnalyzeFraud200ResponseSourcesEmailFormat.php
 lib/Model/AnalyzeFraud200ResponseSourcesGeo.php
 lib/Model/AnalyzeFraud200ResponseSourcesGeoSignals.php
 lib/Model/AnalyzeFraud200ResponseSourcesIp.php
@@ -98,9 +93,7 @@ test/Api/FraudProtectionApiTest.php
 test/Model/AbuseContactTest.php
 test/Model/AddressSignalsTest.php
 test/Model/AdminContactTest.php
-test/Model/AnalyzeFraud200ResponseMetaTest.php
 test/Model/AnalyzeFraud200ResponseSourcesContentTest.php
-test/Model/AnalyzeFraud200ResponseSourcesEmailFormatTest.php
 test/Model/AnalyzeFraud200ResponseSourcesEmailTest.php
 test/Model/AnalyzeFraud200ResponseSourcesGeoSignalsTest.php
 test/Model/AnalyzeFraud200ResponseSourcesGeoTest.php

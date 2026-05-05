@@ -28,6 +28,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         'ip_submissions' => '\OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow',
         'phone_submissions' => '\OpenAPI\FraudIntel\Client\Model\FraudVelocityWindow',
         'anomaly' => 'bool',
+        'risk_report' => '\OpenAPI\FraudIntel\Client\Model\RiskReport',
     ];
 
     /**
@@ -44,6 +45,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         'ip_submissions' => null,
         'phone_submissions' => null,
         'anomaly' => null,
+        'risk_report' => null,
     ];
 
     /**
@@ -56,6 +58,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         'ip_submissions' => true,
         'phone_submissions' => true,
         'anomaly' => false,
+        'risk_report' => false,
     ];
 
     /**
@@ -140,6 +143,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         'ip_submissions' => 'ipSubmissions',
         'phone_submissions' => 'phoneSubmissions',
         'anomaly' => 'anomaly',
+        'risk_report' => 'riskReport',
     ];
 
     /**
@@ -152,6 +156,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         'ip_submissions' => 'setIpSubmissions',
         'phone_submissions' => 'setPhoneSubmissions',
         'anomaly' => 'setAnomaly',
+        'risk_report' => 'setRiskReport',
     ];
 
     /**
@@ -164,6 +169,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         'ip_submissions' => 'getIpSubmissions',
         'phone_submissions' => 'getPhoneSubmissions',
         'anomaly' => 'getAnomaly',
+        'risk_report' => 'getRiskReport',
     ];
 
     /**
@@ -226,6 +232,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
         $this->setIfExists('ip_submissions', $data ?? [], null);
         $this->setIfExists('phone_submissions', $data ?? [], null);
         $this->setIfExists('anomaly', $data ?? [], null);
+        $this->setIfExists('risk_report', $data ?? [], null);
     }
 
     /**
@@ -252,6 +259,13 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if ($this->container['anomaly'] === null) {
+            $invalidProperties[] = "'anomaly' can't be null";
+        }
+        if ($this->container['risk_report'] === null) {
+            $invalidProperties[] = "'risk_report' can't be null";
+        }
 
         return $invalidProperties;
     }
@@ -369,7 +383,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Gets anomaly
      *
-     * @return bool|null
+     * @return bool
      */
     public function getAnomaly()
     {
@@ -379,7 +393,7 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     /**
      * Sets anomaly
      *
-     * @param  bool|null  $anomaly  True when any identifier's submission rate exceeds the configured anomaly threshold.
+     * @param  bool  $anomaly  True when any identifier's submission rate exceeds the configured anomaly threshold.
      * @return self
      */
     public function setAnomaly($anomaly)
@@ -388,6 +402,32 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
             throw new \InvalidArgumentException('non-nullable anomaly cannot be null');
         }
         $this->container['anomaly'] = $anomaly;
+
+        return $this;
+    }
+
+    /**
+     * Gets risk_report
+     *
+     * @return \OpenAPI\FraudIntel\Client\Model\RiskReport
+     */
+    public function getRiskReport()
+    {
+        return $this->container['risk_report'];
+    }
+
+    /**
+     * Sets risk_report
+     *
+     * @param  \OpenAPI\FraudIntel\Client\Model\RiskReport  $risk_report  Risk report for velocity signals. Score is elevated when `anomaly` is `true`.
+     * @return self
+     */
+    public function setRiskReport($risk_report)
+    {
+        if (is_null($risk_report)) {
+            throw new \InvalidArgumentException('non-nullable risk_report cannot be null');
+        }
+        $this->container['risk_report'] = $risk_report;
 
         return $this;
     }
