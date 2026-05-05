@@ -39,10 +39,19 @@ class FraudProtectionApiTest extends TestCase
             'level' => 'high',
             'factors' => ['suspicious_email', 'vpn_detected'],
             'sources' => [
-                'email' => ['format' => (object) ['isFormatValid' => true]],
+                'email' => [
+                    'emailAddress' => 'test@example.com',
+                    'emailProvider' => 'google',
+                    'emailType' => 'free',
+                    'isDeliverable' => 'yes',
+                    'isCatchAll' => false,
+                    'isMailboxFull' => false,
+                    'isReachable' => true,
+                    'isFormatValid' => true,
+                    'emailCorrection' => '',
+                ],
                 'ip' => ['isVpn' => true, 'isTor' => false],
             ],
-            'meta' => ['requestId' => 'req_abc123'],
         ]);
 
         $mockResponse = new Response(200, ['Content-Type' => 'application/json'], $mockResponseData);

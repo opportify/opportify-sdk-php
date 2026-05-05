@@ -81,8 +81,7 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
         'is_reachable' => false,
         'is_format_valid' => false,
         'email_correction' => false,
-        'email_auto_corrected_from' => false,
-        'address_signals' => false,
+        'email_auto_corrected_from' => true,
         'email_dns' => false,
         'risk_report' => false,
         'domain' => false,
@@ -624,7 +623,14 @@ class AnalyzeFraud200ResponseSourcesEmail implements \JsonSerializable, ArrayAcc
     public function setEmailAutoCorrectedFrom($email_auto_corrected_from)
     {
         if (is_null($email_auto_corrected_from)) {
-            throw new \InvalidArgumentException('non-nullable email_auto_corrected_from cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'email_auto_corrected_from');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('email_auto_corrected_from', $nullablesSetToNull);
+            if ($index !== false) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['email_auto_corrected_from'] = $email_auto_corrected_from;
 

@@ -260,15 +260,6 @@ class AnalyzeFraud200ResponseSourcesVelocity implements \JsonSerializable, Array
     {
         $invalidProperties = [];
 
-        if ($this->container['email_submissions'] === null) {
-            $invalidProperties[] = "'email_submissions' can't be null";
-        }
-        if ($this->container['ip_submissions'] === null) {
-            $invalidProperties[] = "'ip_submissions' can't be null";
-        }
-        if ($this->container['phone_submissions'] === null) {
-            $invalidProperties[] = "'phone_submissions' can't be null";
-        }
         if ($this->container['anomaly'] === null) {
             $invalidProperties[] = "'anomaly' can't be null";
         }

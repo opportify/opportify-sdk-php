@@ -290,4 +290,32 @@ class FraudProtectionTest extends TestCase
         $this->assertEquals('tok_abc', $normalized['opportify_token']);
         $this->assertEquals('yoursite.com', $normalized['origin']);
     }
+
+    public function test_normalize_request_enable_ai_snake_case_is_silently_ignored()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($fp, [['email' => 'user@example.com', 'enable_ai' => true]]);
+
+        $this->assertArrayNotHasKey('enable_ai', $normalized);
+        $this->assertArrayNotHasKey('enableAi', $normalized);
+        $this->assertEquals('user@example.com', $normalized['email']);
+    }
+
+    public function test_normalize_request_enable_ai_camel_case_is_silently_ignored()
+    {
+        $fp = new FraudProtection('fake_api_key');
+
+        $reflection = new \ReflectionClass($fp);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($fp, [['email' => 'user@example.com', 'enableAi' => true]]);
+
+        $this->assertArrayNotHasKey('enable_ai', $normalized);
+        $this->assertArrayNotHasKey('enableAi', $normalized);
+        $this->assertEquals('user@example.com', $normalized['email']);
+    }
 }
