@@ -9,7 +9,7 @@
 
 `opportify-sdk-php` is the **official, publicly published PHP SDK** for the
 [Opportify API](https://opportify.ai). It is distributed on Packagist under an
-Apache-2.0 licence and consumed directly by third-party developers. Every line of
+MIT licence and consumed directly by third-party developers. Every line of
 code that ships is part of the public interface of Opportify's developer ecosystem.
 
 **Tech stack:** PHP ≥ 8.1 · Composer · PHPUnit · Laravel Pint (code style)
@@ -63,8 +63,8 @@ This project uses **semantic versioning** (`MAJOR.MINOR.PATCH`).
 - `MINOR` — new backwards-compatible functionality
 - `MAJOR` — breaking changes
 
-Update `composer.json` version field before opening the release PR.
-Publishing the GitHub Release triggers `.github/workflows/packagist-update.yml`,
+Packagist derives the version from the **git tag** — do not add a `version` field to `composer.json`.
+Publishing the GitHub Release triggers `.github/workflows/packagist.yml`,
 which notifies Packagist.
 
 ---
@@ -98,7 +98,7 @@ cd ../opportify-sdk-php.worktrees/<short-name>
 composer install
 
 # 4. Make changes, then run checks before pushing
-composer test          # PHPUnit
+vendor/bin/phpunit     # PHPUnit
 ./vendor/bin/pint      # code style
 
 # 5. Push and open a PR
@@ -116,7 +116,7 @@ git branch -d <type>/<short-description>
 
 ```bash
 # Run tests
-composer test
+vendor/bin/phpunit
 
 # Check code style
 ./vendor/bin/pint --test
