@@ -3,6 +3,7 @@
 namespace Opportify\Sdk;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\MultipartStream;
 use OpenAPI\Client\Api\IPInsightsApi as IpInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
@@ -210,7 +211,7 @@ class IpInsights
                 $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
                 if ($enableAi !== null) {
                     $multipartContents[] = [
-                        'name' => 'enable_ai',
+                        'name' => 'enableAI',
                         'contents' => $enableAi ? 'true' : 'false',
                     ];
                 }
@@ -223,7 +224,7 @@ class IpInsights
                     ];
                 }
 
-                $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
+                $multipartStream = new MultipartStream($multipartContents);
 
                 $result = $this->apiInstance->batchAnalyzeIps($multipartStream, $contentType);
             } finally {

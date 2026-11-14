@@ -3,6 +3,7 @@
 namespace Opportify\Sdk;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\MultipartStream;
 use OpenAPI\Client\Api\EmailInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeEmailRequest;
@@ -210,7 +211,7 @@ class EmailInsights
                 $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
                 if ($enableAi !== null) {
                     $multipartContents[] = [
-                        'name' => 'enable_ai',
+                        'name' => 'enableAI',
                         'contents' => $enableAi ? 'true' : 'false',
                     ];
                 }
@@ -218,7 +219,7 @@ class EmailInsights
                 $enableAutoCorrection = $this->resolveBoolean($params, ['enable_auto_correction', 'enableAutoCorrection']);
                 if ($enableAutoCorrection !== null) {
                     $multipartContents[] = [
-                        'name' => 'enable_auto_correction',
+                        'name' => 'enableAutoCorrection',
                         'contents' => $enableAutoCorrection ? 'true' : 'false',
                     ];
                 }
@@ -232,7 +233,7 @@ class EmailInsights
                 }
 
                 // Create MultipartStream that OpenAPI client expects
-                $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
+                $multipartStream = new MultipartStream($multipartContents);
 
                 $result = $this->apiInstance->batchAnalyzeEmails($multipartStream, $contentType);
             } finally {
