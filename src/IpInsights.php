@@ -218,7 +218,7 @@ class IpInsights
                 $enableAi = $this->resolveBoolean($params, self::ENABLE_AI_KEYS);
                 if ($enableAi !== null) {
                     $multipartContents[] = [
-                        'name' => 'enable_ai',
+                        'name' => 'enableAI',
                         'contents' => $enableAi ? 'true' : 'false',
                     ];
                 }
