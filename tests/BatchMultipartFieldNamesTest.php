@@ -3,7 +3,7 @@
 use GuzzleHttp\Psr7\MultipartStream;
 use Mockery as m;
 use OpenAPI\Client\Api\EmailInsightsApi;
-use OpenAPI\Client\Api\IpInsightsApi;
+use OpenAPI\Client\Api\IPInsightsApi;
 use Opportify\Sdk\EmailInsights;
 use Opportify\Sdk\IpInsights;
 use PHPUnit\Framework\TestCase;
@@ -75,7 +75,7 @@ class BatchMultipartFieldNamesTest extends TestCase
     public function test_ip_multipart_batch_sends_flag_under_the_api_field_name()
     {
         $captured = '';
-        $api = m::mock(IpInsightsApi::class);
+        $api = m::mock(IPInsightsApi::class);
         $api->shouldReceive('batchAnalyzeIps')
             ->once()
             ->with(m::on(function ($stream) use (&$captured) {
