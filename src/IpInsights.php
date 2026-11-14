@@ -3,6 +3,7 @@
 namespace Opportify\Sdk;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\MultipartStream;
 use OpenAPI\Client\Api\IPInsightsApi as IpInsightsApi;
 use OpenAPI\Client\Configuration as ApiConfiguration;
 use OpenAPI\Client\Model\AnalyzeIpRequest;
@@ -14,6 +15,13 @@ use OpenAPI\Client\Model\ExportRequest;
  */
 class IpInsights
 {
+    /**
+     * Accepted spellings of the AI option. `enableAI` is the wire name used by the API and docs.
+     *
+     * @var list<string>
+     */
+    private const ENABLE_AI_KEYS = ['enable_ai', 'enableAi', 'enableAI'];
+
     private ApiConfiguration $config;
 
     private ?IpInsightsApi $apiInstance = null;
@@ -207,7 +215,7 @@ class IpInsights
                 ];
 
                 // Add optional parameters as separate parts
-                $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
+                $enableAi = $this->resolveBoolean($params, self::ENABLE_AI_KEYS);
                 if ($enableAi !== null) {
                     $multipartContents[] = [
                         'name' => 'enable_ai',
@@ -223,7 +231,7 @@ class IpInsights
                     ];
                 }
 
-                $multipartStream = new \GuzzleHttp\Psr7\MultipartStream($multipartContents);
+                $multipartStream = new MultipartStream($multipartContents);
 
                 $result = $this->apiInstance->batchAnalyzeIps($multipartStream, $contentType);
             } finally {
@@ -326,7 +334,10 @@ class IpInsights
 
         $normalized = [];
         $normalized['ip'] = (string) $params['ip'];
-        $normalized['enable_ai'] = $this->resolveBoolean($params, ['enable_ai', 'enableAi'], true);
+        $enableAi = $this->resolveBoolean($params, self::ENABLE_AI_KEYS);
+        if ($enableAi !== null) {
+            $normalized['enable_ai'] = $enableAi;
+        }
 
         return $normalized;
     }
@@ -344,7 +355,7 @@ class IpInsights
 
         $normalized['ips'] = array_map(static fn ($ip) => (string) $ip, $ips);
 
-        $enableAi = $this->resolveBoolean($params, ['enable_ai', 'enableAi']);
+        $enableAi = $this->resolveBoolean($params, self::ENABLE_AI_KEYS);
         if ($enableAi !== null) {
             $normalized['enable_ai'] = $enableAi;
         }
