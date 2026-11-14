@@ -2,8 +2,11 @@
 
 use Mockery as m;
 use OpenAPI\Client\Api\IpInsightsApi;
+use OpenAPI\Client\ApiException;
+use OpenAPI\Client\Model\AnalyzeIpRequest;
 use OpenAPI\Client\Model\ExportRequest;
 use Opportify\Sdk\IpInsights;
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class IpInsightsTest extends TestCase
@@ -18,7 +21,7 @@ class IpInsightsTest extends TestCase
         $insights = new IpInsights('fake_api_key');
         $insights->setHost('https://new-opportify.com');
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $property = $reflection->getProperty('host');
         $property->setAccessible(true);
 
@@ -30,7 +33,7 @@ class IpInsightsTest extends TestCase
         $insights = new IpInsights('fake_api_key');
         $insights->setVersion('v2');
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $property = $reflection->getProperty('version');
         $property->setAccessible(true);
 
@@ -42,7 +45,7 @@ class IpInsightsTest extends TestCase
         $insights = new IpInsights('fake_api_key');
         $insights->setPrefix('new-prefix');
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $property = $reflection->getProperty('prefix');
         $property->setAccessible(true);
 
@@ -54,7 +57,7 @@ class IpInsightsTest extends TestCase
         $insights = new IpInsights('fake_api_key');
         $insights->setDebugMode(true);
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $property = $reflection->getProperty('debugMode');
         $property->setAccessible(true);
 
@@ -102,11 +105,11 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn($mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('analyzeIp')
             ->once()
             ->andReturn($mockResponse);
@@ -137,10 +140,10 @@ class IpInsightsTest extends TestCase
     public function test_throws_exception_when_analyze_fails()
     {
         // Create a mock for IpInsightsApi
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('analyzeIp')
             ->once()
-            ->andThrow(new \OpenAPI\Client\ApiException(
+            ->andThrow(new ApiException(
                 '[403] Client error: `POST https://api.opportify.com/insights/v1/ip/analyze` resulted in a `403 Forbidden` response: {"errorCode": "INVALID_TOKEN", "errorMessage": "The token provided is either invalid, expired, or missing"}',
                 403
             ));
@@ -148,7 +151,7 @@ class IpInsightsTest extends TestCase
         // Inject the mock API instance via constructor
         $insights = new IpInsights('invalid_api_key', $mockApiInstance);
 
-        $this->expectException(\OpenAPI\Client\ApiException::class);
+        $this->expectException(ApiException::class);
         $this->expectExceptionMessage('[403]');
         $this->expectExceptionMessage('INVALID_TOKEN');
 
@@ -172,7 +175,7 @@ class IpInsightsTest extends TestCase
             'enable_ai' => true,
         ];
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $method = $reflection->getMethod('normalizeRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($insights, [$input]);
@@ -194,12 +197,101 @@ class IpInsightsTest extends TestCase
             'enable_ai' => true,
         ];
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $method = $reflection->getMethod('normalizeBatchRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($insights, [$input]);
 
         $this->assertEquals($expectedOutput, $normalized);
+    }
+
+    public static function enableAiSpellingProvider(): array
+    {
+        $cases = [];
+        foreach (['enableAI', 'enableAi', 'enable_ai'] as $key) {
+            foreach ([true, false] as $value) {
+                $cases[$key.'='.var_export($value, true)] = [$key, $value];
+            }
+        }
+
+        return $cases;
+    }
+
+    /**
+     * @dataProvider enableAiSpellingProvider
+     */
+    public function test_normalize_request_accepts_every_enable_ai_spelling(string $key, bool $value)
+    {
+        $insights = new IpInsights('fake_api_key');
+
+        $reflection = new ReflectionClass($insights);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($insights, [['ip' => '192.0.2.1', $key => $value]]);
+
+        $this->assertSame(['ip' => '192.0.2.1', 'enable_ai' => $value], $normalized);
+        $this->assertSame(
+            $value,
+            json_decode(json_encode(new AnalyzeIpRequest($normalized)), true)['enableAI']
+        );
+    }
+
+    public function test_normalize_request_omits_enable_ai_when_not_provided()
+    {
+        $insights = new IpInsights('fake_api_key');
+
+        $reflection = new ReflectionClass($insights);
+        $method = $reflection->getMethod('normalizeRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($insights, [['ip' => '192.0.2.1']]);
+
+        $this->assertSame(['ip' => '192.0.2.1'], $normalized);
+        $this->assertArrayNotHasKey(
+            'enableAI',
+            json_decode(json_encode(new AnalyzeIpRequest($normalized)), true)
+        );
+    }
+
+    /**
+     * @dataProvider enableAiSpellingProvider
+     */
+    public function test_normalize_batch_request_accepts_every_enable_ai_spelling(string $key, bool $value)
+    {
+        $insights = new IpInsights('fake_api_key');
+
+        $reflection = new ReflectionClass($insights);
+        $method = $reflection->getMethod('normalizeBatchRequest');
+        $method->setAccessible(true);
+        $normalized = $method->invokeArgs($insights, [['ips' => ['192.0.2.1'], $key => $value]]);
+
+        $this->assertSame(['ips' => ['192.0.2.1'], 'enable_ai' => $value], $normalized);
+    }
+
+    public function test_batch_analyze_multipart_accepts_documented_enable_ai_key()
+    {
+        $mockResponse = m::mock();
+        $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) ['jobId' => 'job-1']);
+
+        $captured = null;
+        $mockApiInstance = m::mock(IpInsightsApi::class);
+        $mockApiInstance->shouldReceive('batchAnalyzeIps')
+            ->once()
+            ->with(m::on(function ($body) use (&$captured) {
+                $captured = (string) $body;
+
+                return true;
+            }), 'multipart/form-data')
+            ->andReturn($mockResponse);
+
+        $tempFilePath = sys_get_temp_dir().'/test_ips_enable_ai.csv';
+        file_put_contents($tempFilePath, '192.0.2.1');
+
+        $insights = new IpInsights('fake_api_key', $mockApiInstance);
+        $insights->batchAnalyze(['file' => $tempFilePath, 'enableAI' => false], 'multipart/form-data');
+        unlink($tempFilePath);
+
+        $this->assertStringContainsString('name="enable_ai"', $captured);
+        $this->assertMatchesRegularExpression('/name="enable_ai"\r\n(?:[^\r]*\r\n)*\r\nfalse\r\n/', $captured);
     }
 
     public function test_batch_analyze_success()
@@ -211,11 +303,11 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
             ->andReturn($mockResponse);
@@ -243,14 +335,14 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance - now expects MultipartStream instead of array
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
-            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->with(m::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -278,7 +370,7 @@ class IpInsightsTest extends TestCase
     {
         $insights = new IpInsights('fake_api_key');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File parameter is required and must be a valid file path');
 
         $insights->batchAnalyze([
@@ -290,7 +382,7 @@ class IpInsightsTest extends TestCase
     {
         $insights = new IpInsights('fake_api_key');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File parameter is required and must be a valid file path');
 
         $insights->batchAnalyze([
@@ -310,7 +402,7 @@ class IpInsightsTest extends TestCase
         // Test with a path that's guaranteed to fail (null byte is invalid in filenames)
         $invalidPath = "invalid\0path.csv";
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File parameter is required and must be a valid file path');
 
         $insights->batchAnalyze([
@@ -328,14 +420,14 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
-            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->with(m::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -368,14 +460,14 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
-            ->with(Mockery::type('string'), 'text/plain')
+            ->with(m::type('string'), 'text/plain')
             ->andReturn($mockResponse);
 
         // Inject the mock API instance via constructor
@@ -400,11 +492,11 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
             ->andReturn($mockResponse);
@@ -435,10 +527,10 @@ class IpInsightsTest extends TestCase
             'statusDescription' => '',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
             ->andReturn($mockResponse);
@@ -466,11 +558,11 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('getIpBatchStatus')
             ->once()
             ->with('job-123456')
@@ -495,17 +587,17 @@ class IpInsightsTest extends TestCase
             'status' => 'QUEUED',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('createIpBatchExport')
             ->once()
-            ->with('job-ip-1', Mockery::on(function ($request) {
-                \PHPUnit\Framework\Assert::assertInstanceOf(ExportRequest::class, $request);
-                \PHPUnit\Framework\Assert::assertEquals('csv', $request->getExportType());
-                \PHPUnit\Framework\Assert::assertEquals(['result.ipAddress', 'result.riskReport.score'], $request->getColumns());
-                \PHPUnit\Framework\Assert::assertEquals(['result.riskReport.level' => 'low'], $request->getFilters());
+            ->with('job-ip-1', m::on(function ($request) {
+                Assert::assertInstanceOf(ExportRequest::class, $request);
+                Assert::assertEquals('csv', $request->getExportType());
+                Assert::assertEquals(['result.ipAddress', 'result.riskReport.score'], $request->getColumns());
+                Assert::assertEquals(['result.riskReport.level' => 'low'], $request->getFilters());
 
                 return true;
             }))
@@ -530,10 +622,10 @@ class IpInsightsTest extends TestCase
             'status' => 'PROCESSING',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('createIpBatchExport')
             ->once()
             ->with('job-ip-2', null)
@@ -549,9 +641,9 @@ class IpInsightsTest extends TestCase
 
     public function test_create_batch_export_validates_job_id()
     {
-        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+        $ipInsights = new IpInsights('fake_api_key', m::mock(IpInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job ID cannot be empty when creating an export.');
 
         $ipInsights->createBatchExport('');
@@ -559,9 +651,9 @@ class IpInsightsTest extends TestCase
 
     public function test_create_batch_export_validates_filters_type()
     {
-        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+        $ipInsights = new IpInsights('fake_api_key', m::mock(IpInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Filters must be provided as an array.');
 
         $ipInsights->createBatchExport('job-ip-3', [
@@ -571,9 +663,9 @@ class IpInsightsTest extends TestCase
 
     public function test_create_batch_export_validates_columns_type()
     {
-        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+        $ipInsights = new IpInsights('fake_api_key', m::mock(IpInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Columns must be provided as an array.');
 
         $ipInsights->createBatchExport('job-ip-4', [
@@ -589,10 +681,10 @@ class IpInsightsTest extends TestCase
             'downloadUrl' => 'https://example.com/ip-export.json',
         ];
 
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
-        $mockApiInstance = Mockery::mock(IpInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('getIpBatchExportStatus')
             ->once()
             ->with('job-ip-3', 'ip-export-003')
@@ -609,9 +701,9 @@ class IpInsightsTest extends TestCase
 
     public function test_get_batch_export_status_validates_identifiers()
     {
-        $ipInsights = new IpInsights('fake_api_key', Mockery::mock(IpInsightsApi::class));
+        $ipInsights = new IpInsights('fake_api_key', m::mock(IpInsightsApi::class));
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Job ID and export ID are required to fetch export status.');
 
         $ipInsights->getBatchExportStatus('   ', 'ip-export-004');
@@ -627,11 +719,11 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance
-        $mockApiInstance = Mockery::mock(IPInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
             ->andReturn($mockResponse);
@@ -662,14 +754,14 @@ class IpInsightsTest extends TestCase
         ];
 
         // Create a mock for the API response that implements jsonSerialize()
-        $mockResponse = Mockery::mock();
+        $mockResponse = m::mock();
         $mockResponse->shouldReceive('jsonSerialize')->andReturn((object) $mockResponseData);
 
         // Mock the API instance - expects MultipartStream with name parameter
-        $mockApiInstance = Mockery::mock(IPInsightsApi::class);
+        $mockApiInstance = m::mock(IpInsightsApi::class);
         $mockApiInstance->shouldReceive('batchAnalyzeIps')
             ->once()
-            ->with(Mockery::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
+            ->with(m::type('\GuzzleHttp\Psr7\MultipartStream'), 'multipart/form-data')
             ->andReturn($mockResponse);
 
         // Create a temporary file for testing
@@ -715,7 +807,7 @@ class IpInsightsTest extends TestCase
             'enable_ai' => true,
         ];
 
-        $reflection = new \ReflectionClass($ipInsights);
+        $reflection = new ReflectionClass($ipInsights);
         $method = $reflection->getMethod('normalizeBatchRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($ipInsights, [$input]);
@@ -737,7 +829,7 @@ class IpInsightsTest extends TestCase
             'enable_ai' => true,
         ];
 
-        $reflection = new \ReflectionClass($ipInsights);
+        $reflection = new ReflectionClass($ipInsights);
         $method = $reflection->getMethod('normalizeBatchRequest');
         $method->setAccessible(true);
         $normalized = $method->invokeArgs($ipInsights, [$input]);
@@ -784,7 +876,7 @@ class IpInsightsTest extends TestCase
         $insights->setPrefix($prefix);
         $insights->setVersion($version);
 
-        $reflection = new \ReflectionClass($insights);
+        $reflection = new ReflectionClass($insights);
         $method = $reflection->getMethod('refreshApiInstance');
         $method->setAccessible(true);
         $method->invokeArgs($insights, []);
