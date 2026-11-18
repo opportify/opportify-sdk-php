@@ -290,8 +290,9 @@ class IpInsightsTest extends TestCase
         $insights->batchAnalyze(['file' => $tempFilePath, 'enableAI' => false], 'multipart/form-data');
         unlink($tempFilePath);
 
-        $this->assertStringContainsString('name="enable_ai"', $captured);
-        $this->assertMatchesRegularExpression('/name="enable_ai"\r\n(?:[^\r]*\r\n)*\r\nfalse\r\n/', $captured);
+        $this->assertStringContainsString('name="enableAI"', $captured);
+        $this->assertStringNotContainsString('name="enable_ai"', $captured);
+        $this->assertMatchesRegularExpression('/name="enableAI"\r\n(?:[^\r]*\r\n)*\r\nfalse\r\n/', $captured);
     }
 
     public function test_batch_analyze_success()
