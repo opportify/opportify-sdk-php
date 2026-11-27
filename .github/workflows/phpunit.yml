@@ -9,7 +9,7 @@ on:
             - main
 
 permissions:
-    contents: read  
+    contents: read
 
 jobs:
     tests:
@@ -25,10 +25,10 @@ jobs:
             uses: actions/checkout@v4
 
           - name: Set up PHP ${{ matrix.php-version }}
-            uses: shivammathur/setup-php@v2
+            uses: opportify/.github/.github/actions/setup-php@main
             with:
               php-version: ${{ matrix.php-version }}
-              coverage: none 
+              coverage: none
               tools: composer
 
           - name: Validate composer.json and composer.lock
@@ -38,4 +38,4 @@ jobs:
             run: composer install --no-progress --prefer-dist --optimize-autoloader
 
           - name: Run PHP Unit tests
-            run: vendor/bin/phpunit --testdox --colors=always tests/   
+            run: vendor/bin/phpunit --testdox --colors=always tests/

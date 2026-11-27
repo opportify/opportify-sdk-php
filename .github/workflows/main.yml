@@ -10,5 +10,4 @@ jobs:
     uses: opportify/.github/.github/workflows/release-drafter.yml@main
     permissions:
       contents: write
-      pull-requests: write
-    secrets: inherit
+      pull-requests: read
