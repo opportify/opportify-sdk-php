@@ -14,7 +14,7 @@ permissions:
 jobs:
     tests:
         name: PHPUnit on PHP ${{ matrix.php-version }}
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-24.04 # setup-php installs 8.1/8.2/8.4 from ppa:ondrej/php, which has no 26.04 builds
         strategy:
             fail-fast: true
             matrix:
@@ -28,6 +28,8 @@ jobs:
             uses: opportify/.github/.github/actions/setup-php@main
             with:
               php-version: ${{ matrix.php-version }}
+              # xml provides dom, xmlwriter and libxml (needed by PHPUnit)
+              extensions: xml, mbstring, curl
               coverage: none
               tools: composer
 
